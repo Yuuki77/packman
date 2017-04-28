@@ -7,17 +7,21 @@ import * as WebFontLoader from 'webfontloader';
 import Boot from './states/boot';
 import Preloader from './states/preloader';
 import Title from './states/title';
+import GamePlayState from './states/gamePlayState';
+// import grid from './states/grid';
+// import Player from './states/player';
+
 import * as Utils from './utils/utils';
 import * as Assets from './assets';
 
 class App extends Phaser.Game {
     constructor(config: Phaser.IGameConfig) {
-        super (config);
+        super(config);
 
         this.state.add('boot', Boot);
-        this.state.add('preloader', Preloader);
-        this.state.add('title', Title);
-
+        this.state.add('preloader', Preloader, false);
+        this.state.add('title', Title, false);
+        this.state.add('gamePlayState', GamePlayState, false);
         this.state.start('boot');
     }
 }
@@ -38,7 +42,7 @@ function startApp(): void {
         width: gameWidth,
         height: gameHeight,
         renderer: Phaser.AUTO,
-        parent: '',
+        parent: "content",
         resolution: 1
     };
 

@@ -1,10 +1,70 @@
 /* AUTO GENERATED FILE. DO NOT MODIFY. YOU WILL LOSE YOUR CHANGES ON BUILD. */
 
 export namespace Images {
+    export class GraphicsGameOver {
+        static getName(): string { return 'GameOver'; };
+
+        static getPNG(): string { return require('assets/graphics/GameOver.png'); };
+    }
+    export class GraphicsScene {
+        static getName(): string { return 'scene'; };
+
+        static getPNG(): string { return require('assets/graphics/scene.png'); };
+    }
+    export class GraphicsScene720p {
+        static getName(): string { return 'scene720p'; };
+
+        static getPNG(): string { return require('assets/graphics/scene720p.png'); };
+    }
+    export class GraphicsTitleScreen {
+        static getName(): string { return 'TitleScreen'; };
+
+        static getPNG(): string { return require('assets/graphics/TitleScreen.png'); };
+    }
     export class ImagesBackgroundTemplate {
         static getName(): string { return 'background_template'; };
 
         static getPNG(): string { return require('assets/images/background_template.png'); };
+    }
+    export class ImagesBackgroundtexture2 {
+        static getName(): string { return 'backgroundtexture2'; };
+
+        static getJPG(): string { return require('assets/images/backgroundtexture2.jpg'); };
+    }
+    export class ImagesBoafront {
+        static getName(): string { return 'boafront'; };
+
+        static getJPG(): string { return require('assets/images/boafront.jpg'); };
+    }
+    export class ImagesBuildtexture {
+        static getName(): string { return 'buildtexture'; };
+
+        static getJPG(): string { return require('assets/images/buildtexture.jpg'); };
+    }
+    export class ImagesMetal {
+        static getName(): string { return 'metal'; };
+
+        static getPNG(): string { return require('assets/images/metal.png'); };
+    }
+    export class ImagesPacman {
+        static getName(): string { return 'pacman'; };
+
+        static getPNG(): string { return require('assets/images/pacman.png'); };
+    }
+    export class ImagesRoadtexture {
+        static getName(): string { return 'roadtexture'; };
+
+        static getJPG(): string { return require('assets/images/roadtexture.jpg'); };
+    }
+    export class ImagesSand {
+        static getName(): string { return 'sand'; };
+
+        static getPNG(): string { return require('assets/images/sand.png'); };
+    }
+    export class ImagesWall4 {
+        static getName(): string { return 'wall4'; };
+
+        static getPNG(): string { return require('assets/images/wall4.png'); };
     }
 }
 
@@ -61,6 +121,28 @@ export namespace Atlases {
 
         static Frames = AtlasesPreloadSpritesXmlFrames;
     }
+    enum GraphicsHeroIdleFrames {
+    }
+    export class GraphicsHeroIdle {
+        static getName(): string { return 'Hero_Idle'; };
+
+        static getPNG(): string { return require('assets/graphics/Hero_Idle.png'); };
+
+        static getXML(): string { return require('assets/graphics/Hero_Idle.xml'); };
+
+        static Frames = GraphicsHeroIdleFrames;
+    }
+    enum GraphicsHeroWalkingFrames {
+    }
+    export class GraphicsHeroWalking {
+        static getName(): string { return 'Hero_Walking'; };
+
+        static getPNG(): string { return require('assets/graphics/Hero_Walking.png'); };
+
+        static getXML(): string { return require('assets/graphics/Hero_Walking.xml'); };
+
+        static Frames = GraphicsHeroWalkingFrames;
+    }
 }
 
 export namespace Audio {
@@ -71,6 +153,13 @@ export namespace Audio {
         static getM4A(): string { return require('assets/audio/music.m4a'); };
         static getMP3(): string { return require('assets/audio/music.mp3'); };
         static getOGG(): string { return require('assets/audio/music.ogg'); };
+    }
+    export class SoundsTitleSong {
+        static getName(): string { return 'TitleSong'; };
+
+        static getMP3(): string { return require('assets/sounds/TitleSong.mp3'); };
+        static getOGG(): string { return require('assets/sounds/TitleSong.ogg'); };
+        static getWAV(): string { return require('assets/sounds/TitleSong.wav'); };
     }
 }
 
@@ -164,5 +253,19 @@ export namespace Shaders {
     }
 }
 export namespace Misc {
-    class IExistSoTypeScriptWillNotComplainAboutAnEmptyNamespace {}
+    export class ImagesCityBackground {
+        static getName(): string { return 'CityBackground'; };
+
+        static getBLEND(): string { return require('assets/images/CityBackground.blend'); };
+    }
+    export class ImagesIdle {
+        static getName(): string { return 'idle'; };
+
+        static getBLEND(): string { return require('assets/images/idle.blend'); };
+    }
+    export class ImagesWalkcycle {
+        static getName(): string { return 'walkcycle'; };
+
+        static getBLEND(): string { return require('assets/images/walkcycle.blend'); };
+    }
 }

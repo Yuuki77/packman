@@ -4,6 +4,7 @@ import * as AssetUtils from '../utils/assetUtils';
 export default class Preloader extends Phaser.State {
     private preloadBarSprite: Phaser.Sprite = null;
     private preloadFrameSprite: Phaser.Sprite = null;
+    
 
     public preload(): void {
         this.preloadBarSprite = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, Assets.Atlases.AtlasesPreloadSpritesArray.getName(), Assets.Atlases.AtlasesPreloadSpritesArray.Frames.PreloadBar);
@@ -32,6 +33,6 @@ export default class Preloader extends Phaser.State {
     }
 
     private loadTitle(): void {
-        this.game.state.start('title');
+        this.game.state.start('gamePlayState');
     }
 }
