@@ -10,7 +10,6 @@ import Title from './states/title';
 import GamePlayState from './states/gamePlayState';
 // import grid from './states/grid';
 // import Player from './states/player';
-
 import * as Utils from './utils/utils';
 import * as Assets from './assets';
 

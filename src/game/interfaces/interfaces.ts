@@ -21,7 +21,9 @@ export interface ICellContent {
 
 export enum ContentType {
 	Wall,
-	Player
+	Player,
+	Enemy,
+	Dot
 }
 
 export enum Direction {
@@ -29,4 +31,12 @@ export enum Direction {
 	Down,
 	Left,
 	Right
+}
+
+export interface IPathFinding {
+	readonly grid: IGrid;
+	path : number [][];
+}
+export interface IEnemyManager {
+
 }

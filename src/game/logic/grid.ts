@@ -27,15 +27,25 @@ export class Grid implements IGrid {
 			for (let y = 0; y < height; y++) {
 				if (y === 0 || y === height - 1 || x === 0 || x === width - 1) {
 					this.CreateContent(ContentType.Wall, this.grid[x][y]);
+					return;
 				}
 
 				if (y === 8 && (x > 3 && x < 20)) {
 					this.CreateContent(ContentType.Wall, this.grid[x][y]);
+					return;
 				}
 
 				if (y == 3 && x == 12) {
 					this.CreateContent(ContentType.Player, this.grid[x][y]);
+					return;
 				}
+				// create enemy
+			  if (y === 10 && x === 2) {
+				 this.CreateContent(ContentType.Enemy, this.grid[x][y]);
+				 return;
+				}
+				this.CreateContent(ContentType.Dot, this.grid[x][y]);
+				return;
 			}
 		}
 	}
@@ -53,8 +63,13 @@ export class Grid implements IGrid {
 			case ContentType.Player:
 				content = new Player();
 				break;
+			case ContentType.Enemy:
+				content = new Enemy();
+				break;
+			case ContentType.Dot;
+			content = new Dot();
 			default:
-				console.error('un known type');
+				console.error('un known type', type);
 				return;
 		}
 
@@ -113,7 +128,7 @@ export class Cell implements ICell {
 		this.x = x;
 		this.y = y;
 	}
-	
+
 	public GetNeightbor(direction: Direction): ICell | undefined {
 		switch (direction) {
 			case Direction.Up:
@@ -149,7 +164,7 @@ export class Cell implements ICell {
 		if (right !== undefined) {
 			neightbors.push(right);
 		}
-		
+
 		return neightbors;
 	}
 }
@@ -190,6 +205,52 @@ export class Player implements ICellContent {
 			}
 		}
 		console.log('player', this.cell);
+	}
+
+	public AddMoveListener(cb: (cell: ICell) => void) {
+		this.onMove.push(cb);
+	}
+}
+
+export class Enemy implements ICellContent {
+	private onMove: {(cell : ICell): void }[] =[];
+	private cell: ICell;
+	public readonly Type :ContentType = ContentType.Enemy;
+
+	public get Cell() {
+		return this.cell;
+	}
+	public set Cell(cell: ICell | undefined) {
+		this.cell = cell;
+		if (this.cell !== undefined) {
+			for (let cb of this.onMove) {
+				cb(this.cell);
+			}
+		}
+		console.log('enemy', this.cell);
+	}
+
+	public AddMoveListener(cb: (cell: ICell) => void) {
+		this.onMove.push(cb);
+	}
+}
+
+export class Dot implements ICellContent {
+	private onMove: {(cell : ICell): void }[] =[];
+	private cell: ICell;
+	public readonly Type :ContentType = ContentType.Dot;
+
+	public get Cell() {
+		return this.cell;
+	}
+	public set Cell(cell: ICell | undefined) {
+		this.cell = cell;
+		if (this.cell !== undefined) {
+			for (let cb of this.onMove) {
+				cb(this.cell);
+			}
+		}
+		console.log('enemy', this.cell);
 	}
 
 	public AddMoveListener(cb: (cell: ICell) => void) {

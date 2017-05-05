@@ -3,7 +3,6 @@ import * as Assets from '../assets';
 
 export default class Boot extends Phaser.State {
 
-
     public preload(): void {
         // Load any assets you need for your preloader state here.
         this.game.load.atlasJSONArray(Assets.Atlases.AtlasesPreloadSpritesArray.getName(), Assets.Atlases.AtlasesPreloadSpritesArray.getPNG(), Assets.Atlases.AtlasesPreloadSpritesArray.getJSONArray());
@@ -13,7 +12,9 @@ export default class Boot extends Phaser.State {
 
         this.game.load.image(Assets.Images.ImagesPacman.getName(),Assets.Images.ImagesPacman.getPNG());
         this.game.load.image(Assets.Images.ImagesWall4.getName(),Assets.Images.ImagesWall4.getPNG());
+        this.game.load.image(Assets.Images.ImagesSand.getName(),Assets.Images.ImagesGhost1.getPNG());
         this.game.load.image(Assets.Images.ImagesSand.getName(),Assets.Images.ImagesSand.getPNG());
+        this.game.load.image(Assets.Imagae.ImagesYellowDot.getName(), Assets.Images.ImagesYellowDot.getPNG());
     }
 
     public create(): void {
@@ -54,14 +55,14 @@ export default class Boot extends Phaser.State {
         // GOOGLE_WEB_FONTS are the fonts to be loaded from Google Web Fonts
         // SOUND_EXTENSIONS_PREFERENCE is the most preferred to least preferred order to look for audio sources
         console.log(
-            `DEBUG....................... ${DEBUG} 
+            `DEBUG....................... ${DEBUG}
            \nGIT_REVISION................ ${GIT_REVISION}
            \nSCALE_MODE.................. ${SCALE_MODE}
            \nDEFAULT_GAME_WIDTH.......... ${DEFAULT_GAME_WIDTH}
            \nDEFAULT_GAME_HEIGHT......... ${DEFAULT_GAME_HEIGHT}
            \nMAX_GAME_WIDTH.............. ${MAX_GAME_WIDTH}
-           \nMAX_GAME_HEIGHT............. ${MAX_GAME_HEIGHT} 
-           \ngame.width.................. ${this.game.width} 
+           \nMAX_GAME_HEIGHT............. ${MAX_GAME_HEIGHT}
+           \ngame.width.................. ${this.game.width}
            \ngame.height................. ${this.game.height}
            \nGOOGLE_WEB_FONTS............ ${GOOGLE_WEB_FONTS}
            \nSOUND_EXTENSIONS_PREFERENCE. ${SOUND_EXTENSIONS_PREFERENCE}`

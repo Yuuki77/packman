@@ -41,6 +41,11 @@ export namespace Images {
 
         static getJPG(): string { return require('assets/images/buildtexture.jpg'); };
     }
+    export class ImagesGhost1 {
+        static getName(): string { return 'ghost1'; };
+
+        static getPNG(): string { return require('assets/images/ghost1.png'); };
+    }
     export class ImagesMetal {
         static getName(): string { return 'metal'; };
 
@@ -65,6 +70,11 @@ export namespace Images {
         static getName(): string { return 'wall4'; };
 
         static getPNG(): string { return require('assets/images/wall4.png'); };
+    }
+    export class ImagesYellowDot {
+        static getName(): string { return 'yellowDot'; };
+
+        static getPNG(): string { return require('assets/images/yellowDot.png'); };
     }
 }
 

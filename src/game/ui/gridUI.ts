@@ -1,7 +1,8 @@
 import { IGrid, ICellContent, ContentType } from "../interfaces/interfaces";
 import { WallUi } from "./wallUi";
-import { Wall, Player } from "../logic/grid";
+import { Wall, Player, Enemy } from "../logic/grid";
 import { PlayerUi } from "./playerUi";
+import { EnemyUi } from "./enemyUi";
 
 export class GridUi {
 	private game: Phaser.Game;
@@ -19,6 +20,8 @@ export class GridUi {
 			new WallUi(this.game, content as Wall);
 		} else if (content.Type == ContentType.Player) {
 			new PlayerUi(this.game, content as Player)
+		} else if (content.Type === ContentType.Enemy) {
+			new EnemyUi(this.game, content as Enemy);
 		} else {
 			console.warn('no ui for', content);
 		}
