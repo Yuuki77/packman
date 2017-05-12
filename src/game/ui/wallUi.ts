@@ -1,4 +1,4 @@
-import { Wall } from "../logic/grid";
+import { Wall } from "../logic/contents/wall";
 import * as Assets from '../../assets';
 
 export class WallUi {
@@ -13,7 +13,7 @@ export class WallUi {
 	}
 
 	private Show() {
-		this.sprite = this.game.add.sprite(this.wall.Cell.x * 32, this.wall.Cell.y * 32, Assets.Images.ImagesWall4.getName());
-		this.sprite.scale.setTo(0.125, 0.125);
+		this.sprite = this.game.add.sprite(this.wall.Cell.x * 18, this.wall.Cell.y * 18, Assets.Images.ImagesWall4.getName());
+		this.sprite.scale.setTo(0.070, 0.070);
 	}
 }

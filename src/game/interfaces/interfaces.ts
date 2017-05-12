@@ -2,6 +2,8 @@ export interface IGrid {
 	AddContentCreatedListener(cb: (content: ICellContent) => void);
 	GetCell(x: number, y: number): ICell | undefined;
 	Move(content: ICellContent, direction: Direction);
+	width: number;
+	height: number
 }
 
 export interface ICell {
@@ -17,6 +19,7 @@ export interface ICellContent {
 	readonly Type: ContentType;
 	Cell: ICell;
 	AddMoveListener(cb: (cell: ICell) => void);
+	DotVisited(cb: (cell: ICell) => void);
 }
 
 export enum ContentType {
@@ -35,8 +38,11 @@ export enum Direction {
 
 export interface IPathFinding {
 	readonly grid: IGrid;
-	path : number [][];
+	path: number[][];
 }
-export interface IEnemyManager {
-
+export interface IEnemyController {
+	grid: IGrid;
+	player: ICellContent;
+	enemy: ICellContent;
+	FindPathToPlayer(): void;
 }

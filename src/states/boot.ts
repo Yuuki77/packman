@@ -14,7 +14,7 @@ export default class Boot extends Phaser.State {
         this.game.load.image(Assets.Images.ImagesWall4.getName(),Assets.Images.ImagesWall4.getPNG());
         this.game.load.image(Assets.Images.ImagesSand.getName(),Assets.Images.ImagesGhost1.getPNG());
         this.game.load.image(Assets.Images.ImagesSand.getName(),Assets.Images.ImagesSand.getPNG());
-        this.game.load.image(Assets.Imagae.ImagesYellowDot.getName(), Assets.Images.ImagesYellowDot.getPNG());
+        this.game.load.image(Assets.Images.ImagesYellowDot.getName(), Assets.Images.ImagesYellowDot.getPNG());
     }
 
     public create(): void {

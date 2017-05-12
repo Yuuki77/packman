@@ -1,8 +1,12 @@
 import { IGrid, ICellContent, ContentType } from "../interfaces/interfaces";
 import { WallUi } from "./wallUi";
-import { Wall, Player, Enemy } from "../logic/grid";
+import { Wall } from "../logic/contents/wall";
+import { Player } from "../logic/contents/player";
+import { Enemy } from "../logic/contents/enemy";
 import { PlayerUi } from "./playerUi";
 import { EnemyUi } from "./enemyUi";
+import { DotUi } from "./dotUi";
+import { Dot } from "../logic/contents/dot";
 
 export class GridUi {
 	private game: Phaser.Game;
@@ -11,19 +15,24 @@ export class GridUi {
 	constructor(game: Phaser.Game, grid: IGrid) {
 		this.game = game;
 		this.grid = grid;
-
 		this.RegisterEvents();
 	}
 
 	private ContentCreated(content: ICellContent): void {
-		if (content.Type === ContentType.Wall) {
-			new WallUi(this.game, content as Wall);
-		} else if (content.Type == ContentType.Player) {
-			new PlayerUi(this.game, content as Player)
-		} else if (content.Type === ContentType.Enemy) {
-			new EnemyUi(this.game, content as Enemy);
-		} else {
-			console.warn('no ui for', content);
+		switch (content.Type) {
+			case ContentType.Wall:
+				new WallUi(this.game, content as Wall);
+				break;
+			case ContentType.Player:
+				new PlayerUi(this.game, content as Player);
+				break;
+			case ContentType.Enemy:
+				new EnemyUi(this.game, content as Enemy);
+				break;
+			case ContentType.Dot:
+				new DotUi(this.game, content as Dot);
+			default:
+				console.warn('unexpected content', content);
 		}
 	}
 

@@ -1,4 +1,4 @@
-import { Player } from "../logic/grid";
+import { Player } from "../logic/contents/player";
 import * as Assets from '../../assets';
 import { ICell } from "../interfaces/interfaces";
 
@@ -15,13 +15,20 @@ export class PlayerUi {
 		this.player.AddMoveListener((newCell: ICell) => this.PlayerMoved(newCell));
 	}
 
-	private Show() {
-		this.sprite = this.game.add.sprite(this.player.Cell.x * 32, this.player.Cell.y * 32, Assets.Images.ImagesPacman.getName());
-		this.sprite.scale.setTo(0.016, 0.016);
+	private Show(): void {
+		this.sprite = this.game.add.sprite(this.player.Cell.x * 18 + 9, this.player.Cell.y * 18 + 9, Assets.Images.ImagesPacman.getName());
+		this.sprite.anchor.setTo(0.5, 0.5);
+		this.sprite.scale.setTo(0.010, 0.010);
+		this.sprite.z = 5;
 	}
 
-	private PlayerMoved(newCell: ICell) {
-		this.sprite.position.x = this.player.Cell.x * 32;
-		this.sprite.position.y = this.player.Cell.y * 32;
+	private PlayerMoved(newCell: ICell): void {
+		let destination = { x: this.player.Cell.x * 18 + 9, y: this.player.Cell.y * 18 + 9};
+
+		if (destination.x !== this.sprite.x) {
+			this.sprite.scale.x = destination.x < this.sprite.x ? -1 * Math.abs(this.sprite.scale.x) : 1 * Math.abs(this.sprite.scale.x);
+		}
+
+		this.game.add.tween(this.sprite).to(destination, 200, Phaser.Easing.Linear.None, true);
 	}
 }
