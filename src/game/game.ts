@@ -7,7 +7,7 @@ import { ICellContent, ContentType, Direction } from "./interfaces/interfaces";
 
 export class Game {
     private player: ICellContent;
-    private enemy: ICellContent;
+    private enemysArray: ICellContent [];
     private gridUi;
     private grid;
     private game;
@@ -28,14 +28,14 @@ export class Game {
             if (content.Type === ContentType.Player) {
                 this.player = content;
             } else if (content.Type === ContentType.Enemy) {
-                this.enemy = content;
-            } else if (this.enemy && this.player) {
-                this.enemyManager = new EnemyController(this.grid, this.player, this.enemy);
+							enemysArray.push(content);
             }
         });
 
         this.grid.CreateBoard();
         this.KeyboardInputs();
+				this.enemyManager = new EnemyController(this.grid, this.player, this.enemysArray);
+
     }
 
     public KeyboardInputs(): void {

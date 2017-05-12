@@ -25,7 +25,7 @@ export class BreadthFirstPathFind implements IPathFinding {
         if (neighbors[i].Content && neighbors[i].Content.Type === ContentType.Wall) {
           continue;
         }
-        if (this.visited[neighbors[i].x][neighbors[i].y] == true && this.path[neighbors[i].x][neighbors[i].y] === this.path[currentPosition.x][currentPosition.y] - 1) {
+        if (this.visited[neighbors[i].y][neighbors[i].x] == true && this.path[neighbors[i].y][neighbors[i].x] === this.path[currentPosition.y][currentPosition.x] - 1) {
           shortestPath.push(neighbors[i]);
           break;
         }
@@ -37,12 +37,12 @@ export class BreadthFirstPathFind implements IPathFinding {
     this.path = [];
     this.visited = [];
 
-    for (var x = 0; x < this.grid.width; x++) {
-      this.path[x] = [];
-      this.visited[x] = [];
-      for (var y = 0; y < this.grid.height; y++) {
-        this.path[x][y] = 0;
-        this.visited[x][y] = false;
+    for (var y = 0; y < this.grid.height; y++) {
+      this.path[y] = [];
+      this.visited[y] = [];
+      for (var x = 0; x < this.grid.width; x++) {
+        this.path[y][x] = 0;
+        this.visited[y][x] = false;
       }
     }
   }
@@ -54,7 +54,7 @@ export class BreadthFirstPathFind implements IPathFinding {
     queue.Push(startPosition);
     while (queue.Size() > 0) {
       let currentPosition: ICell = queue.Pop();
-      this.visited[currentPosition.x][currentPosition.y] = true;
+      this.visited[currentPosition.y][currentPosition.x] = true;
       if (currentPosition.x === goalPosition.x && currentPosition.y === goalPosition.y) {
         break;
       }
@@ -63,9 +63,9 @@ export class BreadthFirstPathFind implements IPathFinding {
         if (neighbors[i].Content && neighbors[i].Content.Type === ContentType.Wall) {
           continue;
         }
-        if (this.visited[neighbors[i].x][neighbors[i].y] == false) {
-          this.visited[neighbors[i].x][neighbors[i].y] = true;
-          this.path[neighbors[i].x][neighbors[i].y] = this.path[currentPosition.x][currentPosition.y] + 1;
+        if (this.visited[neighbors[i].y][neighbors[i].x] == false) {
+          this.visited[neighbors[i].y][neighbors[i].x] = true;
+          this.path[neighbors[i].y][neighbors[i].x] = this.path[currentPosition.y][currentPosition.x] + 1;
           queue.Push(neighbors[i]);
         }
       }

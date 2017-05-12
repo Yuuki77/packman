@@ -11,8 +11,7 @@ export default class GamePlayState extends Phaser.State {
 	public create(): void {
 
 		this.currentGame = new Game(this.game);
-		// let test = new TestPathfinding(this.game);
-		this.currentGame.findPlayer();
+	   new TestPathfinding(this.game);
 	}
 
 	public update(): void {

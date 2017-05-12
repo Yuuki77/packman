@@ -9,11 +9,11 @@ export class DotUi {
   private player: ICellContent;
   private enemy: ICellContent;
 
-  constructor(game: Phaser.Game, dot: ICellContent) {
+  constructor(game: Phaser.Game, dot: Dot) {
     this.game = game;
     this.dot = dot;
     this.Show();
-    // this.dot.DotVisited((newCell: ICell) => this.Hide(newCell));
+    this.dot.AddVistLietenr(() => this.Hide());
   }
 
   private Show(): void {
@@ -23,7 +23,8 @@ export class DotUi {
     this.sprite.z = 1;
   }
 
-  private Hide(newCell: ICell): void {
+  private Hide(): void {
+    console.log("hide is called");
     this.sprite.visible = false;
   }
 }

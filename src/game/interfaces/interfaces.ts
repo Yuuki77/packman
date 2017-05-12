@@ -19,7 +19,8 @@ export interface ICellContent {
 	readonly Type: ContentType;
 	Cell: ICell;
 	AddMoveListener(cb: (cell: ICell) => void);
-	DotVisited(cb: (cell: ICell) => void);
+	AddVistLietenr(cb: () => void);
+	DotVisited() :void
 }
 
 export enum ContentType {

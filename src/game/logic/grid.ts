@@ -15,10 +15,9 @@ export class Grid implements IGrid {
 
 	constructor(GridData: number[][]) {
 		this.data = GridData;
-
 	}
 
-	// todo 
+	// todo
 	public CreateBoard() {
 		this.grid = [];
 		this.height = this.data.length;
@@ -106,6 +105,9 @@ export class Grid implements IGrid {
 			return console.warn("collision between", content, newCell.Content);
 		}
 
+   if(newCell.Content && newCell.Content.Type === ContentType.Dot) {
+      newCell.Content.DotVisited();
+    }
 
 		let previousCell = content.Cell;
 		newCell.Content = content;

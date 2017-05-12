@@ -31,6 +31,7 @@ export class GridUi {
 				break;
 			case ContentType.Dot:
 				new DotUi(this.game, content as Dot);
+				break;
 			default:
 				console.warn('unexpected content', content);
 		}

@@ -4,16 +4,16 @@ import { BreadthFirstPathFind } from './Pathfind';
 export class EnemyController implements IEnemyController {
   readonly grid: IGrid;
   public player: ICellContent;
-  public enemy: ICellContent;
+  public enemysArray: ICellContent [];
   private pathFindLogic;
   private lastMove = 0;
   private lastDecide = 0;
   private path: ICell[];
 
-  constructor(grid: IGrid, player: ICellContent, enemy: ICellContent) {
+  constructor(grid: IGrid, player: ICellContent, enemy: ICellContent []) {
     this.grid = grid;
     this.player = player;
-    this.enemy = enemy;
+    this.enemysArray = enemy;
     this.pathFindLogic = new BreadthFirstPathFind(this.grid);
     this.player.AddMoveListener((newCell: ICell) => this.PlayerPositionUpdated(newCell));
   }
@@ -39,6 +39,8 @@ export class EnemyController implements IEnemyController {
   }
 
   private Decide() {
+
+    for (let enemy of enemysArray) {
     let attack = Math.random() < 0.9;
 
     if (attack) {
@@ -48,6 +50,7 @@ export class EnemyController implements IEnemyController {
     }
     this.path = this.pathFindLogic.GetPath();
     this.path.shift();
+  }
   }
 
   private Move() {

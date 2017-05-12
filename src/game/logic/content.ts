@@ -2,7 +2,7 @@ import { ICellContent, ICell, ContentType } from "../interfaces/interfaces";
 
 export abstract class Content implements ICellContent {
 	private onMove: { (cell: ICell): void }[] = [];
-	private onVisitedDot: { (cell: ICell): void }[] = [];
+	private onVisitedDot: { (): void }[] = [];
 	private cell: ICell;
 	private previousCell: ICell ;
 	public readonly abstract Type: ContentType;
@@ -23,7 +23,15 @@ export abstract class Content implements ICellContent {
 		this.onMove.push(cb);
 	}
 
-	public DotVisited(cb : (cell : ICell) => void) {
+	public AddVistLietenr(cb: () => void) {
 		this.onVisitedDot.push(cb);
+	}
+
+	public DotVisited() {
+		console.log("dot visited called");
+			for (let cb of this.onVisitedDot) {
+				console.log("callback is ", cb);
+				cb();
+			}
 	}
 }
