@@ -1,13 +1,13 @@
 import { GridData } from './const';
 import { Grid } from './logic/grid';
-import { EnemyController } from './logic/enemyController';
-import { BreadthFirstPathFind } from './logic/Pathfind';
 import { GridUi } from './ui/gridUI';
 import { ICellContent, ContentType, Direction } from "./interfaces/interfaces";
+import { EnemyManager } from './logic/enemyManager/enemyManager';
+
 
 export class Game {
     private player: ICellContent;
-    private enemysArray: ICellContent [];
+    private enemysArray: ICellContent[] = [];
     private gridUi;
     private grid;
     private game;
@@ -28,13 +28,14 @@ export class Game {
             if (content.Type === ContentType.Player) {
                 this.player = content;
             } else if (content.Type === ContentType.Enemy) {
-							enemysArray.push(content);
+                this.enemysArray.push(content);
             }
         });
 
         this.grid.CreateBoard();
         this.KeyboardInputs();
-				this.enemyManager = new EnemyController(this.grid, this.player, this.enemysArray);
+        // todo think about this.
+        this.enemyManager = new EnemyManager(this.grid, this.player, this.enemysArray);
 
     }
 
@@ -52,7 +53,7 @@ export class Game {
         this.rigthKey.onDown.add(() => this.grid.Move(this.player, Direction.Right), this);
     }
 
-    public findPlayer(): void {
-        this.enemyManager.FindPathToPlayer();
+    public Update(): void {
+        this.enemyManager.Update();
     }
 }

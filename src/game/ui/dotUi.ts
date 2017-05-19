@@ -1,6 +1,6 @@
 import * as Assets from '../../assets';
 import { ICell, ICellContent } from "../interfaces/interfaces";
-import { Dot } from "../logic/contents/dot";
+import { Dot } from "../logic/grid//contents/dot";
 
 export class DotUi {
   private game: Phaser.Game;
@@ -9,11 +9,11 @@ export class DotUi {
   private player: ICellContent;
   private enemy: ICellContent;
 
-  constructor(game: Phaser.Game, dot: Dot) {
+  constructor(game: Phaser.Game, dot: ICellContent) {
     this.game = game;
     this.dot = dot;
     this.Show();
-    this.dot.AddVistLietenr(() => this.Hide());
+    this.dot.Cell.AddVistLietenr(() => this.Hide());
   }
 
   private Show(): void {
@@ -24,7 +24,6 @@ export class DotUi {
   }
 
   private Hide(): void {
-    console.log("hide is called");
     this.sprite.visible = false;
   }
 }

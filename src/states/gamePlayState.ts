@@ -15,6 +15,6 @@ export default class GamePlayState extends Phaser.State {
 	}
 
 	public update(): void {
-		this.currentGame.findPlayer();
+		this.currentGame.Update();
 	}
 }

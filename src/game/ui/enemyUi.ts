@@ -1,4 +1,4 @@
-import { Enemy } from "../logic/contents/enemy";
+import { Enemy } from "../logic/grid/contents/enemy";
 import * as Assets from '../../assets';
 import { ICell } from "../interfaces/interfaces";
 

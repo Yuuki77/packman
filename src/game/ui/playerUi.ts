@@ -1,4 +1,4 @@
-import { Player } from "../logic/contents/player";
+import { Player } from "../logic/grid/contents/player";
 import * as Assets from '../../assets';
 import { ICell } from "../interfaces/interfaces";
 
@@ -24,11 +24,18 @@ export class PlayerUi {
 
 	private PlayerMoved(newCell: ICell): void {
 		let destination = { x: this.player.Cell.x * 18 + 9, y: this.player.Cell.y * 18 + 9};
+		let distance = Math.abs(destination.x - this.sprite.x) + Math.abs(destination.y - this.sprite.y);
+		if (distance > 200) {
+			this.sprite.position.x = destination.x;
+			this.sprite.position.y = destination.y;
+			return;
+		}
 
 		if (destination.x !== this.sprite.x) {
 			this.sprite.scale.x = destination.x < this.sprite.x ? -1 * Math.abs(this.sprite.scale.x) : 1 * Math.abs(this.sprite.scale.x);
 		}
 
+		
 		this.game.add.tween(this.sprite).to(destination, 200, Phaser.Easing.Linear.None, true);
 	}
 }

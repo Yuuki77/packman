@@ -1,4 +1,4 @@
-import { Wall } from "../logic/contents/wall";
+import { Wall } from "../logic/grid/contents/wall";
 import * as Assets from '../../assets';
 
 export class WallUi {

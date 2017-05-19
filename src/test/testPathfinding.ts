@@ -1,6 +1,7 @@
 import { Grid } from '../game/logic/grid';
-import { BreadthFirstPathFind } from '../game/logic/Pathfind';
 import { ICellContent, ContentType, Direction } from "../game/interfaces/interfaces";
+import { PathFinding } from "../game/logic/pathFind/pathFind";
+
 import { Helpers } from "./helpers";
 import { GridData } from "../game/const";
 
@@ -21,7 +22,7 @@ export class TestPathfinding {
     grid.CreateBoard();
     let player = this.helpers.getContent(grid, ContentType.Player);
     let enemy = this.helpers.getContent(grid, ContentType.Enemy);
-    let breadthFirstPathFind = new BreadthFirstPathFind(grid);
+    let breadthFirstPathFind = new PathFinding(grid);
     // todo assertion.
 
     this.helpers.assert(player);
@@ -39,7 +40,7 @@ export class TestPathfinding {
     grid.CreateBoard();
     let player = this.helpers.getContent(grid, ContentType.Player);
     let enemysArray = this.helpers.findAllEnemys(grid, ContentType.Enemy);
-    let breadthFirstPathFind = new BreadthFirstPathFind(grid);
+    let breadthFirstPathFind = new PathFinding(grid);
 
     this.helpers.assert(player);
     this.helpers.assert(enemysArray);

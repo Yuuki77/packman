@@ -1,6 +1,6 @@
-import { IGrid, ICellContent, ICell, ContentType, Direction, IPathFinding } from '../interfaces/interfaces';
+import { IGrid, ICellContent, ICell, ContentType, Direction, IPathFinding } from '../../interfaces/interfaces';
 
-export class BreadthFirstPathFind implements IPathFinding {
+export class PathFinding implements IPathFinding {
   readonly grid: IGrid;
   path: number[][];
   visited: boolean[][];

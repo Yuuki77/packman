@@ -1,5 +1,4 @@
 import { Grid } from '../game/logic/grid';
-import { BreadthFirstPathFind } from '../game/logic/Pathfind';
 import { ICellContent, IGrid, ICell,ContentType, Direction } from "../game/interfaces/interfaces";
 
 export class Helpers {

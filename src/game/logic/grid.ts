@@ -1,9 +1,10 @@
-import { IGrid, ICellContent, ICell, ContentType, Direction } from '../interfaces/interfaces';
-import { Cell } from './cell';
-import { Wall } from './contents/wall';
-import { Enemy } from './contents/enemy';
-import { Player } from './contents/player';
-import { Dot } from './contents/dot';
+import { IGrid, ICellContent, ICell, ContentType, Direction, EnemyType } from '../interfaces/interfaces';
+import { Cell } from './grid/cell';
+import { Wall } from './grid/contents/wall';
+import { Enemy } from './grid/contents/enemy';
+import { Player } from './grid/contents/player';
+import { Dot } from './grid/contents/dot';
+import { ScoreManager } from '../score/scoreManager';
 import { GridData } from '../const';
 
 export class Grid implements IGrid {
@@ -12,9 +13,11 @@ export class Grid implements IGrid {
 	private data: number[][]
 	public width: number = 0;
 	public height: number = 0;
+	public scoreManager: ScoreManager;
 
 	constructor(GridData: number[][]) {
 		this.data = GridData;
+		this.scoreManager = new ScoreManager();
 	}
 
 	// todo
@@ -70,11 +73,12 @@ export class Grid implements IGrid {
 			case ContentType.Player:
 				content = new Player();
 				break;
+			// todo change the logic 
 			case ContentType.Enemy:
-				content = new Enemy();
+				content = new Enemy(EnemyType.Blue);
 				break;
 			case ContentType.Dot:
-			content = new Dot();
+				content = new Dot();
 				break;
 			default:
 				console.error('un known type', type);
@@ -95,22 +99,31 @@ export class Grid implements IGrid {
 		return this.grid[y][x];
 	}
 
+	// TODO refactoring 
 	public Move(content: ICellContent, direction: Direction) {
 		let newCell = content.Cell.GetNeightbor(direction);
+		let previousCell = content.Cell;
+		
+		if (previousCell.x === this.width -1 && !newCell) {
+			newCell = this.GetCell(0, previousCell.y);
+		} else if(previousCell.x === 0 && !newCell) {
+			newCell = this.GetCell(this.width -1, previousCell.y);
+		}
+
 		if (newCell === undefined) {
 			return console.warn("cannot move here");
 
 		}
 		else if (newCell.Content !== undefined && newCell.Content.Type !== ContentType.Dot) {
+			previousCell.Content.Bitten(newCell.Content)
 			return console.warn("collision between", content, newCell.Content);
 		}
+		else if (previousCell.Content.Type === ContentType.Player && !newCell.Visited) {
+			newCell.Visited = true;
+		}
 
-   if(newCell.Content && newCell.Content.Type === ContentType.Dot) {
-      newCell.Content.DotVisited();
-    }
-
-		let previousCell = content.Cell;
-		newCell.Content = content;
+		newCell.Content = previousCell.Content;
+		
 		if (previousCell !== undefined) {
 			previousCell.Content = undefined;
 		}
