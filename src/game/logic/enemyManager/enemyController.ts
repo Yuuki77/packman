@@ -1,5 +1,5 @@
-import { ICellContent, IGrid, ICell, ContentType, IEnemyController, Direction } from "../../interfaces/interfaces";
-import { PathFinding } from "../pathFind/pathFind";
+import { ICellContent, IGrid, ICell, IEnemyController, Direction } from '../../interfaces/interfaces';
+import { PathFinding } from '../pathFind/pathFind';
 
 export abstract class EnemyController implements IEnemyController {
 	public readonly grid: IGrid;
@@ -15,7 +15,7 @@ export abstract class EnemyController implements IEnemyController {
 		this.player = player;
 		this.enemy = enemy;
 		this.player.AddMoveListener((newCell: ICell) => this.PlayerPositionUpdated(newCell));
-		this.pathFindLogic = new PathFinding(this.grid)
+		this.pathFindLogic = new PathFinding(this.grid);
 	}
 
 

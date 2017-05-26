@@ -1,17 +1,18 @@
-import { ICellContent, ICell, ContentType } from "../../../interfaces/interfaces";
-import { Content } from "../content";
+import { ICellContent, ICell, ContentType } from '../../../interfaces/interfaces';
+import { Content } from '../content';
 
 export class Player extends Content {
 	public readonly Type: ContentType = ContentType.Player;
-	private onEatItem: { (cell: ICell): void }[] = [];
+	public alive: boolean = true;
 
-	public EatItem(cell: ICell) {
-		this.Cell = cell;
+	private onEatItem: { () }[] = [];
+
+	public EatItem() {
 		if (this.Cell === undefined) {
 			return;
 		}
 		for (let cb of this.onEatItem) {
-			cb(this.Cell);
+			cb();
 		}
 	}
 }

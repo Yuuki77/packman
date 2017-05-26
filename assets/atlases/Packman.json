@@ -1,0 +1,58 @@
+{
+	"frames": [
+		{
+			"filename": "Pacman10-hp-sprite_15.png",
+			"frame": {
+				"x": 1,
+				"y": 1,
+				"w": 12,
+				"h": 13
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 12,
+				"h": 13
+			},
+			"sourceSize": {
+				"w": 12,
+				"h": 13
+			}
+		},
+		{
+			"filename": "Pacman10-hp-sprite_16.png",
+			"frame": {
+				"x": 15,
+				"y": 1,
+				"w": 9,
+				"h": 13
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 9,
+				"h": 13
+			},
+			"sourceSize": {
+				"w": 9,
+				"h": 13
+			}
+		}
+	],
+	"meta": {
+		"app": "http://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"image": "Packman.png",
+		"format": "RGBA8888",
+		"size": {
+			"w": 25,
+			"h": 15
+		},
+		"scale": "1",
+		"smartupdate": "$TexturePacker:SmartUpdate:1d439635a8f2d858b1404c57457c580b:6a644b40b5092d9b573876527bb1c523:3f0b47bc446892ed69799c4552bb8be1$"
+	}
+}

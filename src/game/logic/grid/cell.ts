@@ -1,28 +1,11 @@
-import { IGrid, ICellContent, ICell, ContentType, Direction } from '../../interfaces/interfaces';
+import { IGrid, ICellContent, ICell, Direction, ICellFacility } from '../../interfaces/interfaces';
 
 export class Cell implements ICell {
 	public readonly grid: IGrid;
 	public readonly x: number;
 	public readonly y: number;
 	private content: ICellContent | undefined;
-	private visited: boolean = false;
-	private onVisitedDot: { (): void }[] = [];
-
-	public get Visited(): boolean {
-		return this.visited;
-	}
-
-	public set Visited(visited: boolean) {
-		this.visited = visited;
-		this.grid.scoreManager.Score = 10;
-		for (let cb of this.onVisitedDot) {
-			cb();
-		}
-	}
-
-	public AddVistLietenr(cb: () => void) {
-		this.onVisitedDot.push(cb);
-	}
+	private facility: ICellFacility | undefined;
 
 	public get Content(): ICellContent | undefined {
 		return this.content;
@@ -34,6 +17,13 @@ export class Cell implements ICell {
 		if (this.content !== undefined) {
 			this.content.Cell = this;
 		}
+	}
+	public get Facility(): ICellFacility | undefined {
+		return this.facility;
+	}
+
+	public set Facility(facility: ICellFacility | undefined) {
+		this.facility = facility;
 	}
 
 	constructor(grid: IGrid, x: number, y: number) {

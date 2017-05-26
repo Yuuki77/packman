@@ -1,10 +1,11 @@
 export interface IGrid {
-	AddContentCreatedListener(cb: (content: ICellContent) => void);
+	AddFacilityCreateListener(cb: (content: ICellFacility) => void);
+	AddContentCreatedListener(cb: (facility: ICellContent) => void);
 	GetCell(x: number, y: number): ICell | undefined;
 	Move(content: ICellContent, direction: Direction);
 	scoreManager: IScoreManager;
 	width: number;
-	height: number
+	height: number;
 }
 
 export interface ICell {
@@ -12,10 +13,10 @@ export interface ICell {
 	readonly x: number;
 	readonly y: number;
 	Content: ICellContent | undefined;
+	Facility: ICellFacility | undefined;
 	GetNeightbors(): ICell[];
 	GetNeightbor(direction: Direction): ICell | undefined;
-	AddVistLietenr(cb: () => void);
-	Visited: boolean;
+	// AddVistLietenr(cb: () => void);
 }
 
 export interface ICellContent {
@@ -23,16 +24,19 @@ export interface ICellContent {
 	readonly EnemyType: EnemyType;
 	Cell: ICell;
 	AddMoveListener(cb: (cell: ICell) => void);
-	AddEatEnemyListener(content: ICellContent);
-	EatEnemy(content: ICellContent);
-	Eaten(content: ICellContent);
+	AddEatEnemyListener(cb: (cell: ICell) => void);
+	EatEnemy();
+	Eaten();
 }
 
 export enum ContentType {
-	Wall,
 	Player,
-	Enemy,
-	Dot
+	Enemy
+}
+export enum FacilityType {
+	Wall,
+	YellowDot,
+	PackGum
 }
 
 export enum EnemyType {
@@ -53,10 +57,10 @@ export interface IPathFinding {
 	readonly grid: IGrid;
 	path: number[][];
 }
+
 export interface IEnemyController {
 	Update(): void;
 	GetDirection(grid: IGrid, content: ICellContent, position: ICell): void;
-
 }
 
 export interface IEnemyManager {
@@ -69,5 +73,15 @@ export interface IEnemyManager {
 
 export interface IScoreManager {
 	AddScoreListener(cb: (newScore: number) => void);
-	Score: number
+	Score: number;
+}
+
+export interface ICellFacility {
+	grid: IGrid;
+	x: number;
+	y: number;
+	Cell: ICell;
+	Visited: boolean;
+	Type : FacilityType;
+	AddVisitListener(cb: () => void);
 }

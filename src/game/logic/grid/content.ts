@@ -1,16 +1,15 @@
-import { ICellContent, ICell, ContentType, EnemyType, Direction, IGrid } from "../../interfaces/interfaces";
+import { ICellContent, ICell, EnemyType, Direction, IGrid, ContentType } from '../../interfaces/interfaces';
 
 export abstract class Content implements ICellContent {
-	private onMove: { (cell: ICell): void }[] = [];
-	private onEat: { (cell: ICell): void }[] = [];
-	private onEaten: { (cell: ICell): void }[] = [];
 	private cell: ICell;
-	private previousCell: ICell;
 	private grid: IGrid;
+	private onMove: { (cell: ICell): void }[] = [];
+	private onEat: { (): void }[] = [];
+	private onEaten: { (): void }[] = [];
 	public abstract Type: ContentType;
-	// todo something strange
-	public readonly EnemyType: EnemyType | undefined = undefined;
+	readonly EnemyType: EnemyType | undefined = undefined;
 
+	// todo something strange
 	public Content(grid: IGrid) {
 		this.grid = grid;
 	}
@@ -21,9 +20,9 @@ export abstract class Content implements ICellContent {
 
 	public set Cell(cell: ICell | undefined) {
 		this.cell = cell;
-		if (this.cell !== undefined) {
+		if (cell !== undefined) {
 			for (let cb of this.onMove) {
-				cb(this.cell);
+				cb(this.Cell);
 			}
 		}
 	}
@@ -32,19 +31,35 @@ export abstract class Content implements ICellContent {
 		this.onMove.push(cb);
 	}
 
-	public AddEatEnemyListener(cb: (cell: ICell) => void) {
+	public AddEatEnemyListener(cb: () => void) {
 		this.onEat.push(cb);
 	}
 
-	public EatEnemy(cell: ICellContent): void {
-		if (this.cell !== undefined) {
+	public AddEatenLister(cb: () => void) {
+		this.onEaten.push(cb);
+	}
+
+	public EatEnemy(): void {
+		if (this.Cell !== undefined) {
 			for (let cb of this.onEat) {
-				cb(this.cell);
+				cb();
 			}
 		}
 	}
 
-	public Eaten(cell: ICellContent): void {
+	public Eaten(): void {
+		if (this.Cell !== undefined) {
+			for (let cb of this.onEaten) {
+				cb();
+			}
+		}
+	}
 
+	public Move(cell: ICell) {
+		if (this.Cell !== undefined) {
+			for (let cb of this.onMove) {
+				cb(this.Cell);
+			}
+		}
 	}
 }

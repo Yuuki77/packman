@@ -1,5 +1,5 @@
-import { Wall } from "../logic/grid/contents/wall";
-import * as Assets from '../../assets';
+import { Wall } from "../../logic/grid/facility/wall";
+import * as Assets from "../../../assets";
 
 export class WallUi {
 	private wall: Wall;
@@ -7,8 +7,10 @@ export class WallUi {
 	private sprite: Phaser.Sprite = null;
 
 	constructor(game: Phaser.Game, wall: Wall) {
-		this.wall = wall;
 		this.game = game;
+		this.wall = wall;
+		console.log("waill", wall);
+		console.log("waill", wall.Cell);
 		this.Show();
 	}
 
@@ -17,3 +19,6 @@ export class WallUi {
 		this.sprite.scale.setTo(0.070, 0.070);
 	}
 }
+
+
+

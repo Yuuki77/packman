@@ -1,6 +1,4 @@
-import { Enemy } from "../logic/grid/contents/enemy";
-import * as Assets from '../../assets';
-import { ICell, IScoreManager } from "../interfaces/interfaces";
+import { IScoreManager } from "../../interfaces/interfaces";
 
 export class ScoreUi {
 	private game: Phaser.Game;
@@ -19,11 +17,11 @@ export class ScoreUi {
 
 	private Show() {
 		this.scoreText = this.game.add.text(600, 16, 'score: 0', { fontSize: '18px', fill: '#F0F8FF' });
-		 this.scoreText.text = 'score: 0';
+		this.scoreText.text = 'score: 0';
 	}
 
 	private ScoreUpdated(newScore: number) {
 		this.score += newScore;
- 		this.scoreText.text = 'score: ' + this.score;
+		this.scoreText.text = 'score: ' + this.score;
 	}
 }

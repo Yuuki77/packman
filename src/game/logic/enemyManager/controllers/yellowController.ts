@@ -1,6 +1,6 @@
-import { ICellContent, ICell, ContentType } from "../../../interfaces/interfaces";
-import { EnemyController } from "../enemyController";
+import { ICellContent, ICell } from '../../../interfaces/interfaces';
+import { EnemyController } from '../enemyController';
 
-export class yellowEnemyController extends EnemyController {
-		
+export class YellowEnemyController extends EnemyController {
+
 }
