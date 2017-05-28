@@ -29,5 +29,10 @@ export let GridData: number[][] =
 		[1, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 1],
 		[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 	];
-
+export const REDENEMY_POSITION = 4;
+export const BLEUENEMY_POSITION = 2;
+export const GREENENEMY_POSITION = 5;
+export const PACKMAN_POSITION = 3;
+export const PACKGUM_POSITION = 7;
+export const WALL_POSITION = 1;
 

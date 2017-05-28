@@ -2,7 +2,7 @@ export interface IGrid {
 	AddFacilityCreateListener(cb: (content: ICellFacility) => void);
 	AddContentCreatedListener(cb: (facility: ICellContent) => void);
 	GetCell(x: number, y: number): ICell | undefined;
-	Move(content: ICellContent, direction: Direction);
+	Move(content: ICellContent, nextCell: ICell);
 	scoreManager: IScoreManager;
 	width: number;
 	height: number;
@@ -20,13 +20,19 @@ export interface ICell {
 }
 
 export interface ICellContent {
+	x: number;
+	y: number
 	readonly Type: ContentType;
 	readonly EnemyType: EnemyType;
 	Cell: ICell;
 	AddMoveListener(cb: (cell: ICell) => void);
 	AddEatEnemyListener(cb: (cell: ICell) => void);
+	CannotMove(content: ICellContent, nextCell: ICell): boolean;
 	EatEnemy();
 	Eaten();
+	Alive :boolean;
+	GetNextCell(content: ICellContent, nextCell: ICell): ICellContent;
+
 }
 
 export enum ContentType {
@@ -82,6 +88,6 @@ export interface ICellFacility {
 	y: number;
 	Cell: ICell;
 	Visited: boolean;
-	Type : FacilityType;
+	Type: FacilityType;
 	AddVisitListener(cb: () => void);
 }

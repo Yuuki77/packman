@@ -8,6 +8,8 @@ export abstract class Content implements ICellContent {
 	private onEaten: { (): void }[] = [];
 	public abstract Type: ContentType;
 	readonly EnemyType: EnemyType | undefined = undefined;
+	public x: number;
+	public y : number;
 
 	// todo something strange
 	public Content(grid: IGrid) {
@@ -20,6 +22,9 @@ export abstract class Content implements ICellContent {
 
 	public set Cell(cell: ICell | undefined) {
 		this.cell = cell;
+		this.grid = this.cell.grid;
+		this.x = cell.x;
+		this.y = cell.y;
 		if (cell !== undefined) {
 			for (let cb of this.onMove) {
 				cb(this.Cell);
