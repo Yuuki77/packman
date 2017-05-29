@@ -1,5 +1,5 @@
-import { ICellContent, IGrid, ICell, IEnemyController, Direction, ContentType, FacilityType } from '../../interfaces/interfaces';
-import { PathFinding } from '../pathFind/pathFind';
+import { ICellContent, IGrid, ICell, ContentType, IEnemyController, Direction } from "../../interfaces/interfaces";
+import { PathFinding } from "../pathFind/pathFind";
 
 export abstract class EnemyController implements IEnemyController {
 	public readonly grid: IGrid;
@@ -9,14 +9,13 @@ export abstract class EnemyController implements IEnemyController {
 	private lastMove = 0;
 	private lastDecide = 0;
 	private path: ICell[];
-	private nextCell: ICell;
 
 	constructor(grid: IGrid, player: ICellContent, enemy: ICellContent, ) {
 		this.grid = grid;
 		this.player = player;
 		this.enemy = enemy;
 		this.player.AddMoveListener((newCell: ICell) => this.PlayerPositionUpdated(newCell));
-		this.pathFindLogic = new PathFinding(this.grid);
+		this.pathFindLogic = new PathFinding(this.grid)
 	}
 
 
@@ -36,9 +35,7 @@ export abstract class EnemyController implements IEnemyController {
 		// move
 		if (this.lastMove + 200 < now) {
 			this.lastMove = now;
-			// TODO think about this.
-			let nextCell = this.GetNextCell();
-			this.DoNextAction(nextCell);
+			this.Move();
 		}
 	}
 
@@ -52,47 +49,15 @@ export abstract class EnemyController implements IEnemyController {
 		}
 		this.path = this.pathFindLogic.GetPath();
 		this.path.shift();
-		console.log(this.path.map(x => x.x.toString() + x.y.toString()));
 	}
 
-	public GetNextCell(): ICell {
+	public Move() {
+		if (!this.path || this.path.length === 0) {
+			return;
+		}
+
 		let dest = this.path.shift();
-		return dest;
-	}
-
-	public DoNextAction(nextCell: ICell) {
-		console.log("do next action is called");
-		if (!nextCell || this.path.length === 0) {
-			return;
-		}
-
-		if (this.CanNotMove(nextCell)) {
-			return;
-		}
-
-		if (nextCell === undefined) {
-			throw new Error();
-		}
-		this.grid.Move(this.enemy, nextCell);
-	}
-
-	public CanNotMove(nextCell: ICell): boolean {
-		if (this.IsEnemy(nextCell)) {
-			return true;
-		}
-		else if (this.IsWall(nextCell)) {
-			return true;
-		}
-		return false;
-	}
-
-	private IsEnemy(cell: ICell): boolean {
-		
-		return cell.Content && cell.Content.Type === ContentType.Enemy;
-	}
-
-	private IsWall(cell: ICell): boolean {
-		return cell.Content && cell.Facility.Type === FacilityType.Wall;
+		this.grid.Move(this.enemy, dest);
 	}
 
 	public GetDirection(grid, content: ICellContent, position: ICell) {

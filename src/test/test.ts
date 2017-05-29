@@ -81,7 +81,7 @@ describe('TEST Move function in grid', () => {
 });
 
 describe('TEST CanMove function in player', () => {
-	it('should  not Move left', () => {
+	it('should  not Move up', () => {
 		let GridData: number[][] =
 			[
 				[PLAYER_POSITION, 1, 1],

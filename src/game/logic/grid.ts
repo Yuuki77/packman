@@ -147,8 +147,13 @@ export class Grid implements IGrid {
 	// TODO refactoring
 	public Move(previousContent: ICellContent, nextCell: ICell) {
 
-		nextCell.Content = previousContent;
 
+		if (nextCell === undefined) {
+			console.warn("cannot move here");
+			return;
+		}
+
+		nextCell.Content = previousContent;
 		if (previousContent.Cell !== undefined) {
 			previousContent = undefined;
 		}

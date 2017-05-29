@@ -23,10 +23,10 @@ export class Player extends Content implements IPlayer {
 	public Update(player: ICellContent, direction: Direction): void {
 		let now = Date.now();
 
-		if (this.lastMove + 200 < now) {
+		// if (this.lastMove + 200 < now) {
 			this.lastMove = now;
 			this.Decide(player, direction);
-		}
+		// }
 	}
 
 	private Decide(player: ICellContent, direction: Direction) {
