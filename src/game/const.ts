@@ -35,4 +35,5 @@ export const GREENENEMY_POSITION = 5;
 export const PACKMAN_POSITION = 3;
 export const PACKGUM_POSITION = 7;
 export const WALL_POSITION = 1;
+export const PLAYER_POSITION = 3;
 

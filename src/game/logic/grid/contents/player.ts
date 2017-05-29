@@ -1,8 +1,8 @@
-import { ICellContent, ICell, ContentType, Direction } from '../../../interfaces/interfaces';
+import { ICellContent, ICell, ContentType, Direction, IPlayer, FacilityType } from '../../../interfaces/interfaces';
 import { Content } from '../content';
 import { Helpers } from "../../../../test/helpers";
 
-export class Player extends Content {
+export class Player extends Content implements IPlayer {
 	public readonly Type: ContentType = ContentType.Player;
 	public Alive: boolean = true;
 	public helper;
@@ -15,9 +15,6 @@ export class Player extends Content {
 		this.helper = new Helpers();
 	}
 	public EatItem() {
-		if (this.Cell === undefined) {
-			return;
-		}
 		for (let cb of this.onEatItem) {
 			cb();
 		}
@@ -39,14 +36,21 @@ export class Player extends Content {
 		};
 
 		// eat packgum
-		if (IsThisPackGum()) {
-			this.EatItem():
+		if (this.IsPackGum(nextCell)) {
+			this.EatItem();
+			nextCell.Facility.Visited = true;
 			this.grid.Move(player, nextCell);
 			return;
-		} 
+		}
+
+		if (this.helper.IsThisContent(nextCell, ContentType.Enemy)) {
+			throw new Error('It is not implemented yet');
+		}
+
+		this.grid.Move(player, nextCell);
 	}
 
-	public GetNextCell(player: ICellContent, direction: Direction) : ICell {
+	public GetNextCell(player: ICellContent, direction: Direction): ICell | undefined {
 		let nextCell = player.Cell.GetNeightbor(direction);
 		if (player.x === player.Cell.grid.width - 1 && !nextCell) {
 			nextCell = player.Cell.grid.GetCell(0, player.y);
@@ -56,19 +60,23 @@ export class Player extends Content {
 		return nextCell;
 	}
 
-	public CannotMove(content: ICellContent, nextCell: ICell) {
+	public CannotMove(content: ICellContent, nextCell: ICell): boolean {
 		if (content.Type != ContentType.Player) {
-			return false;
+			return true;
 		}
 
 		//check if there is a cell
 		if (this.helper.IsUndefined(nextCell)) {
-			return false;
+			return true;
 		}
 
 		// is there a wall
 		if (this.helper.IsWall(nextCell)) {
-			return false;
+			return true;
 		}
+	}
+
+	public IsPackGum(cell : ICell): boolean {
+		return this.helper.IsThisFacility(cell, FacilityType.PackGum) && !cell.Facility.Visited
 	}
 }

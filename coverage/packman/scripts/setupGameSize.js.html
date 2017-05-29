@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for packman/scripts/setupGameSize.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">packman/scripts</a> setupGameSize.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/85</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/28</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/7</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/85</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var PNGImage = <span class="cstat-no" title="statement not covered" >require('pngjs-image');</span>
+var commander = <span class="cstat-no" title="statement not covered" >require('commander');</span>
+var shell = <span class="cstat-no" title="statement not covered" >require('shelljs');</span>
+&nbsp;
+var defaultWidth = <span class="cstat-no" title="statement not covered" >800;</span>
+var defaultHeight = <span class="cstat-no" title="statement not covered" >500;</span>
+var defaultAspectRatio = <span class="cstat-no" title="statement not covered" >1.6;</span>
+var defaultScaleMode = <span class="cstat-no" title="statement not covered" >'USER_SCALE';</span>
+var possibleScaleModes = <span class="cstat-no" title="statement not covered" >['USER_SCALE', 'SHOW_ALL', 'EXACT_FIT', 'NO_SCALE', 'RESIZE'];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >commander</span>
+	.option('--width &lt;val&gt;', 'Base width of your game (Default: ' + defaultWidth + ')', <span class="fstat-no" title="function not covered" >fu</span>nction (val) {
+<span class="cstat-no" title="statement not covered" >		return parseInt(val, 10);</span>
+	}, -1)
+	.option('--height &lt;val&gt;', 'Base height of your game (Default: ' + defaultHeight + ')', <span class="fstat-no" title="function not covered" >fu</span>nction (val) {
+<span class="cstat-no" title="statement not covered" >		return parseInt(val, 10);</span>
+	}, -1)
+	.option('--aspect-ratio &lt;val&gt;', 'Aspect ratio of your game (Default: ' + defaultAspectRatio + ')', <span class="fstat-no" title="function not covered" >fu</span>nction (val) {
+<span class="cstat-no" title="statement not covered" >		return parseFloat(val);</span>
+	}, -1)
+	.option('--scale-mode &lt;val&gt;', 'Scale mode of your game (Default: ' + defaultHeight + ') [USER_SCALE, SHOW_ALL, EXACT_FIT, NO_SCALE, RESIZE]', <span class="fstat-no" title="function not covered" >fu</span>nction (val) {
+<span class="cstat-no" title="statement not covered" >		return (possibleScaleModes.indexOf(val) !== -1 ? val : null);</span>
+	}, defaultScaleMode)
+	.option('--no-png', 'Do not create the template background png')
+	.parse(process.argv);
+&nbsp;
+var aspectRatio = <span class="cstat-no" title="statement not covered" >commander.aspectRatio;</span>
+var baseWidth = <span class="cstat-no" title="statement not covered" >Math.round(commander.width);</span>
+var baseHeight = <span class="cstat-no" title="statement not covered" >Math.round(commander.height);</span>
+var maxWidth = <span class="cstat-no" title="statement not covered" >baseWidth;</span>
+var maxHeight = <span class="cstat-no" title="statement not covered" >baseHeight;</span>
+var scaleMode = <span class="cstat-no" title="statement not covered" >commander.scaleMode;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >if (scaleMode === null) {</span>
+<span class="cstat-no" title="statement not covered" >	console.log('--scale-mode must be one of the available options; [USER_SCALE, SHOW_ALL, EXACT_FIT, NO_SCALE, RESIZE]');</span>
+<span class="cstat-no" title="statement not covered" >	return;</span>
+}
+&nbsp;
+var image = <span class="cstat-no" title="statement not covered" >null;</span>
+&nbsp;
+var greenColor = <span class="cstat-no" title="statement not covered" >{ red: 0, green: 255, blue: 0, alpha: 100 };</span>
+var redColor = <span class="cstat-no" title="statement not covered" >{ red: 255, green: 0, blue: 0, alpha: 100 };</span>
+var blueColor = <span class="cstat-no" title="statement not covered" >{ red: 0, green: 0, blue: 255, alpha: 100 };</span>
+var yellowColor = <span class="cstat-no" title="statement not covered" >{ red: 255, green: 255, blue: 0, alpha: 100 };</span>
+var greyColor = <span class="cstat-no" title="statement not covered" >{ red: 128, green: 128, blue: 128, alpha: 100 };</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >if (scaleMode === 'USER_SCALE') {</span>
+	// The game Display is scaled according to the user-specified scale set by setUserScale.
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	if (aspectRatio === -1) {</span>
+<span class="cstat-no" title="statement not covered" >		aspectRatio = defaultAspectRatio;</span>
+	}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	if (baseWidth === -1 &amp;&amp; baseHeight === -1) {</span>
+<span class="cstat-no" title="statement not covered" >		baseWidth = defaultWidth;</span>
+<span class="cstat-no" title="statement not covered" >		baseHeight = defaultHeight;</span>
+	} else <span class="cstat-no" title="statement not covered" >if (baseWidth === -1) {</span>
+<span class="cstat-no" title="statement not covered" >		baseWidth = Math.round(baseHeight * aspectRatio);</span>
+	} else <span class="cstat-no" title="statement not covered" >if (baseHeight === -1) {</span>
+<span class="cstat-no" title="statement not covered" >		baseHeight = Math.round(baseWidth / aspectRatio);</span>
+	} else <span class="cstat-no" title="statement not covered" >if (baseWidth &lt; baseHeight) {</span>
+		var temp = <span class="cstat-no" title="statement not covered" >baseHeight;</span>
+<span class="cstat-no" title="statement not covered" >		baseHeight = baseWidth;</span>
+<span class="cstat-no" title="statement not covered" >		baseWidth = temp;</span>
+	}
+&nbsp;
+	var providedAspectRatio = <span class="cstat-no" title="statement not covered" >parseFloat((baseWidth / baseHeight).toFixed(2));</span>
+<span class="cstat-no" title="statement not covered" >	if (providedAspectRatio !== aspectRatio) {</span>
+<span class="cstat-no" title="statement not covered" >		throw 'Base width and height must result in a ' + aspectRatio + ' aspect ratio (width / height).\nYou only need to provide either width or height and the other will be calculated for you.';</span>
+	}
+&nbsp;
+	// Calculated based of the long and narrow (aspect ratio wise) iOS device, the iPhone 5 (1136 x 640)
+<span class="cstat-no" title="statement not covered" >	maxWidth = Math.round(1136 * (baseHeight / 640));</span>
+	// Calculated based of the short and wide (aspect ratio wise) iOS device, the iPad (1024 x 768)
+<span class="cstat-no" title="statement not covered" >	maxHeight = Math.round(768 * (baseWidth / 1024));</span>
+	var midHeight = <span class="cstat-no" title="statement not covered" >Math.round(640 * (baseWidth / 960));</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	image = PNGImage.createImage(maxWidth, maxHeight);</span>
+&nbsp;
+	var maxWidthDifferenceHalf = <span class="cstat-no" title="statement not covered" >Math.round((maxWidth - baseWidth) * 0.5);</span>
+	var maxHeightDifferenceHalf = <span class="cstat-no" title="statement not covered" >Math.round((maxHeight - baseHeight) * 0.5);</span>
+	var midHeightDifferenceHalf = <span class="cstat-no" title="statement not covered" >Math.round((midHeight - baseHeight) * 0.5);</span>
+&nbsp;
+	// Draw green 16:10 (safe) area
+<span class="cstat-no" title="statement not covered" >	image.fillRect(maxWidthDifferenceHalf, maxHeightDifferenceHalf, baseWidth, baseHeight, greenColor);</span>
+&nbsp;
+	// Draw blue 16:9 area
+<span class="cstat-no" title="statement not covered" >	image.fillRect(0, maxHeightDifferenceHalf, maxWidthDifferenceHalf, baseHeight, blueColor);</span>
+<span class="cstat-no" title="statement not covered" >	image.fillRect(maxWidthDifferenceHalf + baseWidth, maxHeightDifferenceHalf, maxWidthDifferenceHalf, baseHeight, blueColor);</span>
+&nbsp;
+	// Draw yellow 3:2 area
+<span class="cstat-no" title="statement not covered" >	image.fillRect(maxWidthDifferenceHalf, maxHeightDifferenceHalf - midHeightDifferenceHalf, baseWidth, midHeightDifferenceHalf, yellowColor);</span>
+<span class="cstat-no" title="statement not covered" >	image.fillRect(maxWidthDifferenceHalf, maxHeightDifferenceHalf + baseHeight, baseWidth, midHeightDifferenceHalf, yellowColor);</span>
+&nbsp;
+	// Draw red 4:3 area
+<span class="cstat-no" title="statement not covered" >	image.fillRect(maxWidthDifferenceHalf, 0, baseWidth, maxHeightDifferenceHalf - midHeightDifferenceHalf, redColor);</span>
+<span class="cstat-no" title="statement not covered" >	image.fillRect(maxWidthDifferenceHalf, maxHeightDifferenceHalf + baseHeight + midHeightDifferenceHalf, baseWidth, maxHeightDifferenceHalf, redColor);</span>
+&nbsp;
+	// Draw grey unseen corners
+<span class="cstat-no" title="statement not covered" >	image.fillRect(0, 0, maxWidthDifferenceHalf, maxHeightDifferenceHalf, greyColor);</span>
+<span class="cstat-no" title="statement not covered" >	image.fillRect(0, maxHeightDifferenceHalf + baseHeight, maxWidthDifferenceHalf, maxHeightDifferenceHalf, greyColor);</span>
+<span class="cstat-no" title="statement not covered" >	image.fillRect(maxWidthDifferenceHalf + baseWidth, 0, maxWidthDifferenceHalf, maxHeightDifferenceHalf, greyColor);</span>
+<span class="cstat-no" title="statement not covered" >	image.fillRect(maxWidthDifferenceHalf + baseWidth, maxHeightDifferenceHalf + baseHeight, maxWidthDifferenceHalf, maxHeightDifferenceHalf, greyColor);</span>
+} else {
+<span class="cstat-no" title="statement not covered" >	if (baseWidth === -1) {</span>
+<span class="cstat-no" title="statement not covered" >		baseWidth = defaultWidth;</span>
+<span class="cstat-no" title="statement not covered" >		maxWidth = baseWidth;</span>
+	}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	if (baseHeight === -1) {</span>
+<span class="cstat-no" title="statement not covered" >		baseHeight = defaultHeight;</span>
+<span class="cstat-no" title="statement not covered" >		maxHeight = baseHeight;</span>
+	}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	image = PNGImage.createImage(maxWidth, maxHeight);</span>
+<span class="cstat-no" title="statement not covered" >	image.fillRect(0, 0, maxWidth, maxHeight, greenColor);</span>
+}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >shell.ls('webpack.*.config.js').forEach(<span class="fstat-no" title="function not covered" >fu</span>nction (file) {</span>
+<span class="cstat-no" title="statement not covered" >	shell.sed('-i', /\/\*\[\[DEFAULT_GAME_WIDTH\*\/\S*\/\*DEFAULT_GAME_WIDTH\]\]\*\//, '/*[[DEFAULT_GAME_WIDTH*/' + baseWidth + '/*DEFAULT_GAME_WIDTH]]*/', file);</span>
+<span class="cstat-no" title="statement not covered" >	shell.sed('-i', /\/\*\[\[DEFAULT_GAME_HEIGHT\*\/\S*\/\*DEFAULT_GAME_HEIGHT\]\]\*\//, '/*[[DEFAULT_GAME_HEIGHT*/' + baseHeight + '/*DEFAULT_GAME_HEIGHT]]*/', file);</span>
+<span class="cstat-no" title="statement not covered" >	shell.sed('-i', /\/\*\[\[MAX_GAME_WIDTH\*\/\S*\/\*MAX_GAME_WIDTH\]\]\*\//, '/*[[MAX_GAME_WIDTH*/' + maxWidth + '/*MAX_GAME_WIDTH]]*/', file);</span>
+<span class="cstat-no" title="statement not covered" >	shell.sed('-i', /\/\*\[\[MAX_GAME_HEIGHT\*\/\S*\/\*MAX_GAME_HEIGHT\]\]\*\//, '/*[[MAX_GAME_HEIGHT*/' + maxHeight + '/*MAX_GAME_HEIGHT]]*/', file);</span>
+<span class="cstat-no" title="statement not covered" >	shell.sed('-i', /\/\*\[\[SCALE_MODE\*\/\S*\/\*SCALE_MODE\]\]\*\//, '/*[[SCALE_MODE*/\'' + scaleMode + '\'/*SCALE_MODE]]*/', file);</span>
+});
+&nbsp;
+<span class="cstat-no" title="statement not covered" >shell.ls('electron-main.js').forEach(<span class="fstat-no" title="function not covered" >fu</span>nction (file) {</span>
+<span class="cstat-no" title="statement not covered" >	shell.sed('-i', /\/\*\[\[DEFAULT_GAME_WIDTH\*\/\S*\/\*DEFAULT_GAME_WIDTH\]\]\*\//, '/*[[DEFAULT_GAME_WIDTH*/' + baseWidth + '/*DEFAULT_GAME_WIDTH]]*/', file);</span>
+<span class="cstat-no" title="statement not covered" >	shell.sed('-i', /\/\*\[\[DEFAULT_GAME_HEIGHT\*\/\S*\/\*DEFAULT_GAME_HEIGHT\]\]\*\//, '/*[[DEFAULT_GAME_HEIGHT*/' + baseHeight + '/*DEFAULT_GAME_HEIGHT]]*/', file);</span>
+});
+&nbsp;
+<span class="cstat-no" title="statement not covered" >if (!commander.noPng) {</span>
+<span class="cstat-no" title="statement not covered" >	shell.mkdir('-p', 'assets/images/');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	image.writeImage('./assets/images/background_template.png', <span class="fstat-no" title="function not covered" >fu</span>nction (error) {</span>
+<span class="cstat-no" title="statement not covered" >		if (error) {</span>
+<span class="cstat-no" title="statement not covered" >			throw error;</span>
+		}
+	});
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon May 29 2017 22:26:37 GMT+0900 (JST)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

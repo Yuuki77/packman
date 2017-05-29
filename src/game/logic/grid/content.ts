@@ -1,8 +1,9 @@
 import { ICellContent, ICell, EnemyType, Direction, IGrid, ContentType } from '../../interfaces/interfaces';
 
 export abstract class Content implements ICellContent {
+	private alive: boolean;
 	private cell: ICell;
-	private grid: IGrid;
+	public grid: IGrid;
 	private onMove: { (cell: ICell): void }[] = [];
 	private onEat: { (): void }[] = [];
 	private onEaten: { (): void }[] = [];
@@ -10,11 +11,6 @@ export abstract class Content implements ICellContent {
 	readonly EnemyType: EnemyType | undefined = undefined;
 	public x: number;
 	public y : number;
-
-	// todo something strange
-	public Content(grid: IGrid) {
-		this.grid = grid;
-	}
 
 	public get Cell() {
 		return this.cell;
@@ -31,6 +27,16 @@ export abstract class Content implements ICellContent {
 			}
 		}
 	}
+
+	public get Alive() {
+		return this.alive;
+	}
+
+	public set Alive(currentStatus: boolean | undefined) {
+		this.alive = currentStatus;
+			//throw new Error('It is not implemented yet');
+		}
+
 
 	public AddMoveListener(cb: (cell: ICell) => void) {
 		this.onMove.push(cb);

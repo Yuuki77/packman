@@ -19,7 +19,8 @@
     "electron:pack:dev": "npm run build:dev && node ./scripts/packageElectronApp.js",
     "electron:pack:dist": "npm run build:dist && node ./scripts/packageElectronApp.js",
     "checkDepsVersions": "npm-check --skip-unused -u",
-	"test": "mocha -r ts-node/register src/**/test.ts"
+    "test": "mocha -r ts-node/register src/**/test.ts",
+    "coverage": "nyc --all --reporter=html --reporter=text npm run test"
   },
   "repository": {
     "type": "git",
@@ -47,6 +48,7 @@
     "html-webpack-plugin": "2.28.0",
     "mocha": "^3.4.2",
     "npm-check": "5.4.0",
+    "nyc": "^10.3.2",
     "phaser-ce": "2.7.5",
     "pngjs-image": "0.11.7",
     "shelljs": "0.7.7",

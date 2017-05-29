@@ -110,7 +110,6 @@ export class Grid implements IGrid {
 				console.error('un known type', type);
 		}
 		cell.Facility = facility;
-		facility.Cell = cell;
 		for (let cb of this.onFacilityCreatedCallbacks) {
 			cb(facility);
 		}
@@ -132,7 +131,6 @@ export class Grid implements IGrid {
 		}
 
 		cell.Content = content;
-		content.cell = cell;
 		for (let cb of this.onContentCreatedCallbacks) {
 			cb(content);
 		}

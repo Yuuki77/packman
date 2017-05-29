@@ -14,8 +14,8 @@ export interface ICell {
 	readonly y: number;
 	Content: ICellContent | undefined;
 	Facility: ICellFacility | undefined;
-	GetNeightbors(): ICell[];
 	GetNeightbor(direction: Direction): ICell | undefined;
+	GetNeightbors(): ICell[];
 	// AddVistLietenr(cb: () => void);
 }
 
@@ -27,12 +27,9 @@ export interface ICellContent {
 	Cell: ICell;
 	AddMoveListener(cb: (cell: ICell) => void);
 	AddEatEnemyListener(cb: (cell: ICell) => void);
-	CannotMove(content: ICellContent, nextCell: ICell): boolean;
 	EatEnemy();
 	Eaten();
-	Alive :boolean;
-	GetNextCell(content: ICellContent, nextCell: ICell): ICellContent;
-
+	Alive: boolean;
 }
 
 export enum ContentType {
@@ -90,4 +87,9 @@ export interface ICellFacility {
 	Visited: boolean;
 	Type: FacilityType;
 	AddVisitListener(cb: () => void);
+}
+
+export interface IPlayer {
+	GetNextCell(content: ICellContent, direction: Direction): ICell | undefined;
+	CannotMove(content: ICellContent, nextCell: ICell): boolean;
 }

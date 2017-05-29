@@ -6,7 +6,7 @@ export class Helpers {
 	constructor() {
 
 	}
-	public getContent(grid: IGrid, contentName: ContentType) {
+	public getContent(grid: IGrid, contentName: ContentType): ICellContent {
 
 		for (let y = 0; y < grid.height; y++) {
 			for (let x = 0; x < grid.width; x++) {
@@ -85,9 +85,9 @@ export class Helpers {
 		return false;
 	}
 
-	public IsThisFacility(cell: ICell, ContentType): boolean {
+	public IsThisFacility(cell: ICell, FacilityType: FacilityType): boolean {
 		if (cell.Facility) {
-			return cell.Facility.Type === ContentType;
+			return cell.Facility.Type === FacilityType;
 		}
 		return false;
 	}

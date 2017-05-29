@@ -24,6 +24,10 @@ export class Cell implements ICell {
 
 	public set Facility(facility: ICellFacility | undefined) {
 		this.facility = facility;
+		if (this.facility !== undefined) {
+			this.facility.Cell = this;
+		}
+		this.facility = facility;
 	}
 
 	constructor(grid: IGrid, x: number, y: number) {
@@ -42,6 +46,8 @@ export class Cell implements ICell {
 				return this.grid.GetCell(this.x - 1, this.y);
 			case Direction.Right:
 				return this.grid.GetCell(this.x + 1, this.y);
+			default:
+				throw new Error("unexpected direction");
 		}
 	}
 

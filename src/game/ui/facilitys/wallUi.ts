@@ -9,8 +9,6 @@ export class WallUi {
 	constructor(game: Phaser.Game, wall: Wall) {
 		this.game = game;
 		this.wall = wall;
-		console.log("waill", wall);
-		console.log("waill", wall.Cell);
 		this.Show();
 	}
 
