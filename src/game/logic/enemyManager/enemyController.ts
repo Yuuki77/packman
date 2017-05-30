@@ -9,11 +9,13 @@ export abstract class EnemyController implements IEnemyController {
 	private lastMove = 0;
 	private lastDecide = 0;
 	private path: ICell[];
+	private id: string;
 
-	constructor(grid: IGrid, player: ICellContent, enemy: ICellContent, ) {
+	constructor(grid: IGrid, player: ICellContent, enemy: ICellContent, id: string) {
 		this.grid = grid;
 		this.player = player;
 		this.enemy = enemy;
+		this.id = id;
 		this.player.AddMoveListener((newCell: ICell) => this.PlayerPositionUpdated(newCell));
 		this.pathFindLogic = new PathFinding(this.grid)
 	}
@@ -56,8 +58,29 @@ export abstract class EnemyController implements IEnemyController {
 			return;
 		}
 
-		let dest = this.path.shift();
-		this.grid.Move(this.enemy, dest);
+		let dest = this.path[0];
+		let value = this.enemy.Cell === dest;
+		console.log(this.id, value);
+		if (dest) {
+			if (this.CanMove(dest)) {
+				console.log(">>>>>", this.id, dest);
+				dest = this.path.shift();
+				this.grid.Move(this.enemy, dest);
+			} else {
+				console.log(">>>>> cant move", this.id, dest, dest.Content);
+			}
+		} else {
+			console.warn("Attempting to move without dest.");
+		}
+	}
+
+	public CanMove(dest: ICell): boolean {
+		console.warn(dest);
+		if (dest.Content) {
+			console.warn(dest.Content.EnemyType, ContentType.Enemy);
+			return dest.Content.Type !== ContentType.Enemy;
+		}
+		return true;
 	}
 
 	public GetDirection(grid, content: ICellContent, position: ICell) {

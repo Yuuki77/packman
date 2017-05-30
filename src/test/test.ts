@@ -189,69 +189,65 @@ describe('TEST Player Can Eat packgum', () => {
 });
 
 describe('TEST Enemy CanNotMove function', () => {
-	it('should return false', () => {
+	it('should not go down', () => {
 		let GridData: number[][] =
 			[
-				[0, 1, 0],
+				[0, 1, BLEUENEMY_POSITION],
 				[PLAYER_POSITION, 0, GREENENEMY_POSITION],
 				[1, 0, 1]
 			];
 		let helpers = new Helpers();
 		let grid = new Grid(GridData);
 		grid.CreateBoard();
-		
+
 		let playerContent = helpers.getContent(grid, ContentType.Player);
 		let player = playerContent as Player;
-		let enemyContent = helpers.getContent(grid, ContentType.Enemy);
-		let enemy = enemyContent as Enemy;
+		let blue = grid.GetCell(2, 0).Content;
+		let blueEnemy = blue as Enemy;
 
-		assert(enemy);
-		expect(enemy.Type).to.equal(ContentType.Enemy);
-
-		assert(player);
-		expect(player.Type).to.equal(ContentType.Player);
-
-		let enemyController = new GreenEnemyController(grid, player, enemy);
-
-		let nextCell = enemy.Cell.GetNeightbor(Direction.Up);
-		assert(nextCell);
-		expect(enemyController.CanNotMove(nextCell)).to.equal(false);
-
-		nextCell = player.Cell.GetNeightbor(Direction.Down);
-		expect(player.IsPackGum(nextCell)).to.equal(false);
-	});
-
-	it('should return false', () => {
-		let GridData: number[][] =
-			[
-				[PLAYER_POSITION, 1, BLEUENEMY_POSITION],
-				[0, 0, GREENENEMY_POSITION],
-				[1, 0, 1]
-			];
-		let helpers = new Helpers();
-		let grid = new Grid(GridData);
-		grid.CreateBoard();
-	
-	
-		let playerContent = helpers.getContent(grid, ContentType.Player);
-		let player = helpers.getContent(grid, ContentType.Player);
-		let enemyContent = grid.GetCell(2,1).Content;
-		let enemy = enemyContent as Enemy;
-
-		assert(enemy);
-		expect(enemy.Type).to.equal(ContentType.Enemy);
+		assert(blueEnemy);
+		expect(blueEnemy.Type).to.equal(ContentType.Enemy);
 
 		assert(player);
 		expect(player.Type).to.equal(ContentType.Player);
-		expect(grid.GetCell(2,1).Content.Type).to.equal(ContentType.Enemy);
 
-		let enemyController = new GreenEnemyController(grid, player, grid.GetCell(2,0).Content);
-
-		let nextCell = enemy.Cell.GetNeightbor(Direction.Up);
-		assert(nextCell.Content);
-		expect(enemyController.CanNotMove(nextCell)).to.equal(true);
-
-		nextCell = player.Cell.GetNeightbor(Direction.Left);
-		expect(enemyController.CanNotMove(nextCell)).to.equal(false);
+		let enemyController = new GreenEnemyController(grid, player, grid.GetCell(2, 1).Content);
+		let nextCell = blueEnemy.Cell.GetNeightbor(Direction.Down);
+		expect(nextCell).to.equal(grid.GetCell(2,1));
+		expect(enemyController.CanMove(nextCell)).to.equal(false);
 	});
 });
+// 		it('should return false', () => {
+// 			let GridData: number[][] =
+// 				[
+// 					[PLAYER_POSITION, 1, BLEUENEMY_POSITION],
+// 					[0, 0, GREENENEMY_POSITION],
+// 					[1, 0, 1]
+// 				];
+// 			let helpers = new Helpers();
+// 			let grid = new Grid(GridData);
+// 			grid.CreateBoard();
+
+
+// 			let playerContent = helpers.getContent(grid, ContentType.Player);
+// 			let player = helpers.getContent(grid, ContentType.Player);
+// 			let enemyContent = grid.GetCell(2,1).Content;
+// 			let enemy = enemyContent as Enemy;
+
+// 			assert(enemy);
+// 			expect(enemy.Type).to.equal(ContentType.Enemy);
+
+// 			assert(player);
+// 			expect(player.Type).to.equal(ContentType.Player);
+// 			expect(grid.GetCell(2,1).Content.Type).to.equal(ContentType.Enemy);
+
+// 			let enemyController = new GreenEnemyController(grid, player, grid.GetCell(2,0).Content);
+
+// 			let nextCell = enemy.Cell.GetNeightbor(Direction.Up);
+// 			assert(nextCell.Content);
+// 			expect(enemyController.CanNotMove(nextCell)).to.equal(true);
+
+// 			nextCell = player.Cell.GetNeightbor(Direction.Left);
+// 			expect(enemyController.CanNotMove(nextCell)).to.equal(false);
+// 		});
+// 	});

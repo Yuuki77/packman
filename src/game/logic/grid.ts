@@ -145,18 +145,25 @@ export class Grid implements IGrid {
 	}
 
 	// TODO refactoring
-	public Move(previousContent: ICellContent, nextCell: ICell) {
-
-
+	public Move(movingContent: ICellContent, nextCell: ICell) {
 		if (nextCell === undefined) {
 			console.warn("cannot move here");
 			return;
 		}
 
-		nextCell.Content = previousContent;
-		if (previousContent.Cell !== undefined) {
-			previousContent = undefined;
+		if (nextCell === movingContent.Cell) {
+			console.warn("cant move to the same place");
+			return;
 		}
+
+		// clean previous position
+		if (movingContent.Cell !== undefined) {
+			movingContent.Cell.Content = undefined;
+		}
+
+		// set new position
+		nextCell.Content = movingContent;
+		movingContent.Cell = nextCell;
 	}
 
 	private GetEnemy(cell: ICell): Enemy {
