@@ -8,6 +8,7 @@ export abstract class Facility implements ICellFacility {
 	public abstract Type: FacilityType | undefined
 	private visited: boolean = false;
 	private onVisitedDot: { (): void }[] = [];
+	public abstract Id: string;
 
 	// todo think about this
 

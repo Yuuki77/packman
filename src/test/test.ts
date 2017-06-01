@@ -213,8 +213,77 @@ describe('TEST Enemy CanNotMove function', () => {
 
 		let enemyController = new GreenEnemyController(grid, player, grid.GetCell(2, 1).Content);
 		let nextCell = blueEnemy.Cell.GetNeightbor(Direction.Down);
-		expect(nextCell).to.equal(grid.GetCell(2,1));
+		expect(nextCell).to.equal(grid.GetCell(2, 1));
 		expect(enemyController.CanMove(nextCell)).to.equal(false);
+		console.log(grid.toString());
+	});
+});
+
+describe('TEST Player IsPackGUm', () => {
+	it('should eat packGum', () => {
+		let GridData: number[][] =
+			[
+				[PACKGUM_POSITION, 1, 0],
+				[PLAYER_POSITION, 0, 0],
+				[1, 0, 1]
+			];
+		let helpers = new Helpers();
+		let grid = new Grid(GridData);
+		grid.CreateBoard();
+
+		let playerContent = helpers.getContent(grid, ContentType.Player);
+		let player = playerContent as Player;
+
+		assert(player);
+		expect(player.Type).to.equal(ContentType.Player);
+
+		let nextCell = player.Cell.GetNeightbor(Direction.Up);
+		expect(nextCell).to.equal(grid.GetCell(0, 0));
+		expect(grid.GetCell(0, 0).Facility.Visited).to.equal(false);
+		console.log('Before');
+		console.log(grid.toString());
+		player.Decide(player, Direction.Up);
+
+		expect(grid.GetCell(0, 0).Content.Type).to.equal(ContentType.Player);
+		expect(grid.GetCell(0, 0).Facility.Visited).to.equal(true);
+		expect(grid.GetCell(0, 1).Content).to.equal(undefined);
+		console.log();
+		console.log('After');
+		console.log(grid.toString());
+	});
+});
+
+describe('TEST SpecialItemEaten Enemy', () => {
+	it('should get ran away', () => {
+		let GridData: number[][] =
+			[
+				[BLEUENEMY_POSITION, 1, 0],
+				[0, 0, 0],
+				[1, 0, 1]
+			];
+		let helpers = new Helpers();
+		let grid = new Grid(GridData);
+		grid.CreateBoard();
+
+		let enemyContent = helpers.getContent(grid, ContentType.Enemy);
+		let enemy = enemyContent as Player;
+
+		assert(enemy);
+		expect(enemy.Type).to.equal(ContentType.Enemy);
+
+		let nextCell = enemy.Cell.GetNeightbor(Direction.Down);
+
+		console.log('Before');
+		console.log(grid.toString());
+
+		let breadthFirstPathFind = new PathFinding(grid);
+		breadthFirstPathFind.Dfs(nextCell.GetNeightbor(Direction.Right), enemy.Cell);
+		let path = breadthFirstPathFind.GetPath();
+
+		expect(nextCell).to.equal(path[1]);
+		grid.Move(enemy, nextCell);
+		console.log('After');
+		console.log(grid.toString());
 	});
 });
 // 		it('should return false', () => {

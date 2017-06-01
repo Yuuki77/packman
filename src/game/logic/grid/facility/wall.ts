@@ -4,5 +4,7 @@ import { FacilityType } from "../../../interfaces/interfaces";
 
 export class Wall extends Facility {
 	public readonly Type: FacilityType = FacilityType.Wall;
+	public Id: string = "Wall";
+
 }
 

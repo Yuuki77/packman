@@ -7,29 +7,35 @@ export class Player extends Content implements IPlayer {
 	public Alive: boolean = true;
 	public helper;
 	private lastMove = 0;
-
+	public Id = "Player"
 	private onEatItem: { () }[] = [];
 
 	constructor() {
 		super();
 		this.helper = new Helpers();
 	}
+
 	public EatItem() {
+		console.log("eat item", this.onEatItem.length);
 		for (let cb of this.onEatItem) {
 			cb();
 		}
+	}
+
+	public AddPackGumEatListener(cb: () => void) {
+		this.onEatItem.push(cb);
 	}
 
 	public Update(player: ICellContent, direction: Direction): void {
 		let now = Date.now();
 
 		// if (this.lastMove + 200 < now) {
-			this.lastMove = now;
-			this.Decide(player, direction);
+		this.lastMove = now;
+		this.Decide(player, direction);
 		// }
 	}
 
-	private Decide(player: ICellContent, direction: Direction) {
+	public Decide(player: ICellContent, direction: Direction) {
 		let nextCell = this.GetNextCell(player, direction);
 		if (this.CannotMove(player, nextCell)) {
 			return;
@@ -43,11 +49,22 @@ export class Player extends Content implements IPlayer {
 			return;
 		}
 
+		// visit dot 
+		if (this.CanVisitDot(nextCell)) {
+			nextCell.Facility.Visited = true;
+			this.grid.Move(player, nextCell);
+			return;
+		}
+
 		if (this.helper.IsThisContent(nextCell, ContentType.Enemy)) {
 			throw new Error('It is not implemented yet');
 		}
 
 		this.grid.Move(player, nextCell);
+	}
+
+	private CanVisitDot(nextCell: ICell): boolean {
+		return nextCell.Facility && nextCell.Facility.Type === FacilityType.YellowDot && !nextCell.Facility.Visited;
 	}
 
 	public GetNextCell(player: ICellContent, direction: Direction): ICell | undefined {
@@ -76,7 +93,7 @@ export class Player extends Content implements IPlayer {
 		}
 	}
 
-	public IsPackGum(cell : ICell): boolean {
+	public IsPackGum(cell: ICell): boolean {
 		return this.helper.IsThisFacility(cell, FacilityType.PackGum) && !cell.Facility.Visited
 	}
 }

@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/test/helpers.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">src/test</a> helpers.ts
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">46.15% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>24/52</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">21.88% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>7/32</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">42.86% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>6/14</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">45.1% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>23/51</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">20x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">46x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Grid } from '../game/logic/grid';
+import { ICellContent, IGrid, ICell, Direction, ContentType, FacilityType } from '../game/interfaces/interfaces';
+import { Player } from "../game/logic/grid/contents/player";
+&nbsp;
+export class Helpers {
+	constructor() {
+&nbsp;
+	}
+	public getContent(grid: IGrid, contentName: ContentType): ICellContent {
+&nbsp;
+		for (let y = 0; y &lt; grid.height; y++) {
+			for (let x = 0; x &lt; grid.width; x++) {
+				// to do something wrong
+				if (grid.GetCell(x, y).Content &amp;&amp; grid.GetCell(x, y).Content.Type === contentName) {
+					return grid.GetCell(x, y).Content;
+				}
+			}
+		}
+<span class="cstat-no" title="statement not covered" >		console.warn('uncexpected content', contentName);</span>
+<span class="cstat-no" title="statement not covered" >		return undefined;</span>
+	}
+&nbsp;
+<span class="fstat-no" title="function not covered" >	public findAllEnemys(</span>grid: IGrid, contentName: ContentType): ICellContent[] {
+		let enemys: ICellContent[] = <span class="cstat-no" title="statement not covered" >[];</span>
+<span class="cstat-no" title="statement not covered" >		for (let y = 0; y &lt; grid.height; y++) {</span>
+<span class="cstat-no" title="statement not covered" >			for (let x = 0; x &lt; grid.width; x++) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >				if (grid.GetCell(x, y).Content &amp;&amp; grid.GetCell(x, y).Content.Type === contentName) {</span>
+					let enemy = <span class="cstat-no" title="statement not covered" >grid.GetCell(x, y);</span>
+<span class="cstat-no" title="statement not covered" >					enemys.push(enemy.Content);</span>
+				}
+			}
+		}
+<span class="cstat-no" title="statement not covered" >		console.log('enemys', enemys);</span>
+<span class="cstat-no" title="statement not covered" >		return enemys !== undefined ? enemys : undefined;</span>
+	}
+&nbsp;
+<span class="fstat-no" title="function not covered" >	public assert(</span>assertion) {
+<span class="cstat-no" title="statement not covered" >		if (!assertion) {</span>
+<span class="cstat-no" title="statement not covered" >			throw new Error('this is undefined');</span>
+		}
+	}
+	public IsUndefined(cell: ICell): boolean {
+		return cell == undefined;
+	}
+&nbsp;
+	public IsWall(cell: ICell): boolean {
+		return (cell.Facility &amp;&amp; cell.Facility.Type === FacilityType.Wall);
+	}
+&nbsp;
+<span class="fstat-no" title="function not covered" >	public IsYellowDot(</span>cell: ICell): boolean {
+<span class="cstat-no" title="statement not covered" >		return (cell.Facility &amp;&amp; cell.Facility.Type === FacilityType.YellowDot);</span>
+	}
+&nbsp;
+<span class="fstat-no" title="function not covered" >	public IsPlayer(</span>cell: ICell): boolean {
+		let player = <span class="cstat-no" title="statement not covered" >cell.Content;</span>
+<span class="cstat-no" title="statement not covered" >		return player &amp;&amp; player.Type === ContentType.Player;</span>
+	}
+&nbsp;
+<span class="fstat-no" title="function not covered" >	public IsVisited(</span>cell: ICell): boolean {
+<span class="cstat-no" title="statement not covered" >		if (this.IsYellowDot(cell)) {</span>
+<span class="cstat-no" title="statement not covered" >			return cell.Facility.Visited;</span>
+		}
+<span class="cstat-no" title="statement not covered" >		return true;</span>
+	}
+&nbsp;
+<span class="fstat-no" title="function not covered" >	public IsSameContent(</span>cell: ICell, nextCell: ICell): boolean {
+<span class="cstat-no" title="statement not covered" >		if (cell.Content &amp;&amp; nextCell.Content) {</span>
+<span class="cstat-no" title="statement not covered" >			return cell.Content.Type === nextCell.Content.Type;</span>
+		}
+<span class="cstat-no" title="statement not covered" >		return false;</span>
+	}
+&nbsp;
+<span class="fstat-no" title="function not covered" >	public IsDifferentContent(</span>cell: ICell, nextCell: ICell): boolean {
+<span class="cstat-no" title="statement not covered" >		if (cell.Content &amp;&amp; nextCell.Content) {</span>
+<span class="cstat-no" title="statement not covered" >			return cell.Content.Type !== nextCell.Content.Type;</span>
+		}
+<span class="cstat-no" title="statement not covered" >		return false;</span>
+	}
+&nbsp;
+<span class="fstat-no" title="function not covered" >	public IsThisContent(</span>cell: ICell, ContentType): boolean {
+<span class="cstat-no" title="statement not covered" >		if (cell.Content) {</span>
+<span class="cstat-no" title="statement not covered" >			return cell.Content.Type === ContentType.Type;</span>
+		}
+<span class="cstat-no" title="statement not covered" >		return false;</span>
+	}
+&nbsp;
+	public IsThisFacility(cell: ICell, FacilityType: FacilityType): boolean {
+		<span class="missing-if-branch" title="else path not taken" >E</span>if (cell.Facility) {
+			return cell.Facility.Type === FacilityType;
+		}
+<span class="cstat-no" title="statement not covered" >		return false;</span>
+	}
+&nbsp;
+}
+&nbsp;
+&nbsp;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed May 31 2017 10:10:13 GMT+0900 (JST)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

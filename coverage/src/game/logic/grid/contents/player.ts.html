@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/game/logic/grid/contents/player.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../../../index.html">All files</a> / <a href="index.html">src/game/logic/grid/contents</a> player.ts
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">74.58% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>44/59</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">65.52% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>19/29</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">80% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>8/10</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">75% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>42/56</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">import { ICellContent, ICell, ContentType, Direction, IPlayer, FacilityType } from '../../../interfaces/interfaces';
+import { Content } from '../content';
+import { Helpers } from "../../../../test/helpers";
+&nbsp;
+export class Player extends Content implements IPlayer {
+	public readonly Type: ContentType = ContentType.Player;
+	public Alive: boolean = true;
+	public helper;
+	private lastMove = 0;
+	public Id = "Player"
+	private onEatItem: { () }[] = [];
+&nbsp;
+	constructor() {
+		super();
+		this.helper = new Helpers();
+	}
+&nbsp;
+	public EatItem() {
+		console.log("eat item", this.onEatItem.length);
+		for (let cb<span class="cstat-no" title="statement not covered" ></span> of this.onEatItem) {
+<span class="cstat-no" title="statement not covered" >			cb();</span>
+		}
+	}
+&nbsp;
+	public AddPackGumEatListener(cb: () =&gt; void) {
+		this.onEatItem.push(cb);
+	}
+&nbsp;
+<span class="fstat-no" title="function not covered" >	public Update(</span>player: ICellContent, direction: Direction): void {
+		let now = <span class="cstat-no" title="statement not covered" >Date.now();</span>
+&nbsp;
+		// if (this.lastMove + 200 &lt; now) {
+<span class="cstat-no" title="statement not covered" >		this.lastMove = now;</span>
+<span class="cstat-no" title="statement not covered" >		this.Decide(player, direction);</span>
+		// }
+	}
+&nbsp;
+	public Decide(player: ICellContent, direction: Direction) {
+		let nextCell = this.GetNextCell(player, direction);
+		<span class="missing-if-branch" title="if path not taken" >I</span>if (this.CannotMove(player, nextCell)) {
+<span class="cstat-no" title="statement not covered" >			return;</span>
+		};
+&nbsp;
+		// eat packgum
+		<span class="missing-if-branch" title="else path not taken" >E</span>if (this.IsPackGum(nextCell)) {
+			this.EatItem();
+			nextCell.Facility.Visited = true;
+			this.grid.Move(player, nextCell);
+			return;
+		}
+&nbsp;
+		// visit dot 
+<span class="cstat-no" title="statement not covered" >		if (this.CanVisitDot(nextCell)) {</span>
+<span class="cstat-no" title="statement not covered" >			nextCell.Facility.Visited = true;</span>
+<span class="cstat-no" title="statement not covered" >			this.grid.Move(player, nextCell);</span>
+<span class="cstat-no" title="statement not covered" >			return;</span>
+		}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >		if (this.helper.IsThisContent(nextCell, ContentType.Enemy)) {</span>
+<span class="cstat-no" title="statement not covered" >			throw new Error('It is not implemented yet');</span>
+		}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >		this.grid.Move(player, nextCell);</span>
+	}
+&nbsp;
+<span class="fstat-no" title="function not covered" >	private CanVisitDot(</span>nextCell: ICell): boolean {
+<span class="cstat-no" title="statement not covered" >		return nextCell.Facility &amp;&amp; nextCell.Facility.Type === FacilityType.YellowDot &amp;&amp; !nextCell.Facility.Visited;</span>
+	}
+&nbsp;
+	public GetNextCell(player: ICellContent, direction: Direction): ICell | undefined {
+		let nextCell = player.Cell.GetNeightbor(direction);
+		if (player.x === player.Cell.grid.width - 1 &amp;&amp; !nextCell) {
+			nextCell = player.Cell.grid.GetCell(0, player.y);
+		} else if (player.x === 0 &amp;&amp; !nextCell) {
+			nextCell = player.Cell.grid.GetCell(player.Cell.grid.width - 1, player.y);
+		}
+		return nextCell;
+	}
+&nbsp;
+	public CannotMove(content: ICellContent, nextCell: ICell): boolean {
+		<span class="missing-if-branch" title="if path not taken" >I</span>if (content.Type != ContentType.Player) {
+<span class="cstat-no" title="statement not covered" >			return true;</span>
+		}
+&nbsp;
+		//check if there is a cell
+		if (this.helper.IsUndefined(nextCell)) {
+			return true;
+		}
+&nbsp;
+		// is there a wall
+		if (this.helper.IsWall(nextCell)) {
+			return true;
+		}
+	}
+&nbsp;
+	public IsPackGum(cell: ICell): boolean {
+		return this.helper.IsThisFacility(cell, FacilityType.PackGum) &amp;&amp; !cell.Facility.Visited
+	}
+}</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed May 31 2017 10:10:13 GMT+0900 (JST)
+</div>
+</div>
+<script src="../../../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../../../sorter.js"></script>
+</body>
+</html>

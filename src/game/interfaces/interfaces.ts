@@ -21,7 +21,8 @@ export interface ICell {
 
 export interface ICellContent {
 	x: number;
-	y: number
+	y: number;
+	Id: string;
 	readonly Type: ContentType;
 	readonly EnemyType: EnemyType;
 	Cell: ICell;
@@ -63,7 +64,6 @@ export interface IPathFinding {
 
 export interface IEnemyController {
 	Update(): void;
-	GetDirection(grid: IGrid, content: ICellContent, position: ICell): void;
 }
 
 export interface IEnemyManager {
@@ -85,6 +85,7 @@ export interface ICellFacility {
 	y: number;
 	Cell: ICell;
 	Visited: boolean;
+	Id: string;
 	Type: FacilityType;
 	AddVisitListener(cb: () => void);
 }

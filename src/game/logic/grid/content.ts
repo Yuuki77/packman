@@ -8,6 +8,8 @@ export abstract class Content implements ICellContent {
 	private onEat: { (): void }[] = [];
 	private onEaten: { (): void }[] = [];
 	public abstract Type: ContentType;
+	public abstract Id: string;
+
 	readonly EnemyType: EnemyType | undefined = undefined;
 	public x: number;
 	public y : number;

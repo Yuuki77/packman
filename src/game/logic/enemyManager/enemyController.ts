@@ -1,35 +1,45 @@
 import { ICellContent, IGrid, ICell, ContentType, IEnemyController, Direction } from "../../interfaces/interfaces";
 import { PathFinding } from "../pathFind/pathFind";
+import { Player } from "../grid/contents/player";
 
 export abstract class EnemyController implements IEnemyController {
 	public readonly grid: IGrid;
-	public player: ICellContent;
+	public player: Player;
 	public enemy: ICellContent;
 	private pathFindLogic;
 	private lastMove = 0;
 	private lastDecide = 0;
 	private path: ICell[];
 	private id: string;
+	private specialItemEaten: boolean = false;
+	private lastSpecialTime = 0;
+
 
 	constructor(grid: IGrid, player: ICellContent, enemy: ICellContent, id: string) {
 		this.grid = grid;
-		this.player = player;
+		this.player = player as Player;
 		this.enemy = enemy;
 		this.id = id;
 		this.player.AddMoveListener((newCell: ICell) => this.PlayerPositionUpdated(newCell));
+		this.player.AddPackGumEatListener(() => this.SpecialItemEaten());
 		this.pathFindLogic = new PathFinding(this.grid)
 	}
 
 
 	private PlayerPositionUpdated(updatedPlayerPosition: ICell): void {
-		this.player = updatedPlayerPosition.Content;
+		this.player = updatedPlayerPosition.Content as Player;
 	}
 
 	public Update(): void {
 		let now = Date.now();
 
+		// console.log(this.IsSpecialTime());
+		// if (this.IsSpecialTime()) {
+		// 	this.Move();
+		// 	return;
+		// }
 		// decide where to goal
-		if (this.lastDecide + 500 < now) {
+		if (this.lastDecide + 500 < now && !this.IsSpecialTime()) {
 			this.lastDecide = now;
 			this.Decide();
 		}
@@ -59,15 +69,13 @@ export abstract class EnemyController implements IEnemyController {
 		}
 
 		let dest = this.path[0];
-		let value = this.enemy.Cell === dest;
-		console.log(this.id, value);
 		if (dest) {
 			if (this.CanMove(dest)) {
-				console.log(">>>>>", this.id, dest);
+				// console.log(">>>>>", this.id, dest);
 				dest = this.path.shift();
 				this.grid.Move(this.enemy, dest);
 			} else {
-				console.log(">>>>> cant move", this.id, dest, dest.Content);
+				// console.log(">>>>> cant move", this.id, dest, dest.Content);
 			}
 		} else {
 			console.warn("Attempting to move without dest.");
@@ -75,24 +83,29 @@ export abstract class EnemyController implements IEnemyController {
 	}
 
 	public CanMove(dest: ICell): boolean {
-		console.warn(dest);
 		if (dest.Content) {
-			console.warn(dest.Content.EnemyType, ContentType.Enemy);
 			return dest.Content.Type !== ContentType.Enemy;
 		}
 		return true;
 	}
 
-	public GetDirection(grid, content: ICellContent, position: ICell) {
-		if (content.Cell.x + 1 === position.x) {
-			return Direction.Right;
-		} else if (content.Cell.x - 1 === position.x) {
-			return Direction.Left;
-		} else if (content.Cell.y + 1 === position.y) {
-			return Direction.Down;
-		} else if (content.Cell.y - 1 === position.y) {
-			return Direction.Up;
+	private SpecialItemEaten(): void {
+		let now = Date.now();
+		this.lastSpecialTime = now;
+		this.specialItemEaten = true;
+		this.pathFindLogic.Dfs(this.grid.GetCell(13, 12), this.enemy.Cell);
+		this.path = this.pathFindLogic.GetPath();
+		this.path.shift();
+	}
+
+	private IsSpecialTime(): boolean {
+		let now = Date.now();
+		if (this.lastSpecialTime + 10000 < now) {
+			this.specialItemEaten = false;
+			return false;
+		} else if (this.specialItemEaten) {
+			return true;
 		}
-		console.warn('uncexpected position');
+		return false;
 	}
 }
