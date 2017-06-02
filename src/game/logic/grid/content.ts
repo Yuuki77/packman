@@ -12,7 +12,7 @@ export abstract class Content implements ICellContent {
 
 	readonly EnemyType: EnemyType | undefined = undefined;
 	public x: number;
-	public y : number;
+	public y: number;
 
 	public get Cell() {
 		return this.cell;
@@ -36,8 +36,8 @@ export abstract class Content implements ICellContent {
 
 	public set Alive(currentStatus: boolean | undefined) {
 		this.alive = currentStatus;
-			//throw new Error('It is not implemented yet');
-		}
+		// throw new Error('It is not implemented yet');
+	}
 
 
 	public AddMoveListener(cb: (cell: ICell) => void) {

@@ -1,6 +1,6 @@
-import { ICell } from "../../interfaces/interfaces";
-import { Player } from "../../logic/grid/contents/player";
-import * as Assets from "../../../assets";
+import { ICell } from '../../interfaces/interfaces';
+import { Player } from '../../logic/grid/contents/player';
+import * as Assets from '../../../assets';
 
 export class PlayerUi {
 	private player: Player;
@@ -19,7 +19,6 @@ export class PlayerUi {
 
 		// this.sprite = this.game.add.sprite(this.player.Cell.x * 18 + 9, this.player.Cell.y * 18 + 9, Assets.Images.ImagesPacman.getName());
 		this.sprite = this.game.add.sprite(this.player.Cell.x * 18 + 9, this.player.Cell.y * 18 + 9, Assets.Atlases.AtlasesPackman.getName());
-
 		this.sprite.animations.add('walk');
 		this.sprite.animations.play('walk', 4, true);
 		this.sprite.anchor.setTo(0.5, 0.5);
@@ -46,7 +45,6 @@ export class PlayerUi {
 	private PlayerEaten() {
 		// this.player.alive = false;
 		this.sprite.visible = false;
-		console.error('game is over');
 	}
 
 	private RegisterInterface(): void {

@@ -7,7 +7,7 @@ import { ScoreManager } from '../score/scoreManager';
 import { GridData } from '../const';
 import { YellowDot } from './grid/facility/yellowDot';
 import { PackGum } from './grid/facility/packGum';
-import { Helpers } from "../../test/helpers";
+import { Helpers } from '../../test/helpers';
 
 
 export class Grid implements IGrid {
@@ -146,12 +146,12 @@ export class Grid implements IGrid {
 
 	public Move(movingContent: ICellContent, nextCell: ICell) {
 		if (nextCell === undefined) {
-			console.warn("cannot move here");
+			console.warn('cannot move here');
 			return;
 		}
 
 		if (nextCell === movingContent.Cell) {
-			console.warn("cant move to the same place");
+			console.warn('cant move to the same place');
 			return;
 		}
 
@@ -190,7 +190,7 @@ export class Grid implements IGrid {
 	}
 
 	private DataToString() {
-		let result = "";
+		let result = '';
 		for (let y = 0; y < this.height; y++) {
 			for (let x = 0; x < this.width; x++) {
 				let cell = this.GetCell(x, y);
@@ -199,10 +199,10 @@ export class Grid implements IGrid {
 				} else if (cell.Facility && cell.Facility.Type === FacilityType.Wall) {
 					result += ' ' + cell.Facility.Id + ' ';
 				} else {
-					result += ' ' + ' 0 '+ ' ';
+					result += ' ' + ' 0 ' + ' ';
 				}
 			}
-			result += "\n";
+			result += '\n';
 		}
 		// console.warn(result);
 		return result;

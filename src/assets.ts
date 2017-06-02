@@ -1,6 +1,11 @@
 /* AUTO GENERATED FILE. DO NOT MODIFY. YOU WILL LOSE YOUR CHANGES ON BUILD. */
 
 export namespace Images {
+		export class AtlasesDownload {
+				static getName(): string { return 'download'; };
+
+				static getJPEG(): string { return require('assets/atlases/download.jpeg'); };
+		}
 		export class GraphicsGameOver {
 				static getName(): string { return 'GameOver'; };
 
@@ -50,6 +55,11 @@ export namespace Images {
 				static getName(): string { return 'ghostRed'; };
 
 				static getPNG(): string { return require('assets/images/ghostRed.png'); };
+		}
+		export class ImagesGhostRunAway {
+				static getName(): string { return 'ghostRunAway'; };
+
+				static getPNG(): string { return require('assets/images/ghostRunAway.png'); };
 		}
 		export class ImagesGhostYellow {
 				static getName(): string { return 'ghostYellow'; };

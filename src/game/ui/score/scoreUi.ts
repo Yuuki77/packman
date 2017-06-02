@@ -1,4 +1,4 @@
-import { IScoreManager } from "../../interfaces/interfaces";
+import { IScoreManager } from '../../interfaces/interfaces';
 
 export class ScoreUi {
 	private game: Phaser.Game;

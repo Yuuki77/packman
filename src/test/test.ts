@@ -1,14 +1,14 @@
 import 'mocha';
 import { expect } from 'chai';
 import { assert } from 'chai';
-import { Grid } from "../game/logic/grid";
-import { ContentType, Direction, IPlayer } from "../game/interfaces/interfaces";
-import { PathFinding } from "../game/logic/pathFind/pathFind";
-import { Helpers } from "./helpers";
-import { GREENENEMY_POSITION, PACKGUM_POSITION, PLAYER_POSITION, BLEUENEMY_POSITION } from "../game/const";
-import { Player } from "../game/logic/grid/contents/player";
-import { Enemy } from "../game/logic/grid/contents/enemy";
-import { GreenEnemyController } from "../game/logic/enemyManager/controllers/greenController";
+import { Grid } from '../game/logic/grid';
+import { ContentType, Direction, IPlayer } from '../game/interfaces/interfaces';
+import { PathFinding } from '../game/logic/pathFind/pathFind';
+import { Helpers } from './helpers';
+import { GREENENEMY_POSITION, PACKGUM_POSITION, PLAYER_POSITION, BLEUENEMY_POSITION } from '../game/const';
+import { Player } from '../game/logic/grid/contents/player';
+import { Enemy } from '../game/logic/grid/contents/enemy';
+import { GreenEnemyController } from '../game/logic/enemyManager/controllers/greenController';
 
 describe('BFS function', () => {
 	it('should return path', () => {
@@ -117,7 +117,7 @@ describe('TEST GetNextCell ', () => {
 
 		assert(player);
 		expect(player.Type).to.equal(ContentType.Player);
-		let nextCell = player.GetNextCell(player, (Direction.Right))
+		let nextCell = player.GetNextCell(player, (Direction.Right));
 		expect(nextCell).to.equal(grid.GetCell(0, 1));
 	});
 
@@ -132,7 +132,7 @@ describe('TEST GetNextCell ', () => {
 		let grid = new Grid(GridData);
 		grid.CreateBoard();
 		let playerContent = helpers.getContent(grid, ContentType.Player);
-		let player = playerContent as Player
+		let player = playerContent as Player;
 		assert(player);
 		expect(player.Type).to.equal(ContentType.Player);
 

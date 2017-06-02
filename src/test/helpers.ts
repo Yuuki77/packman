@@ -1,6 +1,6 @@
 import { Grid } from '../game/logic/grid';
 import { ICellContent, IGrid, ICell, Direction, ContentType, FacilityType } from '../game/interfaces/interfaces';
-import { Player } from "../game/logic/grid/contents/player";
+import { Player } from '../game/logic/grid/contents/player';
 
 export class Helpers {
 	constructor() {
@@ -41,7 +41,7 @@ export class Helpers {
 		}
 	}
 	public IsUndefined(cell: ICell): boolean {
-		return cell == undefined;
+		return cell === undefined;
 	}
 
 	public IsWall(cell: ICell): boolean {

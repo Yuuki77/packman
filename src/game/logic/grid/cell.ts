@@ -47,7 +47,7 @@ export class Cell implements ICell {
 			case Direction.Right:
 				return this.grid.GetCell(this.x + 1, this.y);
 			default:
-				throw new Error("unexpected direction");
+				throw new Error('unexpected direction');
 		}
 	}
 

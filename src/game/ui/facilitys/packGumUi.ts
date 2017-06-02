@@ -1,17 +1,18 @@
-import { PackGum } from "../../logic/grid/facility/packGum";
-import { ICellContent, ICellFacility } from "../../interfaces/interfaces";
-import * as Assets from "../../../assets";
+import { PackGum } from '../../logic/grid/facility/packGum';
+import { ICellContent, ICellFacility } from '../../interfaces/interfaces';
+import * as Assets from '../../../assets';
 
 export class PackGumUi {
 	private game: Phaser.Game;
 	private sprite: Phaser.Sprite = null;
-	private gum: ICellFacility
+	private gum: ICellFacility;
 
 	constructor(game: Phaser.Game, gum: ICellFacility) {
 		this.game = game;
 		this.gum = gum;
 		this.Show();
-		// this.gum.AddEatItemLister(() => this.Hide());
+		this.gum.AddVisitListener(() => this.Hide());
+
 	}
 
 	private Show(): void {

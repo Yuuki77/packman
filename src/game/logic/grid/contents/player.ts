@@ -1,13 +1,13 @@
 import { ICellContent, ICell, ContentType, Direction, IPlayer, FacilityType } from '../../../interfaces/interfaces';
 import { Content } from '../content';
-import { Helpers } from "../../../../test/helpers";
+import { Helpers } from '../../../../test/helpers';
 
 export class Player extends Content implements IPlayer {
 	public readonly Type: ContentType = ContentType.Player;
 	public Alive: boolean = true;
 	public helper;
 	private lastMove = 0;
-	public Id = "Player"
+	public Id = 'Player';
 	private onEatItem: { () }[] = [];
 
 	constructor() {
@@ -16,7 +16,7 @@ export class Player extends Content implements IPlayer {
 	}
 
 	public EatItem() {
-		console.log("eat item", this.onEatItem.length);
+		console.log('eat item', this.onEatItem.length);
 		for (let cb of this.onEatItem) {
 			cb();
 		}
@@ -49,7 +49,7 @@ export class Player extends Content implements IPlayer {
 			return;
 		}
 
-		// visit dot 
+		// visit dot
 		if (this.CanVisitDot(nextCell)) {
 			nextCell.Facility.Visited = true;
 			this.grid.Move(player, nextCell);
@@ -78,11 +78,11 @@ export class Player extends Content implements IPlayer {
 	}
 
 	public CannotMove(content: ICellContent, nextCell: ICell): boolean {
-		if (content.Type != ContentType.Player) {
+		if (content.Type !== ContentType.Player) {
 			return true;
 		}
 
-		//check if there is a cell
+		// check if there is a cell
 		if (this.helper.IsUndefined(nextCell)) {
 			return true;
 		}
@@ -94,6 +94,6 @@ export class Player extends Content implements IPlayer {
 	}
 
 	public IsPackGum(cell: ICell): boolean {
-		return this.helper.IsThisFacility(cell, FacilityType.PackGum) && !cell.Facility.Visited
+		return this.helper.IsThisFacility(cell, FacilityType.PackGum) && !cell.Facility.Visited;
 	}
 }

@@ -1,5 +1,5 @@
-import { Wall } from "../../logic/grid/facility/wall";
-import * as Assets from "../../../assets";
+import { Wall } from '../../logic/grid/facility/wall';
+import * as Assets from '../../../assets';
 
 export class WallUi {
 	private wall: Wall;
@@ -17,6 +17,3 @@ export class WallUi {
 		this.sprite.scale.setTo(0.070, 0.070);
 	}
 }
-
-
-

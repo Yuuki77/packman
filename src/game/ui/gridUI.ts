@@ -4,12 +4,12 @@ import { Player } from '../logic/grid/contents/player';
 import { Enemy } from '../logic/grid/contents/enemy';
 import { ScoreUi } from './score/scoreUi';
 import { YellowDot } from '../logic/grid/facility/yellowDot';
-import { PackGum } from "../logic/grid/facility/packGum";
-import { EnemyUi } from "./contents/EnemyUi";
-import { PlayerUi } from "./contents/PlayerUi";
-import { YellowDotUi } from "./facilitys/dotUi";
-import { PackGumUi } from "./facilitys/PackGumUi";
-import { WallUi } from "./facilitys/wallUi";
+import { PackGum } from '../logic/grid/facility/packGum';
+import { EnemyUi } from './contents/EnemyUi';
+import { PlayerUi } from './contents/PlayerUi';
+import { YellowDotUi } from './facilitys/dotUi';
+import { PackGumUi } from './facilitys/PackGumUi';
+import { WallUi } from './facilitys/wallUi';
 
 export class GridUi {
 	private game: Phaser.Game;

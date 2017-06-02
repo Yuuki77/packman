@@ -1,5 +1,5 @@
-import { ICellFacility } from "../../interfaces/interfaces";
-import * as Assets from "../../../assets";
+import { ICellFacility } from '../../interfaces/interfaces';
+import * as Assets from '../../../assets';
 
 
 export class YellowDotUi {
