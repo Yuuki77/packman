@@ -286,37 +286,31 @@ describe('TEST SpecialItemEaten Enemy', () => {
 		console.log(grid.toString());
 	});
 });
-// 		it('should return false', () => {
-// 			let GridData: number[][] =
-// 				[
-// 					[PLAYER_POSITION, 1, BLEUENEMY_POSITION],
-// 					[0, 0, GREENENEMY_POSITION],
-// 					[1, 0, 1]
-// 				];
-// 			let helpers = new Helpers();
-// 			let grid = new Grid(GridData);
-// 			grid.CreateBoard();
 
+describe('TEST EnemyController  GetFarPath', () => {
+	it('should get Far path', () => {
+		let GridData: number[][] =
+			[
+				[0, 1, BLEUENEMY_POSITION],
+				[PLAYER_POSITION, 0, GREENENEMY_POSITION],
+				[1, 0, 1]
+			];
+		let helpers = new Helpers();
+		let grid = new Grid(GridData);
+		grid.CreateBoard();
 
-// 			let playerContent = helpers.getContent(grid, ContentType.Player);
-// 			let player = helpers.getContent(grid, ContentType.Player);
-// 			let enemyContent = grid.GetCell(2,1).Content;
-// 			let enemy = enemyContent as Enemy;
+		let playerContent = helpers.getContent(grid, ContentType.Player);
+		let player = playerContent as Player;
+		let blue = grid.GetCell(2, 0).Content;
+		let blueEnemy = blue as Enemy;
 
-// 			assert(enemy);
-// 			expect(enemy.Type).to.equal(ContentType.Enemy);
+		assert(blueEnemy);
+		expect(blueEnemy.Type).to.equal(ContentType.Enemy);
 
-// 			assert(player);
-// 			expect(player.Type).to.equal(ContentType.Player);
-// 			expect(grid.GetCell(2,1).Content.Type).to.equal(ContentType.Enemy);
+		assert(player);
+		expect(player.Type).to.equal(ContentType.Player);
 
-// 			let enemyController = new GreenEnemyController(grid, player, grid.GetCell(2,0).Content);
-
-// 			let nextCell = enemy.Cell.GetNeightbor(Direction.Up);
-// 			assert(nextCell.Content);
-// 			expect(enemyController.CanNotMove(nextCell)).to.equal(true);
-
-// 			nextCell = player.Cell.GetNeightbor(Direction.Left);
-// 			expect(enemyController.CanNotMove(nextCell)).to.equal(false);
-// 		});
-// 	});
+		let enemyController = new GreenEnemyController(grid, player, grid.GetCell(2, 1).Content);
+		console.log(enemyController.GetFarPath());
+	});
+});

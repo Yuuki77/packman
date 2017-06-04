@@ -3,6 +3,7 @@ import { ICellContent, ICell, EnemyType, Direction, IGrid, ContentType } from '.
 export abstract class Content implements ICellContent {
 	private alive: boolean;
 	private cell: ICell;
+	public previousCell: ICell;
 	public grid: IGrid;
 	private onMove: { (cell: ICell): void }[] = [];
 	private onEat: { (): void }[] = [];
@@ -19,10 +20,19 @@ export abstract class Content implements ICellContent {
 	}
 
 	public set Cell(cell: ICell | undefined) {
-		this.cell = cell;
+		if (cell !== this.cell) {
+			this.previousCell = this.cell;
+			this.cell = cell;
+		}
+
+		if (this.previousCell === this.cell) {
+			throw new Error('preciouc sell and current cell shoule not be same');
+		}
 		this.grid = this.cell.grid;
 		this.x = cell.x;
 		this.y = cell.y;
+
+
 		if (cell !== undefined) {
 			for (let cb of this.onMove) {
 				cb(this.Cell);

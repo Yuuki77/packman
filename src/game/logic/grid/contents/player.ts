@@ -1,6 +1,7 @@
 import { ICellContent, ICell, ContentType, Direction, IPlayer, FacilityType } from '../../../interfaces/interfaces';
 import { Content } from '../content';
 import { Helpers } from '../../../../test/helpers';
+import { Enemy } from "./enemy";
 
 export class Player extends Content implements IPlayer {
 	public readonly Type: ContentType = ContentType.Player;
@@ -16,7 +17,6 @@ export class Player extends Content implements IPlayer {
 	}
 
 	public EatItem() {
-		console.log('eat item', this.onEatItem.length);
 		for (let cb of this.onEatItem) {
 			cb();
 		}
@@ -47,6 +47,11 @@ export class Player extends Content implements IPlayer {
 			nextCell.Facility.Visited = true;
 			this.grid.Move(player, nextCell);
 			return;
+		}
+
+		let enemy = nextCell.Content as Enemy;
+		if (this.IsEnemy(nextCell) && enemy.Run) {
+			this.EatEnemy(nextCell);
 		}
 
 		// visit dot
@@ -95,5 +100,9 @@ export class Player extends Content implements IPlayer {
 
 	public IsPackGum(cell: ICell): boolean {
 		return this.helper.IsThisFacility(cell, FacilityType.PackGum) && !cell.Facility.Visited;
+	}
+
+	public IsEnemy(cell: ICell): boolean {
+		return this.helper.IsThisContent(cell, ContentType.Enemy);
 	}
 }

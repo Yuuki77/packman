@@ -1,4 +1,4 @@
-import { ICellContent, IGrid, ICell, ContentType, IEnemyController, Direction } from '../../interfaces/interfaces';
+import { ICellContent, IGrid, ICell, ContentType, IEnemyController, Direction, FacilityType } from '../../interfaces/interfaces';
 import { PathFinding } from '../pathFind/pathFind';
 import { Player } from '../grid/contents/player';
 import { Enemy } from '../grid/contents/enemy';
@@ -33,6 +33,17 @@ export abstract class EnemyController implements IEnemyController {
 
 	public Update(): void {
 		let now = Date.now();
+
+		// check if specialTime is over or not
+		if (!this.IsSpecialTime() && this.specialItemEaten === true && this.enemy.Run === true) {
+			this.specialItemEaten = false;
+			this.enemy.Run = false;
+		}
+
+		//
+		if (this.IsSpecialTime()) {
+			this.path = this.GetFarPath();
+		}
 
 		// decide where to goal
 		if (this.lastDecide + 500 < now && !this.IsSpecialTime()) {
@@ -89,20 +100,38 @@ export abstract class EnemyController implements IEnemyController {
 		let now = Date.now();
 		this.lastSpecialTime = now;
 		this.specialItemEaten = true;
-		this.pathFindLogic.Dfs(this.grid.GetCell(13, 12), this.enemy.Cell);
-		this.path = this.pathFindLogic.GetPath();
+		this.path = this.GetFarPath();
 		this.enemy.Run = true;
-		this.path.shift();
 	}
 
 	private IsSpecialTime(): boolean {
 		let now = Date.now();
 		if (this.lastSpecialTime + 10000 < now) {
-			this.specialItemEaten = false;
 			return false;
 		} else if (this.specialItemEaten) {
 			return true;
 		}
+
 		return false;
+	}
+
+	// todo refactoring
+	public GetFarPath(): ICell[] {
+		let neightbors = this.enemy.Cell.GetNeightbors();
+		let farPath: ICell[];
+		for (let neightbor of neightbors) {
+			// check if it is wall or another content
+			if ((neightbor.Facility && neightbor.Facility.Type === FacilityType.Wall) || neightbor.Content || this.enemy.previousCell === neightbor) {
+				continue;
+			}
+
+			this.pathFindLogic.Dfs(this.player.Cell, neightbor);
+			let path: ICell[] = this.pathFindLogic.GetPath();
+			if (!farPath || path.length > farPath.length) {
+				farPath = path;
+			}
+		}
+
+		return farPath;
 	}
 }

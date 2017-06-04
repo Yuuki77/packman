@@ -30,6 +30,7 @@ export interface ICellContent {
 	AddEatEnemyListener(cb: (cell: ICell) => void);
 	EatEnemy();
 	Eaten();
+	previousCell: ICell;
 	Alive: boolean;
 }
 

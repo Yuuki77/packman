@@ -11,7 +11,7 @@ export class PathFinding implements IPathFinding {
 		this.grid = grid;
 	}
 
-	public GetPath() {
+	public GetPath(): ICell[] {
 		let shortestPath = [];
 		shortestPath.push(this.goalPosition);
 		let count = 0;
@@ -33,6 +33,7 @@ export class PathFinding implements IPathFinding {
 		}
 		return shortestPath;
 	}
+
 	private initialize() {
 		this.path = [];
 		this.visited = [];
