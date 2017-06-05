@@ -6,7 +6,6 @@ export abstract class Content implements ICellContent {
 	public previousCell: ICell;
 	public grid: IGrid;
 	private onMove: { (cell: ICell): void }[] = [];
-	private onEat: { (): void }[] = [];
 	private onEaten: { (): void }[] = [];
 	public abstract Type: ContentType;
 	public abstract Id: string;
@@ -26,7 +25,7 @@ export abstract class Content implements ICellContent {
 		}
 
 		if (this.previousCell === this.cell) {
-			throw new Error('preciouc sell and current cell shoule not be same');
+			throw new Error('previous sell and current cell should not be same');
 		}
 		this.grid = this.cell.grid;
 		this.x = cell.x;
@@ -46,36 +45,11 @@ export abstract class Content implements ICellContent {
 
 	public set Alive(currentStatus: boolean | undefined) {
 		this.alive = currentStatus;
-		// throw new Error('It is not implemented yet');
 	}
 
 
 	public AddMoveListener(cb: (cell: ICell) => void) {
 		this.onMove.push(cb);
-	}
-
-	public AddEatEnemyListener(cb: () => void) {
-		this.onEat.push(cb);
-	}
-
-	public AddEatenLister(cb: () => void) {
-		this.onEaten.push(cb);
-	}
-
-	public EatEnemy(): void {
-		if (this.Cell !== undefined) {
-			for (let cb of this.onEat) {
-				cb();
-			}
-		}
-	}
-
-	public Eaten(): void {
-		if (this.Cell !== undefined) {
-			for (let cb of this.onEaten) {
-				cb();
-			}
-		}
 	}
 
 	public Move(cell: ICell) {

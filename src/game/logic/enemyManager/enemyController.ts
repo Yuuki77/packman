@@ -13,6 +13,7 @@ export abstract class EnemyController implements IEnemyController {
 	private path: ICell[];
 	private id: string;
 	private specialItemEaten: boolean = false;
+	private goHome: boolean = false;
 	private lastSpecialTime = 0;
 	private onEatSpecialItem: { (isSpecalItemTime: boolean): void }[] = [];
 
@@ -23,6 +24,7 @@ export abstract class EnemyController implements IEnemyController {
 		this.id = id;
 		this.player.AddMoveListener((newCell: ICell) => this.PlayerPositionUpdated(newCell));
 		this.player.AddPackGumEatListener(() => this.SpecialItemEaten());
+		this.player.AddEatEnemyListener(() => this.EnemyEaten());
 		this.pathFindLogic = new PathFinding(this.grid);
 	}
 
@@ -40,19 +42,30 @@ export abstract class EnemyController implements IEnemyController {
 			this.enemy.Run = false;
 		}
 
+		if (this.goHome && this.lastDecide + 159 < now) {
+			this.lastDecide = now;
+			console.log('return ');
+			console.log(this.path.length);
+			console.log(this.path.length === 1 ? false : true);
+			this.goHome = this.path.length === 1 ? false : true;
+			this.Move();
+			return;
+		}
+
 		//
 		if (this.IsSpecialTime()) {
 			this.path = this.GetFarPath();
 		}
 
+
 		// decide where to goal
-		if (this.lastDecide + 500 < now && !this.IsSpecialTime()) {
+		if (this.lastDecide + 500 < now && !this.IsSpecialTime() && !this.goHome) {
 			this.lastDecide = now;
 			this.Decide();
 		}
 
 		// move
-		if (this.lastMove + 200 < now) {
+		if (this.lastMove + 200 < now && !this.goHome) {
 			this.lastMove = now;
 			this.Move();
 		}
@@ -76,6 +89,7 @@ export abstract class EnemyController implements IEnemyController {
 		}
 
 		let dest = this.path[0];
+		console.log('destination', dest);
 		if (dest) {
 			if (this.CanMove(dest)) {
 				// console.log(">>>>>", this.id, dest);
@@ -91,7 +105,7 @@ export abstract class EnemyController implements IEnemyController {
 
 	public CanMove(dest: ICell): boolean {
 		if (dest.Content) {
-			return dest.Content.Type !== ContentType.Enemy;
+			return false;
 		}
 		return true;
 	}
@@ -102,6 +116,14 @@ export abstract class EnemyController implements IEnemyController {
 		this.specialItemEaten = true;
 		this.path = this.GetFarPath();
 		this.enemy.Run = true;
+	}
+
+	private EnemyEaten(): void {
+		this.pathFindLogic.Dfs(this.grid.GetCell(13, 12), this.enemy.Cell);
+		this.path = this.pathFindLogic.GetPath();
+		this.path.shift();
+		this.goHome = true;
+		console.warn(this.path);
 	}
 
 	private IsSpecialTime(): boolean {
@@ -119,13 +141,14 @@ export abstract class EnemyController implements IEnemyController {
 	public GetFarPath(): ICell[] {
 		let neightbors = this.enemy.Cell.GetNeightbors();
 		let farPath: ICell[];
-		for (let neightbor of neightbors) {
+		for (let neighbor of neightbors) {
+
 			// check if it is wall or another content
-			if ((neightbor.Facility && neightbor.Facility.Type === FacilityType.Wall) || neightbor.Content || this.enemy.previousCell === neightbor) {
+			if ((neighbor.Facility && neighbor.Facility.Type === FacilityType.Wall) || neighbor.Content || this.enemy.previousCell === neighbor) {
 				continue;
 			}
 
-			this.pathFindLogic.Dfs(this.player.Cell, neightbor);
+			this.pathFindLogic.Dfs(this.player.Cell, neighbor);
 			let path: ICell[] = this.pathFindLogic.GetPath();
 			if (!farPath || path.length > farPath.length) {
 				farPath = path;

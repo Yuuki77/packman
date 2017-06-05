@@ -49,6 +49,5 @@ export class PlayerUi {
 
 	private RegisterInterface(): void {
 		this.player.AddMoveListener((newCell: ICell) => this.PlayerMoved(newCell));
-		this.player.AddEatenLister(() => this.PlayerEaten());
 	}
 }

@@ -311,6 +311,39 @@ describe('TEST EnemyController  GetFarPath', () => {
 		expect(player.Type).to.equal(ContentType.Player);
 
 		let enemyController = new GreenEnemyController(grid, player, grid.GetCell(2, 1).Content);
-		console.log(enemyController.GetFarPath());
+	});
+});
+
+describe('TEST Player eatEnemy', () => {
+	it('should enemy Eat', () => {
+		let GridData: number[][] =
+			[
+				[0, 1, 0],
+				[PLAYER_POSITION, GREENENEMY_POSITION, 0],
+				[1, 0, 1]
+			];
+		let helpers = new Helpers();
+		let grid = new Grid(GridData);
+		grid.CreateBoard();
+
+		let playerContent = helpers.getContent(grid, ContentType.Player);
+		let player = playerContent as Player;
+		let blue = helpers.getContent(grid, ContentType.Enemy);
+		let blueEnemy = blue as Enemy;
+		blueEnemy.Run = true;
+
+		assert(blueEnemy);
+		expect(blueEnemy.Type).to.equal(ContentType.Enemy);
+
+		assert(player);
+		expect(player.Type).to.equal(ContentType.Player);
+
+		console.log('Before');
+		console.log(grid.toString());
+		let nextCell = player.Cell.GetNeightbor(Direction.Right);
+		grid.Move(player, nextCell);
+
+		console.log('After');
+		console.log(grid.toString());
 	});
 });

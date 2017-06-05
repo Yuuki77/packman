@@ -11,11 +11,6 @@ export namespace Images {
 
 				static getPNG(): string { return require('assets/graphics/GameOver.png'); };
 		}
-		export class GraphicsTitleScreen {
-				static getName(): string { return 'TitleScreen'; };
-
-				static getPNG(): string { return require('assets/graphics/TitleScreen.png'); };
-		}
 		export class GraphicsScene {
 				static getName(): string { return 'scene'; };
 
@@ -25,6 +20,11 @@ export namespace Images {
 				static getName(): string { return 'scene720p'; };
 
 				static getPNG(): string { return require('assets/graphics/scene720p.png'); };
+		}
+		export class GraphicsTitleScreen {
+				static getName(): string { return 'TitleScreen'; };
+
+				static getPNG(): string { return require('assets/graphics/TitleScreen.png'); };
 		}
 		export class ImagesBackgroundTemplate {
 				static getName(): string { return 'background_template'; };
@@ -50,6 +50,11 @@ export namespace Images {
 				static getName(): string { return 'ghostBlue'; };
 
 				static getPNG(): string { return require('assets/images/ghostBlue.png'); };
+		}
+		export class ImagesGhostDead {
+				static getName(): string { return 'ghostDead'; };
+
+				static getPNG(): string { return require('assets/images/ghostDead.png'); };
 		}
 		export class ImagesGhostRed {
 				static getName(): string { return 'ghostRed'; };

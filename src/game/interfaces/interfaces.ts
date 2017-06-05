@@ -27,9 +27,6 @@ export interface ICellContent {
 	readonly EnemyType: EnemyType;
 	Cell: ICell;
 	AddMoveListener(cb: (cell: ICell) => void);
-	AddEatEnemyListener(cb: (cell: ICell) => void);
-	EatEnemy();
-	Eaten();
 	previousCell: ICell;
 	Alive: boolean;
 }

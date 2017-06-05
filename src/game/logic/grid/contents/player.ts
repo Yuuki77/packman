@@ -1,7 +1,7 @@
 import { ICellContent, ICell, ContentType, Direction, IPlayer, FacilityType } from '../../../interfaces/interfaces';
 import { Content } from '../content';
 import { Helpers } from '../../../../test/helpers';
-import { Enemy } from "./enemy";
+import { Enemy } from './enemy';
 
 export class Player extends Content implements IPlayer {
 	public readonly Type: ContentType = ContentType.Player;
@@ -10,6 +10,7 @@ export class Player extends Content implements IPlayer {
 	private lastMove = 0;
 	public Id = 'Player';
 	private onEatItem: { () }[] = [];
+	private onEat: { (): void }[] = [];
 
 	constructor() {
 		super();
@@ -49,9 +50,9 @@ export class Player extends Content implements IPlayer {
 			return;
 		}
 
-		let enemy = nextCell.Content as Enemy;
-		if (this.IsEnemy(nextCell) && enemy.Run) {
-			this.EatEnemy(nextCell);
+		if (this.CanEatEnemy(nextCell)) {
+			console.error('Eat Enemy');
+			this.EatEnemy();
 		}
 
 		// visit dot
@@ -82,13 +83,24 @@ export class Player extends Content implements IPlayer {
 		return nextCell;
 	}
 
+	private CanEatEnemy(cell: ICell) {
+		if (!cell.Content) {
+			return false;
+		}
+
+		if (cell.Content.Type === ContentType.Enemy) {
+			let enemy = cell.Content as Enemy;
+			return enemy.Run;
+		}
+	}
+
 	public CannotMove(content: ICellContent, nextCell: ICell): boolean {
 		if (content.Type !== ContentType.Player) {
 			return true;
 		}
 
-		// check if there is a cell
-		if (this.helper.IsUndefined(nextCell)) {
+		// check if cell is undefined
+		if (nextCell === undefined) {
 			return true;
 		}
 
@@ -104,5 +116,19 @@ export class Player extends Content implements IPlayer {
 
 	public IsEnemy(cell: ICell): boolean {
 		return this.helper.IsThisContent(cell, ContentType.Enemy);
+	}
+
+
+	public AddEatEnemyListener(cb: () => void) {
+		this.onEat.push(cb);
+	}
+
+	public EatEnemy(): void {
+		console.log('call function');
+		if (this.Cell !== undefined) {
+			for (let cb of this.onEat) {
+				cb();
+			}
+		}
 	}
 }

@@ -5,7 +5,7 @@ export class Enemy extends Content {
 	public readonly Type: ContentType = ContentType.Enemy;
 	public readonly EnemyType: EnemyType;
 	public Id = 'Enemy';
-	public run: boolean = false;
+	private run: boolean = false;
 	private onRun: { (run: boolean): void }[] = [];
 
 	constructor(type: EnemyType) {
@@ -35,4 +35,3 @@ export class Enemy extends Content {
 		this.onRun.push(cb);
 	}
 }
-

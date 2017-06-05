@@ -40,9 +40,6 @@ export class Helpers {
 			throw new Error('this is undefined');
 		}
 	}
-	public IsUndefined(cell: ICell): boolean {
-		return cell === undefined;
-	}
 
 	public IsWall(cell: ICell): boolean {
 		return (cell.Facility && cell.Facility.Type === FacilityType.Wall);
@@ -80,6 +77,8 @@ export class Helpers {
 
 	public IsThisContent(cell: ICell, ContentType): boolean {
 		if (cell.Content) {
+			console.log(cell.Content);
+			console.log(cell.Content.Type === ContentType.Type);
 			return cell.Content.Type === ContentType.Type;
 		}
 		return false;
