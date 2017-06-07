@@ -36,24 +36,21 @@ export abstract class EnemyController implements IEnemyController {
 	public Update(): void {
 		let now = Date.now();
 
-		// check if specialTime is over or not
+		// a lot of if makes me sad....
 		if (!this.IsSpecialTime() && this.specialItemEaten === true && this.enemy.Run === true) {
 			this.specialItemEaten = false;
 			this.enemy.Run = false;
 		}
 
-		if (this.goHome && this.lastDecide + 159 < now) {
+		if (this.goHome && this.lastDecide + 80 < now) {
 			this.lastDecide = now;
-			console.log('return ');
-			console.log(this.path.length);
-			console.log(this.path.length === 1 ? false : true);
 			this.goHome = this.path.length === 1 ? false : true;
 			this.Move();
 			return;
 		}
 
 		//
-		if (this.IsSpecialTime()) {
+		if (this.IsSpecialTime() && !this.goHome) {
 			this.path = this.GetFarPath();
 		}
 
@@ -89,7 +86,6 @@ export abstract class EnemyController implements IEnemyController {
 		}
 
 		let dest = this.path[0];
-		console.log('destination', dest);
 		if (dest) {
 			if (this.CanMove(dest)) {
 				// console.log(">>>>>", this.id, dest);
@@ -123,7 +119,7 @@ export abstract class EnemyController implements IEnemyController {
 		this.path = this.pathFindLogic.GetPath();
 		this.path.shift();
 		this.goHome = true;
-		console.warn(this.path);
+		this.enemy.Eaten = true;
 	}
 
 	private IsSpecialTime(): boolean {

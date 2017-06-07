@@ -3,10 +3,11 @@ import { ICellContent, ICell, EnemyType, Direction, IGrid, ContentType } from '.
 export abstract class Content implements ICellContent {
 	private alive: boolean;
 	private cell: ICell;
+	private eaten: boolean = false;
 	public previousCell: ICell;
 	public grid: IGrid;
 	private onMove: { (cell: ICell): void }[] = [];
-	private onEaten: { (): void }[] = [];
+	private onEaten: { (Eaten: boolean): void }[] = [];
 	public abstract Type: ContentType;
 	public abstract Id: string;
 
@@ -45,6 +46,21 @@ export abstract class Content implements ICellContent {
 
 	public set Alive(currentStatus: boolean | undefined) {
 		this.alive = currentStatus;
+	}
+
+	public AddEatenListner(cb: (eaten: boolean) => void) {
+		this.onEaten.push(cb);
+	}
+
+	public get Eaten() {
+		return this.eaten;
+	}
+
+	public set Eaten(currentStatus: boolean | undefined) {
+		this.eaten = currentStatus;
+		for (let cb of this.onEaten) {
+			cb(this.eaten);
+		}
 	}
 
 

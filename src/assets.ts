@@ -66,6 +66,11 @@ export namespace Images {
 
 				static getPNG(): string { return require('assets/images/ghostRunAway.png'); };
 		}
+		export class ImagesGhostWhite {
+				static getName(): string { return 'ghostWhite'; };
+
+				static getPNG(): string { return require('assets/images/ghostWhite.png'); };
+		}
 		export class ImagesGhostYellow {
 				static getName(): string { return 'ghostYellow'; };
 

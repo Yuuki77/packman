@@ -23,6 +23,7 @@ export interface ICellContent {
 	x: number;
 	y: number;
 	Id: string;
+	Eaten: boolean;
 	readonly Type: ContentType;
 	readonly EnemyType: EnemyType;
 	Cell: ICell;
