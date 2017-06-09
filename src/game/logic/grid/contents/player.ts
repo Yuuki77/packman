@@ -4,13 +4,14 @@ import { Helpers } from '../../../../test/helpers';
 import { Enemy } from './enemy';
 
 export class Player extends Content implements IPlayer {
+	public currentDirection: Direction = Direction.Left;
 	public readonly Type: ContentType = ContentType.Player;
 	public Alive: boolean = true;
 	public helper;
 	private lastMove = 0;
 	public Id = 'Player';
 	private onEatItem: { () }[] = [];
-	private onEat: { (): void }[] = [];
+	private onEat: { (enemy: ICellContent): void }[] = [];
 
 	constructor() {
 		super();
@@ -27,13 +28,22 @@ export class Player extends Content implements IPlayer {
 		this.onEatItem.push(cb);
 	}
 
+	private GetNextDirection(direction: Direction) {
+		let nextCell = this.GetNextCell(this, direction);
+		if (this.CannotMove(this, nextCell)) {
+			return this.currentDirection;
+		}
+		return direction;
+	}
+
 	public Update(player: ICellContent, direction: Direction): void {
 		let now = Date.now();
 
-		// if (this.lastMove + 200 < now) {
-		this.lastMove = now;
-		this.Decide(player, direction);
-		// }
+		this.currentDirection = this.GetNextDirection(direction);
+		if (this.lastMove + 200 < now) {
+			this.lastMove = now;
+			this.Decide(player, direction);
+		}
 	}
 
 	public Decide(player: ICellContent, direction: Direction) {
@@ -51,8 +61,7 @@ export class Player extends Content implements IPlayer {
 		}
 
 		if (this.CanEatEnemy(nextCell)) {
-			console.error('Eat Enemy');
-			this.EatEnemy();
+			this.EatEnemy(nextCell.Content);
 		}
 
 		// visit dot
@@ -119,15 +128,19 @@ export class Player extends Content implements IPlayer {
 	}
 
 
-	public AddEatEnemyListener(cb: () => void) {
+	public AddEatEnemyListener(cb: (enemy: ICellContent) => void) {
 		this.onEat.push(cb);
 	}
 
-	public EatEnemy(): void {
-		console.log('call function');
+	public EatEnemy(enemy: ICellContent): void {
+		if (enemy.Type !== ContentType.Enemy) {
+			throw new Error('it should be enemy' + enemy);
+		}
+
 		if (this.Cell !== undefined) {
+			this.grid.scoreManager.EnemyEaten();
 			for (let cb of this.onEat) {
-				cb();
+				cb(enemy);
 			}
 		}
 	}

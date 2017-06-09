@@ -13,6 +13,7 @@ export class ScoreUi {
 		this.Show();
 		this.scoreManager = scoreManager;
 		this.scoreManager.AddScoreListener((newScore: number) => this.ScoreUpdated(newScore));
+		this.scoreManager.AddEnemyEatenListenr((newScore: number) => this.ScoreUpdated(newScore));
 	}
 
 	private Show() {

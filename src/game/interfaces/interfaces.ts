@@ -75,6 +75,8 @@ export interface IEnemyManager {
 
 export interface IScoreManager {
 	AddScoreListener(cb: (newScore: number) => void);
+	EnemyEaten(): void;
+	RestEnemyEatenTimes(): void;
 	Score: number;
 }
 

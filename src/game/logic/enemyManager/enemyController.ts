@@ -24,7 +24,7 @@ export abstract class EnemyController implements IEnemyController {
 		this.id = id;
 		this.player.AddMoveListener((newCell: ICell) => this.PlayerPositionUpdated(newCell));
 		this.player.AddPackGumEatListener(() => this.SpecialItemEaten());
-		this.player.AddEatEnemyListener(() => this.EnemyEaten());
+		this.player.AddEatEnemyListener((enemy: ICellContent) => this.EnemyEaten(enemy));
 		this.pathFindLogic = new PathFinding(this.grid);
 	}
 
@@ -114,7 +114,12 @@ export abstract class EnemyController implements IEnemyController {
 		this.enemy.Run = true;
 	}
 
-	private EnemyEaten(): void {
+	private EnemyEaten(enemy: ICellContent): void {
+
+		if (enemy.EnemyType !== this.enemy.EnemyType) {
+			return;
+		}
+
 		this.pathFindLogic.Dfs(this.grid.GetCell(13, 12), this.enemy.Cell);
 		this.path = this.pathFindLogic.GetPath();
 		this.path.shift();

@@ -18,6 +18,7 @@ export class Game {
 	private leftKey;
 	private rigthKey;
 	private enemyManager;
+	private currentKey: Phaser.Key;
 
 	constructor(game: Phaser.Game) {
 		this.game = game;
@@ -54,6 +55,8 @@ export class Game {
 	}
 
 	public Update(): void {
+
+		this.player.Update(this.player, this.player.currentDirection);
 		this.enemyManager.Update();
 	}
 
