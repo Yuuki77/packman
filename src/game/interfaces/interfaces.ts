@@ -75,7 +75,8 @@ export interface IEnemyManager {
 
 export interface IScoreManager {
 	AddScoreListener(cb: (newScore: number) => void);
-	EnemyEaten(): void;
+	AddEnemyEatenListenr(cb: (newScore: number, enemy: ICellContent) => void);
+	EnemyEaten(enemy: ICellContent): void;
 	RestEnemyEatenTimes(): void;
 	Score: number;
 }

@@ -138,7 +138,7 @@ export class Player extends Content implements IPlayer {
 		}
 
 		if (this.Cell !== undefined) {
-			this.grid.scoreManager.EnemyEaten();
+			this.grid.scoreManager.EnemyEaten(enemy);
 			for (let cb of this.onEat) {
 				cb(enemy);
 			}

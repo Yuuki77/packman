@@ -1,4 +1,4 @@
-import { IScoreManager, ICell, ICellContent, IGrid } from '../interfaces/interfaces';
+import { IScoreManager, ICell, ICellContent, IGrid, ContentType } from '../interfaces/interfaces';
 
 export class ScoreManager implements IScoreManager {
 	public readonly grid: IGrid;
@@ -7,6 +7,7 @@ export class ScoreManager implements IScoreManager {
 
 	// to do change
 	private OnScoreUpdatedCallbacks: { (cb): void }[] = [];
+	private OnScoreEnemyEatenCallbacks: { (newScore: number, enemy: ICellContent): void }[] = [];
 
 	public get Score() {
 		return this.score;
@@ -25,20 +26,24 @@ export class ScoreManager implements IScoreManager {
 		this.OnScoreUpdatedCallbacks.push(cb);
 	}
 
-	public AddEnemyEatenListenr(cb: (newScore: number) => void) {
-		this.OnScoreUpdatedCallbacks.push(cb);
+	public AddEnemyEatenListenr(cb: (newScore: number, enemy: ICellContent) => void) {
+		this.OnScoreEnemyEatenCallbacks.push(cb);
 	}
 
-	public EnemyEaten() {
+	public EnemyEaten(enemy: ICellContent) {
+
+		if (enemy.Type !== ContentType.Enemy) {
+			throw new Error('this content should be enemy');
+		}
 		this.score = 200 * this.enemyEatenTimes++;
 		if (this.score !== undefined) {
-			for (let cb of this.OnScoreUpdatedCallbacks) {
-				cb(this.score);
+			for (let cb of this.OnScoreEnemyEatenCallbacks) {
+				cb(this.score, enemy);
 			}
 		}
 	}
 
-	public ResetEnemyEatenTimes(): void {
+	public RestEnemyEatenTimes(): void {
 		this.enemyEatenTimes = 1;
 	}
 }
