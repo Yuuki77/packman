@@ -1,4 +1,4 @@
-import { ICellContent, IGrid, ICell, ContentType, IEnemyController, Direction, FacilityType } from '../../interfaces/interfaces';
+import { ICellContent, IGrid, ICell, ContentType, IEnemyController, Direction, FacilityType, ENEMY_NOMAL_SPPED, ENEMY_RUN_AWAY_SPPED, ENEMY_GOHOME_SPPED } from '../../interfaces/interfaces';
 import { PathFinding } from '../pathFind/pathFind';
 import { Player } from '../grid/contents/player';
 import { Enemy } from '../grid/contents/enemy';
@@ -42,7 +42,7 @@ export abstract class EnemyController implements IEnemyController {
 			this.enemy.Run = false;
 		}
 
-		if (this.goHome && this.lastDecide + 80 < now) {
+		if (this.goHome && this.lastDecide + ENEMY_GOHOME_SPPED < now) {
 			this.lastDecide = now;
 			this.goHome = this.path.length === 1 ? false : true;
 			this.Move();
@@ -62,7 +62,7 @@ export abstract class EnemyController implements IEnemyController {
 		}
 
 		// move
-		if (this.lastMove + 200 < now && !this.goHome) {
+		if (this.lastMove + this.GetCurrentSpeed() < now && !this.goHome) {
 			this.lastMove = now;
 			this.Move();
 		}
@@ -157,5 +157,9 @@ export abstract class EnemyController implements IEnemyController {
 		}
 
 		return farPath;
+	}
+
+	public GetCurrentSpeed(): number {
+		return this.specialItemEaten === true ? ENEMY_RUN_AWAY_SPPED : ENEMY_NOMAL_SPPED;
 	}
 }

@@ -10,7 +10,7 @@ export class Game {
 	private player: Player;
 	private enemysArray: ICellContent[] = [];
 	private gridUi;
-	private grid;
+	private grid: Grid;
 	private game;
 	private pathFind;
 	private upKey;
@@ -37,7 +37,6 @@ export class Game {
 		this.KeyboardInputs();
 		// todo think about this.
 		this.enemyManager = new EnemyManager(this.grid, this.player, this.enemysArray);
-
 	}
 
 	public KeyboardInputs(): void {

@@ -242,7 +242,7 @@ describe('TEST Player IsPackGUm', () => {
 		expect(grid.GetCell(0, 0).Facility.Visited).to.equal(false);
 		console.log('Before');
 		console.log(grid.toString());
-		player.Decide(player, Direction.Up);
+		// player.Decide(player, Direction.Up);
 
 		expect(grid.GetCell(0, 0).Content.Type).to.equal(ContentType.Player);
 		expect(grid.GetCell(0, 0).Facility.Visited).to.equal(true);
@@ -345,5 +345,82 @@ describe('TEST Player eatEnemy', () => {
 
 		console.log('After');
 		console.log(grid.toString());
+	});
+});
+
+describe('TEST Check if game is clear or not', () => {
+	it('should game clear', () => {
+		let GridData: number[][] =
+			[
+				[PLAYER_POSITION, 0, 0],
+				[1, 1, 1],
+				[1, 1, 1]
+			];
+		let helpers = new Helpers();
+		let grid = new Grid(GridData);
+		grid.CreateBoard();
+
+		let playerContent = helpers.getContent(grid, ContentType.Player);
+		let player = playerContent as Player;
+
+		assert(player);
+		expect(player.Type).to.equal(ContentType.Player);
+
+		expect(grid.IsGameClear()).to.equal(false);
+		console.log(grid.visitedDotNumbers);
+		console.log('Before');
+		console.log(grid.toString());
+		let nextCell = player.Cell.GetNeightbor(Direction.Right);
+		grid.Move(player, nextCell);
+		expect(grid.IsGameClear()).to.equal(false);
+
+		nextCell = player.Cell.GetNeightbor(Direction.Right);
+		grid.Move(player, nextCell);
+
+		console.log('After');
+		console.log(grid.toString());
+		console.log('dots', grid.numberOfDots);
+		console.log('visited', grid.visitedDotNumbers);
+		expect(grid.IsGameClear()).to.equal(true);
+
+	});
+});
+
+
+describe('TEST Check if game is clear or not', () => {
+	it('should game clear', () => {
+		let GridData: number[][] =
+			[
+				[PLAYER_POSITION, 9, 0],
+				[1, 1, 1],
+				[1, 1, 1]
+			];
+		let helpers = new Helpers();
+		let grid = new Grid(GridData);
+		grid.CreateBoard();
+
+		let playerContent = helpers.getContent(grid, ContentType.Player);
+		let player = playerContent as Player;
+
+		assert(player);
+		expect(player.Type).to.equal(ContentType.Player);
+
+		expect(grid.IsGameClear()).to.equal(false);
+		console.log(grid.visitedDotNumbers);
+		console.log('Before');
+		console.log(grid.toString());
+		let nextCell = player.Cell.GetNeightbor(Direction.Right);
+		grid.Move(player, nextCell);
+		expect(grid.IsGameClear()).to.equal(false);
+
+		nextCell = player.Cell.GetNeightbor(Direction.Right);
+		grid.Move(player, nextCell);
+
+		console.log('After');
+		console.log(grid.toString());
+		console.log('dots', grid.numberOfDots);
+		console.log('visited', grid.visitedDotNumbers);
+		expect(grid.IsGameClear()).to.equal(true);
+
 	});
 });

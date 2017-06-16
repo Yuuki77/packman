@@ -1,7 +1,8 @@
-import { ICellContent, ICell, ContentType, Direction, IPlayer, FacilityType } from '../../../interfaces/interfaces';
+import { ICellContent, ICell, ContentType, Direction, IPlayer, FacilityType, ICellFacility, PLAYERY_NOMAL_SPPED } from '../../../interfaces/interfaces';
 import { Content } from '../content';
 import { Helpers } from '../../../../test/helpers';
 import { Enemy } from './enemy';
+import { Cherry } from '../facility/cherry';
 
 export class Player extends Content implements IPlayer {
 	public currentDirection: Direction = Direction.Left;
@@ -40,7 +41,7 @@ export class Player extends Content implements IPlayer {
 		let now = Date.now();
 
 		this.currentDirection = this.GetNextDirection(direction);
-		if (this.lastMove + 200 < now) {
+		if (this.lastMove + PLAYERY_NOMAL_SPPED < now) {
 			this.lastMove = now;
 			this.Decide(player, direction);
 		}
@@ -71,6 +72,16 @@ export class Player extends Content implements IPlayer {
 			return;
 		}
 
+		// visit Item
+		if (this.CanVisitItem(nextCell)) {
+			console.log('visit item');
+			this.EatSpecialItem(nextCell.Facility);
+			nextCell.Facility.Visited = true;
+			this.grid.Move(player, nextCell);
+			return;
+		}
+
+
 		if (this.helper.IsThisContent(nextCell, ContentType.Enemy)) {
 			throw new Error('It is not implemented yet');
 		}
@@ -80,6 +91,13 @@ export class Player extends Content implements IPlayer {
 
 	private CanVisitDot(nextCell: ICell): boolean {
 		return nextCell.Facility && nextCell.Facility.Type === FacilityType.YellowDot && !nextCell.Facility.Visited;
+	}
+
+	private CanVisitItem(nextCell: ICell): boolean {
+		if (nextCell.Facility && nextCell.Facility.Type === FacilityType.Cherry && !nextCell.Facility.Visited) {
+			let cherry = nextCell.Facility as Cherry;
+			return cherry.showed === true ? true : false;
+		}
 	}
 
 	public GetNextCell(player: ICellContent, direction: Direction): ICell | undefined {
@@ -143,5 +161,12 @@ export class Player extends Content implements IPlayer {
 				cb(enemy);
 			}
 		}
+	}
+
+	public EatSpecialItem(cherry: ICellFacility): void {
+		if (cherry.Type !== FacilityType.Cherry) {
+			throw new Error('it should be cherry' + cherry);
+		}
+		this.grid.scoreManager.SpecialItemEaten(cherry);
 	}
 }

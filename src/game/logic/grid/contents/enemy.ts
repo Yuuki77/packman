@@ -1,4 +1,4 @@
-import { ICellContent, ICell, EnemyType, ContentType } from '../../../interfaces/interfaces';
+import { ICellContent, ICell, EnemyType, ContentType, Direction } from '../../../interfaces/interfaces';
 import { Content } from '../content';
 
 export class Enemy extends Content {
@@ -7,6 +7,7 @@ export class Enemy extends Content {
 	public Id = 'Enemy';
 	private run: boolean = false;
 	private onRun: { (run: boolean): void }[] = [];
+	public readonly HomeDirection = Direction.LeftUp;
 
 	constructor(type: EnemyType) {
 		super();
@@ -33,5 +34,9 @@ export class Enemy extends Content {
 
 	public AddRunListener(cb: (isRun: boolean) => void) {
 		this.onRun.push(cb);
+	}
+
+	public toString(): string {
+		return ' enemy ' + 'x' + this.x + 'y' + this.y;
 	}
 }

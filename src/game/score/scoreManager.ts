@@ -1,4 +1,4 @@
-import { IScoreManager, ICell, ICellContent, IGrid, ContentType } from '../interfaces/interfaces';
+import { IScoreManager, ICell, ICellContent, IGrid, ContentType, ICellFacility, FacilityType } from '../interfaces/interfaces';
 
 export class ScoreManager implements IScoreManager {
 	public readonly grid: IGrid;
@@ -8,6 +8,7 @@ export class ScoreManager implements IScoreManager {
 	// to do change
 	private OnScoreUpdatedCallbacks: { (cb): void }[] = [];
 	private OnScoreEnemyEatenCallbacks: { (newScore: number, enemy: ICellContent): void }[] = [];
+	private OnScoreSoecialItemEatenCallbacks: { (newScore: number, specialItem: ICellFacility): void }[] = [];
 
 	public get Score() {
 		return this.score;
@@ -31,7 +32,6 @@ export class ScoreManager implements IScoreManager {
 	}
 
 	public EnemyEaten(enemy: ICellContent) {
-
 		if (enemy.Type !== ContentType.Enemy) {
 			throw new Error('this content should be enemy');
 		}
@@ -39,6 +39,22 @@ export class ScoreManager implements IScoreManager {
 		if (this.score !== undefined) {
 			for (let cb of this.OnScoreEnemyEatenCallbacks) {
 				cb(this.score, enemy);
+			}
+		}
+	}
+
+	public AddSpecialItemEatenListenr(cb: (newScore: number, cherry: ICellFacility) => void) {
+		this.OnScoreSoecialItemEatenCallbacks.push(cb);
+	}
+
+	public SpecialItemEaten(cherry: ICellFacility) {
+		if (cherry.Type !== FacilityType.Cherry) {
+			throw new Error('this content should be cherry');
+		}
+		this.score = 100;
+		if (this.score !== undefined) {
+			for (let cb of this.OnScoreSoecialItemEatenCallbacks) {
+				cb(this.score, cherry);
 			}
 		}
 	}

@@ -6,6 +6,7 @@ export interface IGrid {
 	scoreManager: IScoreManager;
 	width: number;
 	height: number;
+	visitedDotNumbers: number;
 }
 
 export interface ICell {
@@ -16,7 +17,6 @@ export interface ICell {
 	Facility: ICellFacility | undefined;
 	GetNeightbor(direction: Direction): ICell | undefined;
 	GetNeightbors(): ICell[];
-	// AddVistLietenr(cb: () => void);
 }
 
 export interface ICellContent {
@@ -39,7 +39,8 @@ export enum ContentType {
 export enum FacilityType {
 	Wall,
 	YellowDot,
-	PackGum
+	PackGum,
+	Cherry
 }
 
 export enum EnemyType {
@@ -53,7 +54,11 @@ export enum Direction {
 	Up,
 	Down,
 	Left,
-	Right
+	Right,
+	LeftUp,
+	LeftDown,
+	RightDows,
+	RightUp
 }
 
 export interface IPathFinding {
@@ -75,14 +80,15 @@ export interface IEnemyManager {
 
 export interface IScoreManager {
 	AddScoreListener(cb: (newScore: number) => void);
-	AddEnemyEatenListenr(cb: (newScore: number, enemy: ICellContent) => void);
 	EnemyEaten(enemy: ICellContent): void;
+	SpecialItemEaten(cherry: ICellFacility);
 	RestEnemyEatenTimes(): void;
+	AddEnemyEatenListenr(cb: (newScore: number, enemy: ICellContent) => void);
+	AddSpecialItemEatenListenr(cb: (newScore: number, cherry: ICellFacility) => void);
 	Score: number;
 }
 
 export interface ICellFacility {
-	grid: IGrid;
 	x: number;
 	y: number;
 	Cell: ICell;
@@ -96,3 +102,8 @@ export interface IPlayer {
 	GetNextCell(content: ICellContent, direction: Direction): ICell | undefined;
 	CannotMove(content: ICellContent, nextCell: ICell): boolean;
 }
+
+export const ENEMY_NOMAL_SPPED: number = 170;
+export const PLAYERY_NOMAL_SPPED: number = 210;
+export const ENEMY_RUN_AWAY_SPPED: number = 459;
+export const ENEMY_GOHOME_SPPED: number = 120;

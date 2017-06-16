@@ -7,6 +7,7 @@ import { ScoreManager } from '../score/scoreManager';
 import { GridData } from '../const';
 import { YellowDot } from './grid/facility/yellowDot';
 import { PackGum } from './grid/facility/packGum';
+import { Cherry } from './grid/facility/cherry';
 import { Helpers } from '../../test/helpers';
 
 
@@ -15,15 +16,20 @@ export class Grid implements IGrid {
 	private onFacilityCreatedCallbacks: { (facility: ICellFacility): void; }[] = [];
 	private onContentCreatedCallbacks: { (content: ICellContent): void; }[] = [];
 	private data: number[][];
+
+	public visitedDotNumbers: number = 0;
+	public numberOfDots: number = 0;
 	public width: number = 0;
 	public height: number = 0;
 	public scoreManager: ScoreManager;
 	private helper: Helpers;
+	private now: number;
 
 	constructor(GridData: number[][]) {
 		this.data = GridData;
 		this.scoreManager = new ScoreManager();
 		this.helper = new Helpers();
+		this.now = Date.now();
 	}
 
 	// todo
@@ -75,12 +81,18 @@ export class Grid implements IGrid {
 
 				if (this.data[y][x] === 0) {
 					this.CreateFacility(FacilityType.YellowDot, this.grid[y][x]);
+					this.numberOfDots++;
 					continue;
 				}
 
 				if (this.data[y][x] === 7) {
+					this.numberOfDots++;
 					this.CreateFacility(FacilityType.PackGum, this.grid[y][x]);
 					continue;
+				}
+
+				if (this.data[y][x] === 9) {
+					this.CreateFacility(FacilityType.Cherry, this.grid[y][x]);
 				}
 			}
 		}
@@ -105,6 +117,9 @@ export class Grid implements IGrid {
 				break;
 			case FacilityType.PackGum:
 				facility = new PackGum();
+				break;
+			case FacilityType.Cherry:
+				facility = new Cherry();
 				break;
 			default:
 				console.error('un known type', type);
@@ -146,13 +161,11 @@ export class Grid implements IGrid {
 
 	public Move(movingContent: ICellContent, nextCell: ICell) {
 		if (nextCell === undefined) {
-			console.warn('cannot move here');
-			return;
+			throw Error('next cell is undefined');
 		}
 
 		if (nextCell === movingContent.Cell) {
-			console.warn('cant move to the same place');
-			return;
+			throw Error('next cell is same place');
 		}
 
 		// clean previous position
@@ -206,5 +219,9 @@ export class Grid implements IGrid {
 		}
 		// console.warn(result);
 		return result;
+	}
+
+	public IsGameClear(): boolean {
+		return this.visitedDotNumbers === this.numberOfDots;
 	}
 }

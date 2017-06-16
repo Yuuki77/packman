@@ -10,10 +10,13 @@ import { PlayerUi } from './contents/PlayerUi';
 import { YellowDotUi } from './facilitys/dotUi';
 import { PackGumUi } from './facilitys/PackGumUi';
 import { WallUi } from './facilitys/wallUi';
+import { CherryUi } from './facilitys/cherryUi';
+import { Cherry } from '../logic/grid/facility/cherry';
 
 export class GridUi {
 	private game: Phaser.Game;
 	private grid: IGrid;
+	private player: ICellContent;
 
 	constructor(game: Phaser.Game, grid: IGrid) {
 		this.game = game;
@@ -26,6 +29,7 @@ export class GridUi {
 	private ContentCreated(content: ICellContent): void {
 		switch (content.Type) {
 			case ContentType.Player:
+				this.player = content;
 				new PlayerUi(this.game, content as Player);
 				break;
 			case ContentType.Enemy:
@@ -46,6 +50,9 @@ export class GridUi {
 				break;
 			case FacilityType.PackGum:
 				new PackGumUi(this.game, facility as PackGum);
+				break;
+			case FacilityType.Cherry:
+				new CherryUi(this.game, facility as Cherry);
 				break;
 			default:
 				console.warn('unexpected facility', facility);

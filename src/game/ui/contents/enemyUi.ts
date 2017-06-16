@@ -48,7 +48,7 @@ export class EnemyUi {
 			this.sprite.scale.x = destination.x < this.sprite.x ? -1 * Math.abs(this.sprite.scale.x) : 1 * Math.abs(this.sprite.scale.x);
 		}
 
-		this.game.add.tween(this.sprite).to(destination, 200, Phaser.Easing.Linear.None, true);
+		this.game.add.tween(this.sprite).to(destination, 500, Phaser.Easing.Linear.None, true);
 	}
 
 	private SpecialItemEaten(isRun: boolean): void {
