@@ -74,7 +74,8 @@ export abstract class EnemyController implements IEnemyController {
 		if (attack) {
 			this.pathFindLogic.Dfs(this.player.Cell, this.enemy.Cell);
 		} else {
-			this.pathFindLogic.Dfs(this.grid.GetCell(13, 12), this.enemy.Cell);
+			// this.pathFindLogic.Dfs(this.grid.GetCell(13, 12), this.enemy.Cell);
+			this.pathFindLogic.Dfs(this.grid.GetCell(this.enemy.HomePosition[0], this.enemy.HomePosition[1]), this.enemy.Cell);
 		}
 		this.path = this.pathFindLogic.GetPath();
 		this.path.shift();
@@ -120,7 +121,8 @@ export abstract class EnemyController implements IEnemyController {
 			return;
 		}
 
-		this.pathFindLogic.Dfs(this.grid.GetCell(13, 12), this.enemy.Cell);
+		// this.pathFindLogic.Dfs(this.grid.GetCell(13, 12), this.enemy.Cell);
+		this.pathFindLogic.Dfs(this.grid.GetCell(this.enemy.HomePosition[0], this.enemy.HomePosition[1]), this.enemy.Cell);
 		this.path = this.pathFindLogic.GetPath();
 		this.path.shift();
 		this.goHome = true;
