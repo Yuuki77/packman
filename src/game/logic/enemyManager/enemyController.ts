@@ -1,7 +1,9 @@
-import { ICellContent, IGrid, ICell, ContentType, IEnemyController, Direction, FacilityType, ENEMY_NOMAL_SPPED, ENEMY_RUN_AWAY_SPPED, ENEMY_GOHOME_SPPED } from '../../interfaces/interfaces';
+import { ICellContent, IGrid, ICell, ContentType, IEnemyController, Direction, FacilityType, ENEMY_NOMAL_SPPED, ENEMY_RUN_AWAY_SPPED, ENEMY_GOHOME_SPPED, EnemyType, IAiManager } from '../../interfaces/interfaces';
 import { PathFinding } from '../pathFind/pathFind';
 import { Player } from '../grid/contents/player';
 import { Enemy } from '../grid/contents/enemy';
+import { AiManager } from '../Ai/aiManager';
+
 
 export abstract class EnemyController implements IEnemyController {
 	public readonly grid: IGrid;
@@ -13,8 +15,8 @@ export abstract class EnemyController implements IEnemyController {
 	private path: ICell[];
 	private id: string;
 	private specialItemEaten: boolean = false;
-	private goHome: boolean = false;
 	private lastSpecialTime = 0;
+	private currentSteps = 0;
 	private onEatSpecialItem: { (isSpecalItemTime: boolean): void }[] = [];
 
 	constructor(grid: IGrid, player: ICellContent, enemy: ICellContent, id: string) {
@@ -37,45 +39,47 @@ export abstract class EnemyController implements IEnemyController {
 		let now = Date.now();
 
 		// a lot of if makes me sad....
-		if (!this.IsSpecialTime() && this.specialItemEaten === true && this.enemy.Run === true) {
+		// back to normal state.
+		if (!this.IsSpecialTime() && this.specialItemEaten && this.enemy.Run && this.enemy.isPlayable) {
 			this.specialItemEaten = false;
 			this.enemy.Run = false;
+			this.enemy.goHome = false;
 		}
 
-		if (this.goHome && this.lastDecide + ENEMY_GOHOME_SPPED < now) {
+		if (this.enemy.goHome && this.enemy.isPlayable) {
 			this.lastDecide = now;
-			this.goHome = this.path.length === 1 ? false : true;
+			this.enemy.goHome = this.path.length === 1 ? false : true;
 			this.Move();
 			return;
 		}
 
-		//
-		if (this.IsSpecialTime() && !this.goHome) {
+		// run away from player
+		if (this.IsSpecialTime() && !this.enemy.goHome && this.enemy.isPlayable) {
 			this.path = this.GetFarPath();
 		}
 
-
 		// decide where to goal
-		if (this.lastDecide + 500 < now && !this.IsSpecialTime() && !this.goHome) {
+		if (this.CanDecide()) {
 			this.lastDecide = now;
 			this.Decide();
 		}
 
 		// move
-		if (this.lastMove + this.GetCurrentSpeed() < now && !this.goHome) {
-			this.lastMove = now;
+		console.log('isplayable' + this.enemy.isPlayable);
+		console.log('gohome' + this.enemy.goHome);
+		if (this.enemy.isPlayable && !this.enemy.goHome) {
 			this.Move();
 		}
 	}
 
 	public Decide(): void {
-		let attack = Math.random() < 0.9;
+		let attack = Math.random() < this.enemy.aiManager.Greedy;
 
 		if (attack) {
 			this.pathFindLogic.Dfs(this.player.Cell, this.enemy.Cell);
 		} else {
-			// this.pathFindLogic.Dfs(this.grid.GetCell(13, 12), this.enemy.Cell);
-			this.pathFindLogic.Dfs(this.grid.GetCell(this.enemy.HomePosition[0], this.enemy.HomePosition[1]), this.enemy.Cell);
+			this.pathFindLogic.Dfs(this.grid.GetCell(13, 12), this.enemy.Cell);
+			return;
 		}
 		this.path = this.pathFindLogic.GetPath();
 		this.path.shift();
@@ -83,14 +87,17 @@ export abstract class EnemyController implements IEnemyController {
 
 	public Move() {
 		if (!this.path || this.path.length === 0) {
+			this.Decide();
 			return;
 		}
 
 		let dest = this.path[0];
+		console.warn('move is called');
 		if (dest) {
 			if (this.CanMove(dest)) {
 				// console.log(">>>>>", this.id, dest);
 				dest = this.path.shift();
+				this.enemy.isPlayable = false;
 				this.grid.Move(this.enemy, dest);
 			} else {
 				// console.log(">>>>> cant move", this.id, dest, dest.Content);
@@ -107,6 +114,22 @@ export abstract class EnemyController implements IEnemyController {
 		return true;
 	}
 
+	public CanDecide(): boolean {
+		if (!this.path || this.path.length === 1) {
+			return true;
+		}
+		let now = Date.now();
+
+		if (this.lastDecide + 500 > now || this.IsSpecialTime() || this.enemy.goHome) {
+			return false;
+		}
+		return true;
+	}
+
+	// private GetReactTime(): number {
+	// 	return ((1 - this.enemy.aiManager.Reactivity) * 0.1 + 2) * 1000;
+	// }
+
 	private SpecialItemEaten(): void {
 		let now = Date.now();
 		this.lastSpecialTime = now;
@@ -121,11 +144,10 @@ export abstract class EnemyController implements IEnemyController {
 			return;
 		}
 
-		// this.pathFindLogic.Dfs(this.grid.GetCell(13, 12), this.enemy.Cell);
-		this.pathFindLogic.Dfs(this.grid.GetCell(this.enemy.HomePosition[0], this.enemy.HomePosition[1]), this.enemy.Cell);
+		this.pathFindLogic.Dfs(this.grid.GetCell(13, 12), this.enemy.Cell);
 		this.path = this.pathFindLogic.GetPath();
 		this.path.shift();
-		this.goHome = true;
+		this.enemy.goHome = true;
 		this.enemy.Eaten = true;
 	}
 

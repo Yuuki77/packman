@@ -17,6 +17,7 @@ export interface ICell {
 	Facility: ICellFacility | undefined;
 	GetNeightbor(direction: Direction): ICell | undefined;
 	GetNeightbors(): ICell[];
+	canPlayerVisit: boolean;
 }
 
 export interface ICellContent {
@@ -54,11 +55,7 @@ export enum Direction {
 	Up,
 	Down,
 	Left,
-	Right,
-	LeftUp,
-	LeftDown,
-	RightDows,
-	RightUp
+	Right
 }
 
 export interface IPathFinding {
@@ -83,9 +80,14 @@ export interface IScoreManager {
 	EnemyEaten(enemy: ICellContent): void;
 	SpecialItemEaten(cherry: ICellFacility);
 	RestEnemyEatenTimes(): void;
-	AddEnemyEatenListenr(cb: (newScore: number, enemy: ICellContent) => void);
-	AddSpecialItemEatenListenr(cb: (newScore: number, cherry: ICellFacility) => void);
+	AddEnemyEatenListener(cb: (newScore: number, enemy: ICellContent) => void);
+	AddSpecialItemEatenListener(cb: (newScore: number, cherry: ICellFacility) => void);
 	Score: number;
+}
+export interface IAiManager {
+	Greedy: number;
+	Emotively: number;
+	Speed: number;
 }
 
 export interface ICellFacility {
@@ -103,7 +105,7 @@ export interface IPlayer {
 	CannotMove(content: ICellContent, nextCell: ICell): boolean;
 }
 
-export const ENEMY_NOMAL_SPPED: number = 170;
+export const ENEMY_NOMAL_SPPED: number = 500;
 export const PLAYERY_NOMAL_SPPED: number = 210;
 export const ENEMY_RUN_AWAY_SPPED: number = 459;
-export const ENEMY_GOHOME_SPPED: number = 120;
+export const ENEMY_GOHOME_SPPED: number = 100;

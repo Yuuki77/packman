@@ -13,8 +13,8 @@ export class ScoreUi {
 		this.Show();
 		this.scoreManager = scoreManager;
 		this.scoreManager.AddScoreListener((newScore: number) => this.ScoreUpdated(newScore));
-		this.scoreManager.AddEnemyEatenListenr((newScore: number, enemy: ICellContent) => this.ScoreSpecialUpdated(newScore, enemy));
-		this.scoreManager.AddSpecialItemEatenListenr((newScore: number, cherry: ICellFacility) => this.ScoreSpecialItmEatenUpdated(newScore, cherry));
+		this.scoreManager.AddEnemyEatenListener((newScore: number, enemy: ICellContent) => this.ScoreSpecialUpdated(newScore, enemy));
+		this.scoreManager.AddSpecialItemEatenListener((newScore: number, cherry: ICellFacility) => this.ScoreSpecialItmEatenUpdated(newScore, cherry));
 	}
 
 	private Show() {
@@ -30,14 +30,14 @@ export class ScoreUi {
 	private ScoreSpecialUpdated(newScore: number, enemy: ICellContent) {
 		this.scoreEnemyEatenText = this.game.add.text(enemy.x * 18 + 9, enemy.y * 18 + 9, newScore.toString(), { fontSize: '15px', fill: '#F0F8FF' });
 		this.score += newScore;
-		this.scoreEnemyEatenText.text = 'score: ' + this.score;
+		this.scoreEnemyEatenText.text = newScore.toString();
 		this.game.time.events.add(1000, this.RemoveText, this);
 	}
 
 	private ScoreSpecialItmEatenUpdated(newScore: number, cherry: ICellFacility) {
 		this.scoreEnemyEatenText = this.game.add.text(cherry.Cell.x * 18 + 9, cherry.Cell.y * 18, newScore.toString(), { fontSize: '15px', fill: '#F0F8FF' });
 		this.score += newScore;
-		this.scoreEnemyEatenText.text = 'score: ' + this.score;
+		this.scoreEnemyEatenText.text = newScore.toString();
 		this.game.time.events.add(1000, this.RemoveText, this);
 	}
 

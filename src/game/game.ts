@@ -16,9 +16,10 @@ export class Game {
 	private upKey;
 	private downKey;
 	private leftKey;
-	private rigthKey;
+	private rightKey;
 	private enemyManager;
 	private currentKey: Phaser.Key;
+	private currentTime: number;
 
 	constructor(game: Phaser.Game) {
 		this.game = game;
@@ -34,9 +35,8 @@ export class Game {
 		});
 
 		this.grid.CreateBoard();
-		this.KeyboardInputs();
-		// todo think about this.
 		this.enemyManager = new EnemyManager(this.grid, this.player, this.enemysArray);
+		this.currentTime = Date.now();
 	}
 
 	public KeyboardInputs(): void {
@@ -49,14 +49,21 @@ export class Game {
 		this.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
 		this.leftKey.onDown.add(() => this.player.Update(this.player, Direction.Left), this);
 
-		this.rigthKey = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-		this.rigthKey.onDown.add(() => this.player.Update(this.player, Direction.Right), this);
+		this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+		this.rightKey.onDown.add(() => this.player.Update(this.player, Direction.Right), this);
 	}
 
 	public Update(): void {
+		let now = Date.now();
+		// if (this.currentTime + 5000 > now) {
+		// 	console.log('ready');
+		// 	return;
+		// }
 
+		this.KeyboardInputs();
 		this.player.Update(this.player, this.player.currentDirection);
 		this.enemyManager.Update();
+
 	}
 
 	public isGameOver(): boolean {

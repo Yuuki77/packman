@@ -39,7 +39,6 @@ export class EnemyManager implements IEnemyManager {
 					this.greenEnemyController = new GreenEnemyController(this.grid, this.player, enemy);
 					this.enemyControllers.push(this.greenEnemyController);
 					break;
-
 				default:
 					console.error('unexpected enemy', enemy);
 			}

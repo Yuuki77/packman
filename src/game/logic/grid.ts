@@ -58,7 +58,6 @@ export class Grid implements IGrid {
 					continue;
 				}
 
-
 				if (this.data[y][x] === 4) {
 					this.CreateContent(ContentType.Enemy, this.grid[y][x]);
 					continue;
@@ -93,6 +92,10 @@ export class Grid implements IGrid {
 
 				if (this.data[y][x] === 9) {
 					this.CreateFacility(FacilityType.Cherry, this.grid[y][x]);
+				}
+
+				if (this.data[y][x] === 8) {
+					this.grid[y][x].CanPlayerVisit = false;
 				}
 			}
 		}
@@ -204,7 +207,14 @@ export class Grid implements IGrid {
 
 	private DataToString() {
 		let result = '';
+
+		for (let i = 0; i < this.width; i++) {
+			result += '-------';
+		}
+		result += '\n';
 		for (let y = 0; y < this.height; y++) {
+			result += '|';
+
 			for (let x = 0; x < this.width; x++) {
 				let cell = this.GetCell(x, y);
 				if (cell.Content) {
@@ -214,10 +224,15 @@ export class Grid implements IGrid {
 				} else {
 					result += ' ' + ' 0 ' + ' ';
 				}
+				result += '|';
+			}
+			result += '\n';
+
+			for (let i = 0; i < this.width; i++) {
+				result += '-------';
 			}
 			result += '\n';
 		}
-		// console.warn(result);
 		return result;
 	}
 

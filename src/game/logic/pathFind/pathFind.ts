@@ -64,6 +64,7 @@ export class PathFinding implements IPathFinding {
 				if (neighbors[i].Facility && neighbors[i].Facility.Type === FacilityType.Wall) {
 					continue;
 				}
+
 				if (this.visited[neighbors[i].y][neighbors[i].x] === false) {
 					this.visited[neighbors[i].y][neighbors[i].x] = true;
 					this.path[neighbors[i].y][neighbors[i].x] = this.path[currentPosition.y][currentPosition.x] + 1;

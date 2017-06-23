@@ -4,6 +4,7 @@ export class Cell implements ICell {
 	public readonly grid: IGrid;
 	public readonly x: number;
 	public readonly y: number;
+	public canPlayerVisit: boolean = true;
 	private content: ICellContent | undefined;
 	private facility: ICellFacility | undefined;
 
@@ -18,6 +19,7 @@ export class Cell implements ICell {
 			this.content.Cell = this;
 		}
 	}
+
 	public get Facility(): ICellFacility | undefined {
 		return this.facility;
 	}
@@ -28,6 +30,14 @@ export class Cell implements ICell {
 			this.facility.Cell = this;
 		}
 		this.facility = facility;
+	}
+
+	public get CanPlayerVisit(): boolean {
+		return this.canPlayerVisit;
+	}
+
+	public set CanPlayerVisit(canPlayerVisit: boolean) {
+		this.canPlayerVisit = canPlayerVisit;
 	}
 
 	constructor(grid: IGrid, x: number, y: number) {

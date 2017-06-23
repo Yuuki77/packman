@@ -10,7 +10,7 @@ export class Player extends Content implements IPlayer {
 	public Alive: boolean = true;
 	public helper;
 	private lastMove = 0;
-	public Id = 'Player';
+	public Id = ' Player ';
 	private onEatItem: { () }[] = [];
 	private onEat: { (enemy: ICellContent): void }[] = [];
 
@@ -53,7 +53,7 @@ export class Player extends Content implements IPlayer {
 			return;
 		};
 
-		// eat packgum
+		// eat pacgum
 		if (this.IsPackGum(nextCell)) {
 			this.EatItem();
 			nextCell.Facility.Visited = true;
@@ -135,6 +135,11 @@ export class Player extends Content implements IPlayer {
 		if (this.helper.IsWall(nextCell)) {
 			return true;
 		}
+
+		if (!nextCell.canPlayerVisit) {
+			return true;
+		}
+		return false;
 	}
 
 	public IsPackGum(cell: ICell): boolean {

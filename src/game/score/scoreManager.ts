@@ -4,11 +4,9 @@ export class ScoreManager implements IScoreManager {
 	public readonly grid: IGrid;
 	private score: number = 0;
 	private enemyEatenTimes: number = 1;
-
-	// to do change
 	private OnScoreUpdatedCallbacks: { (cb): void }[] = [];
 	private OnScoreEnemyEatenCallbacks: { (newScore: number, enemy: ICellContent): void }[] = [];
-	private OnScoreSoecialItemEatenCallbacks: { (newScore: number, specialItem: ICellFacility): void }[] = [];
+	private OnScoreSpecialItemEatenCallbacks: { (newScore: number, specialItem: ICellFacility): void }[] = [];
 
 	public get Score() {
 		return this.score;
@@ -27,7 +25,7 @@ export class ScoreManager implements IScoreManager {
 		this.OnScoreUpdatedCallbacks.push(cb);
 	}
 
-	public AddEnemyEatenListenr(cb: (newScore: number, enemy: ICellContent) => void) {
+	public AddEnemyEatenListener(cb: (newScore: number, enemy: ICellContent) => void) {
 		this.OnScoreEnemyEatenCallbacks.push(cb);
 	}
 
@@ -35,26 +33,27 @@ export class ScoreManager implements IScoreManager {
 		if (enemy.Type !== ContentType.Enemy) {
 			throw new Error('this content should be enemy');
 		}
-		this.score = 200 * this.enemyEatenTimes++;
+		let score = 200 * this.enemyEatenTimes++;
 		if (this.score !== undefined) {
 			for (let cb of this.OnScoreEnemyEatenCallbacks) {
-				cb(this.score, enemy);
+				cb(score, enemy);
 			}
 		}
 	}
 
-	public AddSpecialItemEatenListenr(cb: (newScore: number, cherry: ICellFacility) => void) {
-		this.OnScoreSoecialItemEatenCallbacks.push(cb);
+	public AddSpecialItemEatenListener(cb: (newScore: number, cherry: ICellFacility) => void) {
+		this.OnScoreSpecialItemEatenCallbacks.push(cb);
 	}
 
 	public SpecialItemEaten(cherry: ICellFacility) {
 		if (cherry.Type !== FacilityType.Cherry) {
 			throw new Error('this content should be cherry');
 		}
-		this.score = 100;
+
+		let score = 100;
 		if (this.score !== undefined) {
-			for (let cb of this.OnScoreSoecialItemEatenCallbacks) {
-				cb(this.score, cherry);
+			for (let cb of this.OnScoreSpecialItemEatenCallbacks) {
+				cb(score, cherry);
 			}
 		}
 	}

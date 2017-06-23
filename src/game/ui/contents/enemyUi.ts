@@ -48,7 +48,22 @@ export class EnemyUi {
 			this.sprite.scale.x = destination.x < this.sprite.x ? -1 * Math.abs(this.sprite.scale.x) : 1 * Math.abs(this.sprite.scale.x);
 		}
 
-		this.game.add.tween(this.sprite).to(destination, 500, Phaser.Easing.Linear.None, true);
+		// TODO : use const for speeds.
+		// let duration = this.enemy.goHome ? 50 : 250;
+		let duration = this.GetDuration();
+		let tween = this.game.add.tween(this.sprite).to(destination, duration, Phaser.Easing.Linear.None, true);
+		tween.onComplete.add(this.onComplete, this);
+	}
+
+	private GetDuration(): number {
+		if (this.enemy.goHome) {
+			return 50;
+		}
+		return this.enemy.aiManager.Speed;
+	}
+
+	private onComplete() {
+		this.enemy.isPlayable = true;
 	}
 
 	private SpecialItemEaten(isRun: boolean): void {
@@ -61,6 +76,7 @@ export class EnemyUi {
 			this.sprite.destroy();
 			this.Show();
 		}
+		this.onComplete();
 	}
 
 	private EnemyEaten(eaten: boolean): void {
@@ -73,5 +89,6 @@ export class EnemyUi {
 			this.sprite.destroy();
 			this.Show();
 		}
+		this.onComplete();
 	}
 }

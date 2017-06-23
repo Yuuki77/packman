@@ -2,10 +2,10 @@ import 'mocha';
 import { expect } from 'chai';
 import { assert } from 'chai';
 import { Grid } from '../game/logic/grid';
-import { ContentType, Direction, IPlayer } from '../game/interfaces/interfaces';
+import { ContentType, Direction, IPlayer, EnemyType } from '../game/interfaces/interfaces';
 import { PathFinding } from '../game/logic/pathFind/pathFind';
 import { Helpers } from './helpers';
-import { GREENENEMY_POSITION, PACKGUM_POSITION, PLAYER_POSITION, BLEUENEMY_POSITION } from '../game/const';
+import { GREEN_ENEMY_POSITION, PACKGUM_POSITION, PLAYER_POSITION, BLUE_ENEMY_POSITION } from '../game/const';
 import { Player } from '../game/logic/grid/contents/player';
 import { Enemy } from '../game/logic/grid/contents/enemy';
 import { GreenEnemyController } from '../game/logic/enemyManager/controllers/greenController';
@@ -85,7 +85,7 @@ describe('TEST CanMove function in player', () => {
 		let GridData: number[][] =
 			[
 				[PLAYER_POSITION, 1, 1],
-				[0, 0, GREENENEMY_POSITION],
+				[0, 0, GREEN_ENEMY_POSITION],
 				[1, 0, 1]
 			];
 		let helpers = new Helpers();
@@ -192,8 +192,8 @@ describe('TEST Enemy CanNotMove function', () => {
 	it('should not go down', () => {
 		let GridData: number[][] =
 			[
-				[0, 1, BLEUENEMY_POSITION],
-				[PLAYER_POSITION, 0, GREENENEMY_POSITION],
+				[0, 1, BLUE_ENEMY_POSITION],
+				[PLAYER_POSITION, 0, GREEN_ENEMY_POSITION],
 				[1, 0, 1]
 			];
 		let helpers = new Helpers();
@@ -257,7 +257,7 @@ describe('TEST SpecialItemEaten Enemy', () => {
 	it('should get ran away', () => {
 		let GridData: number[][] =
 			[
-				[BLEUENEMY_POSITION, 1, 0],
+				[BLUE_ENEMY_POSITION, 1, 0],
 				[0, 0, 0],
 				[1, 0, 1]
 			];
@@ -291,8 +291,8 @@ describe('TEST EnemyController  GetFarPath', () => {
 	it('should get Far path', () => {
 		let GridData: number[][] =
 			[
-				[0, 1, BLEUENEMY_POSITION],
-				[PLAYER_POSITION, 0, GREENENEMY_POSITION],
+				[0, 1, BLUE_ENEMY_POSITION],
+				[PLAYER_POSITION, 0, GREEN_ENEMY_POSITION],
 				[1, 0, 1]
 			];
 		let helpers = new Helpers();
@@ -319,7 +319,7 @@ describe('TEST Player eatEnemy', () => {
 		let GridData: number[][] =
 			[
 				[0, 1, 0],
-				[PLAYER_POSITION, GREENENEMY_POSITION, 0],
+				[PLAYER_POSITION, GREEN_ENEMY_POSITION, 0],
 				[1, 0, 1]
 			];
 		let helpers = new Helpers();
@@ -421,6 +421,80 @@ describe('TEST Check if game is clear or not', () => {
 		console.log('dots', grid.numberOfDots);
 		console.log('visited', grid.visitedDotNumbers);
 		expect(grid.IsGameClear()).to.equal(true);
+	});
+});
+
+
+
+describe('TEST Check if game is clear or not', () => {
+	it('should game clear', () => {
+		let GridData: number[][] =
+			[
+				[PLAYER_POSITION, 9, 0],
+				[1, 1, 1],
+				[1, 1, 1]
+			];
+		let helpers = new Helpers();
+		let grid = new Grid(GridData);
+		grid.CreateBoard();
+
+		let playerContent = helpers.getContent(grid, ContentType.Player);
+		let player = playerContent as Player;
+
+		assert(player);
+		expect(player.Type).to.equal(ContentType.Player);
+
+		expect(grid.IsGameClear()).to.equal(false);
+		console.log(grid.visitedDotNumbers);
+		console.log('Before');
+		console.log(grid.toString());
+		let nextCell = player.Cell.GetNeightbor(Direction.Right);
+		grid.Move(player, nextCell);
+		expect(grid.IsGameClear()).to.equal(false);
+
+		nextCell = player.Cell.GetNeightbor(Direction.Right);
+		grid.Move(player, nextCell);
+
+		console.log('After');
+		console.log(grid.toString());
+		console.log('dots', grid.numberOfDots);
+		console.log('visited', grid.visitedDotNumbers);
+		expect(grid.IsGameClear()).to.equal(true);
+	});
+});
+
+describe('TEST Check if there is a collision go home ', () => {
+	it('should game clear', () => {
+		let GridData: number[][] =
+			[
+				[0, 9, 0],
+				[GREEN_ENEMY_POSITION, 1, 1],
+				[BLUE_ENEMY_POSITION, 1, 1]
+			];
+		let helpers = new Helpers();
+		let grid = new Grid(GridData);
+
+		grid.CreateBoard();
+
+		let enemyContent = grid.GetCell(0, 2);
+		assert(enemyContent);
+		expect(enemyContent.Content.EnemyType).to.equal(EnemyType.Blue);
+
+		let enemy = enemyContent.Content as Enemy;
+		// let enemyController = new GreenEnemyController(grid, enem, grid.GetCell(2, 1).Content);
+		enemy.Run = true;
+
+		console.log('Before');
+		console.log(grid.toString());
+		let nextCell = enemy.Cell.GetNeightbor(Direction.Up);
+		grid.Move(enemy, nextCell);
+		expect(grid.IsGameClear()).to.equal(false);
+
+		console.log(nextCell.Content.EnemyType);
+		expect(nextCell.Content.EnemyType).to.equal(EnemyType.Blue);
+
+		console.log('After');
+		console.log(grid.toString());
 
 	});
 });
