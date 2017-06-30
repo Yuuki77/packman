@@ -1,5 +1,5 @@
-import * as Utils from '../utils/utils';
 import * as Assets from '../assets';
+import * as Utils from '../utils/utils';
 
 export default class Boot extends Phaser.State {
 

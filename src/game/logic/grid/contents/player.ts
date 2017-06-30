@@ -1,18 +1,19 @@
-import { ICellContent, ICell, ContentType, Direction, IPlayer, FacilityType, ICellFacility, PLAYERY_NOMAL_SPPED } from '../../../interfaces/interfaces';
-import { Content } from '../content';
 import { Helpers } from '../../../../test/helpers';
-import { Enemy } from './enemy';
+import { ContentType, Direction, FacilityType, ICell, ICellContent, ICellFacility, IPlayer, PLAYERY_NOMAL_SPPED } from '../../../interfaces/interfaces';
+import { Content } from '../content';
 import { Cherry } from '../facility/cherry';
+import { Enemy } from './enemy';
 
 export class Player extends Content implements IPlayer {
 	public currentDirection: Direction = Direction.Left;
-	public readonly Type: ContentType = ContentType.Player;
+	public readonly type: ContentType = ContentType.Player;
+	// tslint:disable-next-line:variable-name
 	public Alive: boolean = true;
 	public helper;
 	private lastMove = 0;
-	public Id = ' Player ';
-	private onEatItem: { () }[] = [];
-	private onEat: { (enemy: ICellContent): void }[] = [];
+	public id = ' Player ';
+	private onEatItem: Array<{ () }> = [];
+	private onEat: Array<{ (enemy: ICellContent): void }> = [];
 
 	constructor() {
 		super();
@@ -51,7 +52,7 @@ export class Player extends Content implements IPlayer {
 		let nextCell = this.GetNextCell(player, direction);
 		if (this.CannotMove(player, nextCell)) {
 			return;
-		};
+		}
 
 		// eat pacgum
 		if (this.IsPackGum(nextCell)) {
@@ -80,7 +81,6 @@ export class Player extends Content implements IPlayer {
 			this.grid.Move(player, nextCell);
 			return;
 		}
-
 
 		if (this.helper.IsThisContent(nextCell, ContentType.Enemy)) {
 			throw new Error('It is not implemented yet');
@@ -115,14 +115,14 @@ export class Player extends Content implements IPlayer {
 			return false;
 		}
 
-		if (cell.Content.Type === ContentType.Enemy) {
+		if (cell.Content.type === ContentType.Enemy) {
 			let enemy = cell.Content as Enemy;
 			return enemy.Run;
 		}
 	}
 
 	public CannotMove(content: ICellContent, nextCell: ICell): boolean {
-		if (content.Type !== ContentType.Player) {
+		if (content.type !== ContentType.Player) {
 			return true;
 		}
 
@@ -150,13 +150,12 @@ export class Player extends Content implements IPlayer {
 		return this.helper.IsThisContent(cell, ContentType.Enemy);
 	}
 
-
 	public AddEatEnemyListener(cb: (enemy: ICellContent) => void) {
 		this.onEat.push(cb);
 	}
 
 	public EatEnemy(enemy: ICellContent): void {
-		if (enemy.Type !== ContentType.Enemy) {
+		if (enemy.type !== ContentType.Enemy) {
 			throw new Error('it should be enemy' + enemy);
 		}
 

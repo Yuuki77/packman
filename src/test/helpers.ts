@@ -1,6 +1,5 @@
-import { Grid } from '../game/logic/grid';
-import { ICellContent, IGrid, ICell, Direction, ContentType, FacilityType } from '../game/interfaces/interfaces';
-import { Player } from '../game/logic/grid/contents/player';
+import { ContentType, FacilityType, ICell, ICellContent, IGrid } from '../game/interfaces/interfaces';
+import { Enemy } from '../game/logic/grid/contents/enemy';
 
 export class Helpers {
 	constructor() {
@@ -16,7 +15,7 @@ export class Helpers {
 				}
 			}
 		}
-		console.warn('uncexpected content', contentName);
+		console.warn('unexpected content', contentName);
 		return undefined;
 	}
 
@@ -75,15 +74,6 @@ export class Helpers {
 		return false;
 	}
 
-	public IsThisContent(cell: ICell, ContentType): boolean {
-		if (cell.Content) {
-			console.log(cell.Content);
-			console.log(cell.Content.Type === ContentType.Type);
-			return cell.Content.Type === ContentType.Type;
-		}
-		return false;
-	}
-
 	public IsThisFacility(cell: ICell, FacilityType: FacilityType): boolean {
 		if (cell.Facility) {
 			return cell.Facility.Type === FacilityType;
@@ -93,4 +83,19 @@ export class Helpers {
 
 }
 
+// tslint:disable-next-line:max-classes-per-file
+export class FakeGridUi {
+	private grid: IGrid;
 
+	constructor(grid: IGrid) {
+		this.grid = grid;
+		this.grid.AddContentCreatedListener((content: ICellContent) => {
+			let enemy = content as Enemy;
+			if (enemy.isPlayable !== undefined) {
+				enemy.AddMoveListener((newCell: ICell) => enemy.isPlayable = true);
+				enemy.AddRunListener((isRun: boolean) => enemy.isPlayable = true);
+				enemy.AddEatenListner((isEaten: boolean) => enemy.isPlayable = true);
+			}
+		});
+	}
+}

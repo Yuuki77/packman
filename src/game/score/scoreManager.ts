@@ -1,12 +1,12 @@
-import { IScoreManager, ICell, ICellContent, IGrid, ContentType, ICellFacility, FacilityType } from '../interfaces/interfaces';
+import { ContentType, FacilityType, ICellContent, ICellFacility, IGrid, IScoreManager } from '../interfaces/interfaces';
 
 export class ScoreManager implements IScoreManager {
 	public readonly grid: IGrid;
 	private score: number = 0;
 	private enemyEatenTimes: number = 1;
-	private OnScoreUpdatedCallbacks: { (cb): void }[] = [];
-	private OnScoreEnemyEatenCallbacks: { (newScore: number, enemy: ICellContent): void }[] = [];
-	private OnScoreSpecialItemEatenCallbacks: { (newScore: number, specialItem: ICellFacility): void }[] = [];
+	private onScoreUpdatedCallbacks: Array<{ (cb): void }> = [];
+	private onScoreEnemyEatenCallbacks: Array<{ (newScore: number, enemy: ICellContent): void }> = [];
+	private onScoreSpecialItemEatenCallbacks: Array<{ (newScore: number, specialItem: ICellFacility): void }> = [];
 
 	public get Score() {
 		return this.score;
@@ -15,18 +15,18 @@ export class ScoreManager implements IScoreManager {
 	public set Score(score: number) {
 		this.score = score;
 		if (this.score !== undefined) {
-			for (let cb of this.OnScoreUpdatedCallbacks) {
+			for (let cb of this.onScoreUpdatedCallbacks) {
 				cb(this.score);
 			}
 		}
 	}
 
 	public AddScoreListener(cb: (newScore: number) => void) {
-		this.OnScoreUpdatedCallbacks.push(cb);
+		this.onScoreUpdatedCallbacks.push(cb);
 	}
 
 	public AddEnemyEatenListener(cb: (newScore: number, enemy: ICellContent) => void) {
-		this.OnScoreEnemyEatenCallbacks.push(cb);
+		this.onScoreEnemyEatenCallbacks.push(cb);
 	}
 
 	public EnemyEaten(enemy: ICellContent) {
@@ -35,14 +35,14 @@ export class ScoreManager implements IScoreManager {
 		}
 		let score = 200 * this.enemyEatenTimes++;
 		if (this.score !== undefined) {
-			for (let cb of this.OnScoreEnemyEatenCallbacks) {
+			for (let cb of this.onScoreEnemyEatenCallbacks) {
 				cb(score, enemy);
 			}
 		}
 	}
 
 	public AddSpecialItemEatenListener(cb: (newScore: number, cherry: ICellFacility) => void) {
-		this.OnScoreSpecialItemEatenCallbacks.push(cb);
+		this.onScoreSpecialItemEatenCallbacks.push(cb);
 	}
 
 	public SpecialItemEaten(cherry: ICellFacility) {
@@ -52,7 +52,7 @@ export class ScoreManager implements IScoreManager {
 
 		let score = 100;
 		if (this.score !== undefined) {
-			for (let cb of this.OnScoreSpecialItemEatenCallbacks) {
+			for (let cb of this.onScoreSpecialItemEatenCallbacks) {
 				cb(score, cherry);
 			}
 		}
@@ -62,4 +62,3 @@ export class ScoreManager implements IScoreManager {
 		this.enemyEatenTimes = 1;
 	}
 }
-

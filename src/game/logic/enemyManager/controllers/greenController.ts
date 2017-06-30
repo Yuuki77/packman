@@ -1,4 +1,4 @@
-import { ICellContent, ICell, IGrid } from '../../../interfaces/interfaces';
+import { ICellContent, IGrid } from '../../../interfaces/interfaces';
 import { EnemyController } from '../enemyController';
 
 export class GreenEnemyController extends EnemyController {

@@ -1,23 +1,23 @@
 export interface IGrid {
-	AddFacilityCreateListener(cb: (content: ICellFacility) => void);
-	AddContentCreatedListener(cb: (facility: ICellContent) => void);
-	GetCell(x: number, y: number): ICell | undefined;
-	Move(content: ICellContent, nextCell: ICell);
 	scoreManager: IScoreManager;
 	width: number;
 	height: number;
 	visitedDotNumbers: number;
+	AddFacilityCreateListener(cb: (content: ICellFacility) => void);
+	AddContentCreatedListener(cb: (facility: ICellContent) => void);
+	GetCell(x: number, y: number): ICell | undefined;
+	Move(content: ICellContent, nextCell: ICell);
 }
 
 export interface ICell {
 	readonly grid: IGrid;
 	readonly x: number;
 	readonly y: number;
+	canPlayerVisit: boolean;
 	Content: ICellContent | undefined;
 	Facility: ICellFacility | undefined;
 	GetNeightbor(direction: Direction): ICell | undefined;
 	GetNeightbors(): ICell[];
-	canPlayerVisit: boolean;
 }
 
 export interface ICellContent {
@@ -27,10 +27,10 @@ export interface ICellContent {
 	Eaten: boolean;
 	readonly Type: ContentType;
 	readonly EnemyType: EnemyType;
-	Cell: ICell;
-	AddMoveListener(cb: (cell: ICell) => void);
 	previousCell: ICell;
 	Alive: boolean;
+	Cell: ICell;
+	AddMoveListener(cb: (cell: ICell) => void);
 }
 
 export enum ContentType {
@@ -64,25 +64,27 @@ export interface IPathFinding {
 }
 
 export interface IEnemyController {
-	Update(): void;
+	yt: number[];
+	xt: number[];
+	Update(dt: number): void;
 }
 
 export interface IEnemyManager {
 	grid: IGrid;
 	enemyArray: ICellContent[];
-	Update(): void;
-	// redEnemy: IEnemyManager;
 	blueEnemyController: IEnemyController;
+	Update(dt: number): void;
+	// redEnemy: IEnemyManager;
 }
 
 export interface IScoreManager {
+	Score: number;
 	AddScoreListener(cb: (newScore: number) => void);
 	EnemyEaten(enemy: ICellContent): void;
 	SpecialItemEaten(cherry: ICellFacility);
 	RestEnemyEatenTimes(): void;
 	AddEnemyEatenListener(cb: (newScore: number, enemy: ICellContent) => void);
 	AddSpecialItemEatenListener(cb: (newScore: number, cherry: ICellFacility) => void);
-	Score: number;
 }
 export interface IAiManager {
 	Greedy: number;
@@ -105,7 +107,7 @@ export interface IPlayer {
 	CannotMove(content: ICellContent, nextCell: ICell): boolean;
 }
 
-export const ENEMY_NOMAL_SPPED: number = 500;
-export const PLAYERY_NOMAL_SPPED: number = 210;
-export const ENEMY_RUN_AWAY_SPPED: number = 459;
-export const ENEMY_GOHOME_SPPED: number = 100;
+export const ENEMY_NOMAL_SPPED = 500;
+export const PLAYERY_NOMAL_SPPED = 210;
+export const ENEMY_RUN_AWAY_SPPED = 459;
+export const ENEMY_GOHOME_SPPED = 100;

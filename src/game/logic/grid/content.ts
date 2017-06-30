@@ -1,4 +1,5 @@
-import { ICellContent, ICell, EnemyType, Direction, IGrid, ContentType } from '../../interfaces/interfaces';
+import { ContentType, EnemyType, ICell, ICellContent, IGrid } from '../../interfaces/interfaces';
+import { Player } from "./contents/player";
 
 export abstract class Content implements ICellContent {
 	private alive: boolean;
@@ -6,12 +7,12 @@ export abstract class Content implements ICellContent {
 	private eaten: boolean = false;
 	public previousCell: ICell;
 	public grid: IGrid;
-	private onMove: { (cell: ICell): void }[] = [];
-	private onEaten: { (Eaten: boolean): void }[] = [];
-	public abstract Type: ContentType;
-	public abstract Id: string;
+	private onMove: Array<{ (player: Player): void }> = [];
+	private onEaten: Array<{ (eaten: boolean): void }> = [];
+	public abstract type: ContentType;
+	public abstract id: string;
 
-	readonly EnemyType: EnemyType | undefined = undefined;
+	readonly enemyType: EnemyType | undefined = undefined;
 	public x: number;
 	public y: number;
 
@@ -31,7 +32,6 @@ export abstract class Content implements ICellContent {
 		this.grid = this.cell.grid;
 		this.x = cell.x;
 		this.y = cell.y;
-
 
 		if (cell !== undefined) {
 			for (let cb of this.onMove) {
@@ -63,8 +63,7 @@ export abstract class Content implements ICellContent {
 		}
 	}
 
-
-	public AddMoveListener(cb: (cell: ICell) => void) {
+	public AddMoveListener(cb: (player: Player) => void) {
 		this.onMove.push(cb);
 	}
 

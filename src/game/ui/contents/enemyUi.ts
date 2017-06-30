@@ -1,12 +1,12 @@
+import * as Assets from '../../../assets';
 import { EnemyType, ICell } from '../../interfaces/interfaces';
 import { Enemy } from '../../logic/grid/contents/enemy';
-import * as Assets from '../../../assets';
 
 export class EnemyUi {
 	private enemy: Enemy;
 	private game: Phaser.Game;
 	private sprite: Phaser.Sprite = null;
-	private imageName: string;
+
 	constructor(game: Phaser.Game, enemy: Enemy) {
 		this.enemy = enemy;
 		this.game = game;
@@ -38,10 +38,12 @@ export class EnemyUi {
 				this.sprite.anchor.setTo(0.5, 0.5);
 				this.sprite.scale.setTo(0.035, 0.035);
 				break;
+			default: console.log('unexpected enemyType' + this.enemy.EnemyType);
 		}
 	}
 
 	private EnemyMoved(newCell: ICell): void {
+		console.log('enemy moved');
 		let destination = { x: this.enemy.Cell.x * 18 + 9, y: this.enemy.Cell.y * 18 + 9 };
 
 		if (destination.x !== this.sprite.x) {

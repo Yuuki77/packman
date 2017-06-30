@@ -1,8 +1,7 @@
-import { IGrid, IEnemyController, ICellContent, ICell, Direction, IEnemyManager, EnemyType } from '../../interfaces/interfaces';
-import { PathFinding } from '../pathFind/pathFind';
-import { RedEnemyController } from './controllers/redController';
+import { EnemyType, ICellContent, IEnemyController, IEnemyManager, IGrid } from '../../interfaces/interfaces';
 import { BlueEnemyController } from './controllers/blueController';
 import { GreenEnemyController } from './controllers/greenController';
+import { RedEnemyController } from './controllers/redController';
 import { YellowEnemyController } from './controllers/yellowController';
 
 export class EnemyManager implements IEnemyManager {
@@ -44,9 +43,10 @@ export class EnemyManager implements IEnemyManager {
 			}
 		}
 	}
-	Update(): void {
+
+	Update(dt: number): void {
 		for (let enemyController of this.enemyControllers) {
-			enemyController.Update();
+			enemyController.Update(dt);
 		}
 	}
 }

@@ -1,25 +1,23 @@
-import { ICellContent, ICell, EnemyType, ContentType, Direction } from '../../../interfaces/interfaces';
-import { Content } from '../content';
+import { ContentType, Direction, EnemyType } from '../../../interfaces/interfaces';
 import { AiManager } from '../../Ai/aiManager';
+import { Content } from '../content';
 
 export class Enemy extends Content {
-	public readonly Type: ContentType = ContentType.Enemy;
-	public readonly EnemyType: EnemyType;
-	public homePosition1: Direction;
-	public homePosition2: Direction;
+	public readonly type: ContentType = ContentType.Enemy;
+	public readonly enemyType: EnemyType;
+	public homeDirections: Direction[] = [];
 	public aiManager: AiManager;
-	public Id = 'Enemy';
+	public id = 'Enemy';
 	private run: boolean = false;
-	private onRun: { (run: boolean): void }[] = [];
-	public readonly HomeDirection;
+	private onRun: Array<{ (run: boolean): void }> = [];
 	public isPlayable: boolean = true;
 	public goHome: boolean = false;
 
 	constructor(type: EnemyType) {
 		super();
-		this.EnemyType = type;
+		this.enemyType = type;
 		this.aiManager = new AiManager(type);
-		this.GetHomeDirection(type);
+		this.SetHomeDirection(type);
 	}
 
 	public get Run() {
@@ -33,36 +31,27 @@ export class Enemy extends Content {
 		}
 	}
 
-	// public set Alive(value: boolean | undefined) {
-	// 	this.run = value;
-	// 	for (let cb of this.onRun) {
-	// 		cb(this.run);
-	// 	}
-	// }
-	private GetHomeDirection(enemyType: EnemyType) {
-		let homePosition: number[];
-
+	private SetHomeDirection(enemyType: EnemyType): void {
 		switch (enemyType) {
 			case EnemyType.Red:
-				this.homePosition1 = Direction.Up;
-				this.homePosition2 = Direction.Left;
+				this.homeDirections.push(Direction.Up);
+				this.homeDirections.push(Direction.Left);
 				break;
 			case EnemyType.Blue:
-				this.homePosition1 = Direction.Down;
-				this.homePosition2 = Direction.Left;
+				this.homeDirections.push(Direction.Down);
+				this.homeDirections.push(Direction.Left);
 				break;
 			case EnemyType.Green:
-				this.homePosition1 = Direction.Right;
-				this.homePosition2 = Direction.Down;
+				this.homeDirections.push(Direction.Right);
+				this.homeDirections.push(Direction.Down);
 				break;
 			case EnemyType.Yellow:
-				this.homePosition1 = Direction.Up;
-				this.homePosition2 = Direction.Right;
+				this.homeDirections.push(Direction.Up);
+				this.homeDirections.push(Direction.Right);
 				break;
 			default:
 				throw new Error('unexpected enemy type' + enemyType);
 		}
-		return homePosition;
 	}
 
 	public AddRunListener(cb: (isRun: boolean) => void) {

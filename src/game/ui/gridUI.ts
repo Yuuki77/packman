@@ -1,17 +1,17 @@
-import { IGrid, ICellContent, ContentType, ICellFacility, FacilityType } from '../interfaces/interfaces';
-import { Wall } from '../logic/grid/facility/wall';
-import { Player } from '../logic/grid/contents/player';
+import { ContentType, FacilityType, ICellContent, ICellFacility, IGrid } from '../interfaces/interfaces';
 import { Enemy } from '../logic/grid/contents/enemy';
-import { ScoreUi } from './score/scoreUi';
-import { YellowDot } from '../logic/grid/facility/yellowDot';
+import { Player } from '../logic/grid/contents/player';
+import { Cherry } from '../logic/grid/facility/cherry';
 import { PackGum } from '../logic/grid/facility/packGum';
+import { Wall } from '../logic/grid/facility/wall';
+import { YellowDot } from '../logic/grid/facility/yellowDot';
 import { EnemyUi } from './contents/EnemyUi';
 import { PlayerUi } from './contents/PlayerUi';
+import { CherryUi } from './facilitys/cherryUi';
 import { YellowDotUi } from './facilitys/dotUi';
 import { PackGumUi } from './facilitys/PackGumUi';
 import { WallUi } from './facilitys/wallUi';
-import { CherryUi } from './facilitys/cherryUi';
-import { Cherry } from '../logic/grid/facility/cherry';
+import { ScoreUi } from './score/scoreUi';
 
 export class GridUi {
 	private game: Phaser.Game;
@@ -22,6 +22,7 @@ export class GridUi {
 		this.game = game;
 		this.grid = grid;
 		this.RegisterEvents();
+		// tslint:disable-next-line:no-unused-new
 		new ScoreUi(this.game, this.grid.scoreManager);
 	}
 

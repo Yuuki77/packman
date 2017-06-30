@@ -1,20 +1,18 @@
-import { IGrid, ICellContent, ICell, Direction, EnemyType, ContentType, FacilityType, ICellFacility } from '../interfaces/interfaces';
+import { Helpers } from '../../test/helpers';
+import { ContentType, EnemyType, FacilityType, ICell, ICellContent, ICellFacility, IGrid } from '../interfaces/interfaces';
+import { ScoreManager } from '../score/scoreManager';
 import { Cell } from './grid/cell';
-import { Wall } from './grid/facility/wall';
 import { Enemy } from './grid/contents/enemy';
 import { Player } from './grid/contents/player';
-import { ScoreManager } from '../score/scoreManager';
-import { GridData } from '../const';
-import { YellowDot } from './grid/facility/yellowDot';
-import { PackGum } from './grid/facility/packGum';
 import { Cherry } from './grid/facility/cherry';
-import { Helpers } from '../../test/helpers';
-
+import { PackGum } from './grid/facility/packGum';
+import { Wall } from './grid/facility/wall';
+import { YellowDot } from './grid/facility/yellowDot';
 
 export class Grid implements IGrid {
 	private grid: Cell[][];
-	private onFacilityCreatedCallbacks: { (facility: ICellFacility): void; }[] = [];
-	private onContentCreatedCallbacks: { (content: ICellContent): void; }[] = [];
+	private onFacilityCreatedCallbacks: Array<{ (facility: ICellFacility): void; }> = [];
+	private onContentCreatedCallbacks: Array<{ (content: ICellContent): void; }> = [];
 	private data: number[][];
 
 	public visitedDotNumbers: number = 0;
@@ -25,8 +23,8 @@ export class Grid implements IGrid {
 	private helper: Helpers;
 	private now: number;
 
-	constructor(GridData: number[][]) {
-		this.data = GridData;
+	constructor(gridData: number[][]) {
+		this.data = gridData;
 		this.scoreManager = new ScoreManager();
 		this.helper = new Helpers();
 		this.now = Date.now();

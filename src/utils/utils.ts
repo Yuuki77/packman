@@ -33,6 +33,7 @@ export class ScreenMetrics {
 	offsetY: number;
 }
 
+// tslint:disable-next-line:max-classes-per-file
 export class ScreenUtils {
 	public static screenMetrics: ScreenMetrics;
 
@@ -101,8 +102,10 @@ export class ScreenUtils {
 	}
 }
 
+// tslint:disable-next-line:max-classes-per-file
 export class StringUtils {
 	public static toCamelCase(str: string) {
+		// tslint:disable-next-line:only-arrow-functions
 		return str.replace(/[^A-Za-z0-9]/g, ' ').replace(/^\w|[A-Z]|\b\w|\s+/g, function (match, index) {
 			if (+match === 0 || match === '-' || match === '.') {
 				return '';

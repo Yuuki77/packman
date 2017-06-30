@@ -1,15 +1,13 @@
 import 'p2';
-import 'pixi';
 import 'phaser';
-
+import 'pixi';
 import * as WebFontLoader from 'webfontloader';
-
+import * as Assets from './assets';
 import Boot from './states/boot';
+import GamePlayState from './states/gamePlayState';
 import Preloader from './states/preloader';
 import Title from './states/title';
-import GamePlayState from './states/gamePlayState';
 import * as Utils from './utils/utils';
-import * as Assets from './assets';
 
 class App extends Phaser.Game {
 	constructor(config: Phaser.IGameConfig) {
@@ -43,7 +41,8 @@ function startApp(): void {
 		resolution: 1
 	};
 
-	let app = new App(gameConfig);
+	// tslint:disable-next-line:no-unused-new
+	new App(gameConfig);
 }
 
 window.onload = () => {
@@ -66,6 +65,7 @@ window.onload = () => {
 			urls: []
 		};
 
+		// tslint:disable-next-line:forin
 		for (let font in Assets.CustomWebFonts) {
 			webFontLoaderOptions.custom.families.push(Assets.CustomWebFonts[font].getFamily());
 			webFontLoaderOptions.custom.urls.push(Assets.CustomWebFonts[font].getCSS());
