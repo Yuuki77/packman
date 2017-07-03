@@ -1,4 +1,6 @@
-import { EnemyType, ICellContent, IEnemyController, IEnemyManager, IGrid } from '../../interfaces/interfaces';
+import { EnemyType, IEnemyController, IEnemyManager, IGrid } from '../../interfaces/interfaces';
+import { Enemy } from '../grid/contents/enemy';
+import { Player } from '../grid/contents/player';
 import { BlueEnemyController } from './controllers/blueController';
 import { GreenEnemyController } from './controllers/greenController';
 import { RedEnemyController } from './controllers/redController';
@@ -11,17 +13,17 @@ export class EnemyManager implements IEnemyManager {
 	public yellowEnemyController: BlueEnemyController;
 
 	public readonly grid: IGrid;
-	public player: ICellContent;
-	public enemyArray: ICellContent[] = [];
+	public player: Player;
+	public enemyArray: Enemy[] = [];
 	public enemyControllers: IEnemyController[] = [];
 
-	constructor(grid: IGrid, player: ICellContent, enemyArray: ICellContent[]) {
+	constructor(grid: IGrid, player: Player, enemyArray: Enemy[]) {
 		this.grid = grid;
 		this.player = player;
 		this.enemyArray = enemyArray;
 
 		for (let enemy of this.enemyArray) {
-			switch (enemy.EnemyType) {
+			switch (enemy.enemyType) {
 				case EnemyType.Blue:
 					this.blueEnemyController = new BlueEnemyController(this.grid, this.player, enemy);
 					this.enemyControllers.push(this.blueEnemyController);

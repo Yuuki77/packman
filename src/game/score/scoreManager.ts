@@ -30,7 +30,7 @@ export class ScoreManager implements IScoreManager {
 	}
 
 	public EnemyEaten(enemy: ICellContent) {
-		if (enemy.Type !== ContentType.Enemy) {
+		if (enemy.type !== ContentType.Enemy) {
 			throw new Error('this content should be enemy');
 		}
 		let score = 200 * this.enemyEatenTimes++;
@@ -46,7 +46,7 @@ export class ScoreManager implements IScoreManager {
 	}
 
 	public SpecialItemEaten(cherry: ICellFacility) {
-		if (cherry.Type !== FacilityType.Cherry) {
+		if (cherry.type !== FacilityType.Cherry) {
 			throw new Error('this content should be cherry');
 		}
 

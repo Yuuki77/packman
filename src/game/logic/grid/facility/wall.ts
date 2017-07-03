@@ -1,10 +1,8 @@
-import { Facility } from '../facility';
 import { FacilityType } from '../../../interfaces/interfaces';
-
+import { Facility } from '../facility';
 
 export class Wall extends Facility {
-	public readonly Type: FacilityType = FacilityType.Wall;
-	public Id: string = 'Wall';
+	public readonly type: FacilityType = FacilityType.Wall;
+	public id: string = 'Wall';
 
 }
-

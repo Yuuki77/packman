@@ -17,7 +17,7 @@ export class EnemyUi {
 	}
 
 	private Show() {
-		switch (this.enemy.EnemyType) {
+		switch (this.enemy.enemyType) {
 			case EnemyType.Blue:
 				this.sprite = this.game.add.sprite(this.enemy.Cell.x * 18 + 9, this.enemy.Cell.y * 18 + 9, Assets.Images.ImagesGhostBlue.getName());
 				this.sprite.anchor.setTo(0.5, 0.5);
@@ -38,12 +38,11 @@ export class EnemyUi {
 				this.sprite.anchor.setTo(0.5, 0.5);
 				this.sprite.scale.setTo(0.035, 0.035);
 				break;
-			default: console.log('unexpected enemyType' + this.enemy.EnemyType);
+			default: console.log('unexpected enemyType' + this.enemy.enemyType);
 		}
 	}
 
 	private EnemyMoved(newCell: ICell): void {
-		console.log('enemy moved');
 		let destination = { x: this.enemy.Cell.x * 18 + 9, y: this.enemy.Cell.y * 18 + 9 };
 
 		if (destination.x !== this.sprite.x) {

@@ -8,7 +8,6 @@ export class Player extends Content implements IPlayer {
 	public currentDirection: Direction = Direction.Left;
 	public readonly type: ContentType = ContentType.Player;
 	// tslint:disable-next-line:variable-name
-	public Alive: boolean = true;
 	public helper;
 	private lastMove = 0;
 	public id = ' Player ';
@@ -90,11 +89,11 @@ export class Player extends Content implements IPlayer {
 	}
 
 	private CanVisitDot(nextCell: ICell): boolean {
-		return nextCell.Facility && nextCell.Facility.Type === FacilityType.YellowDot && !nextCell.Facility.Visited;
+		return nextCell.Facility && nextCell.Facility.type === FacilityType.YellowDot && !nextCell.Facility.Visited;
 	}
 
 	private CanVisitItem(nextCell: ICell): boolean {
-		if (nextCell.Facility && nextCell.Facility.Type === FacilityType.Cherry && !nextCell.Facility.Visited) {
+		if (nextCell.Facility && nextCell.Facility.type === FacilityType.Cherry && !nextCell.Facility.Visited) {
 			let cherry = nextCell.Facility as Cherry;
 			return cherry.showed === true ? true : false;
 		}
@@ -168,7 +167,7 @@ export class Player extends Content implements IPlayer {
 	}
 
 	public EatSpecialItem(cherry: ICellFacility): void {
-		if (cherry.Type !== FacilityType.Cherry) {
+		if (cherry.type !== FacilityType.Cherry) {
 			throw new Error('it should be cherry' + cherry);
 		}
 		this.grid.scoreManager.SpecialItemEaten(cherry);

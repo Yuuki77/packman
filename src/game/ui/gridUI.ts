@@ -28,7 +28,7 @@ export class GridUi {
 
 	// todo can I use interface instead of class name
 	private ContentCreated(content: ICellContent): void {
-		switch (content.Type) {
+		switch (content.type) {
 			case ContentType.Player:
 				this.player = content;
 				new PlayerUi(this.game, content as Player);
@@ -42,7 +42,7 @@ export class GridUi {
 	}
 
 	private FacilityCreated(facility: ICellFacility): void {
-		switch (facility.Type) {
+		switch (facility.type) {
 			case FacilityType.Wall:
 				new WallUi(this.game, facility as Wall);
 				break;

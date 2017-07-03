@@ -1,4 +1,4 @@
-import { ENEMY_NOMAL_SPPED, ENEMY_RUN_AWAY_SPPED, FacilityType, ICell, ICellContent, IEnemyController, IGrid } from '../../interfaces/interfaces';
+import { ENEMY_NOMAL_SPPED, ENEMY_RUN_AWAY_SPPED, FacilityType, ICell, ICellContent, IEnemyController, IGrid, ContentType } from '../../interfaces/interfaces';
 import { Enemy } from '../grid/contents/enemy';
 import { Player } from '../grid/contents/player';
 import { PathFinding } from '../pathFind/pathFind';
@@ -13,11 +13,25 @@ export abstract class EnemyController implements IEnemyController {
 	private id: string;
 	private specialItemEaten = false;
 	private lastSpecialTime = 0;
-	public xt;
-	public yt;
+	public xt: number[];
+	public yt: number[];
+	private movingTimes: number = 0;
+
 
 	// control random for testing purpose
 	private random?: number;
+
+	constructor(grid: IGrid, player: Player, enemy: Enemy, id: string) {
+		this.grid = grid;
+		this.player = player as Player;
+		this.enemy = enemy as Enemy;
+		this.id = id;
+		this.player.AddMoveListener((cell: ICell) => this.PlayerPositionUpdated(player));
+		this.player.AddPackGumEatListener(() => this.SpecialItemEaten());
+		this.player.AddEatEnemyListener((enemyContent: ICellContent) => this.EnemyEaten(enemyContent));
+		this.pathFindLogic = new PathFinding(this.grid);
+	}
+
 	public get Random(): number {
 		return this.random === undefined ? Math.random() : this.random;
 	}
@@ -25,15 +39,11 @@ export abstract class EnemyController implements IEnemyController {
 		this.random = val;
 	}
 
-	constructor(grid: IGrid, player: Player, enemy: Enemy, id: string) {
-		this.grid = grid;
-		this.player = player as Player;
-		this.enemy = enemy as Enemy;
-		this.id = id;
-		this.player.AddMoveListener((player: Player) => this.PlayerPositionUpdated(player));
-		this.player.AddPackGumEatListener(() => this.SpecialItemEaten());
-		this.player.AddEatEnemyListener((enemyContent: ICellContent) => this.EnemyEaten(enemyContent));
-		this.pathFindLogic = new PathFinding(this.grid);
+	public get MovingTimes(): number {
+		return this.movingTimes;
+	}
+	public set MovingTimes(val: number) {
+		this.movingTimes = val;
 	}
 
 	private PlayerPositionUpdated(player: Player): void {
@@ -66,6 +76,13 @@ export abstract class EnemyController implements IEnemyController {
 
 		// decide where to goal
 		if (this.CanDecide() && this.enemy.isPlayable) {
+			// set if walk around or not
+			if (this.movingTimes % this.enemy.aiManager.Reactivity === 0) {
+				this.Random = 1;
+			} else if (this.movingTimes % 20 === 0 && this.random !== undefined) {
+				this.Random = undefined;
+			}
+
 			this.thinkingTime = 0;
 			this.Decide();
 		}
@@ -85,6 +102,7 @@ export abstract class EnemyController implements IEnemyController {
 			if (!nextPos) {
 				return;
 			}
+
 			this.pathFindLogic.Dfs(this.GetWalkingAroundNextCell(), this.enemy.Cell);
 		}
 		this.path = this.pathFindLogic.GetPath();
@@ -97,22 +115,28 @@ export abstract class EnemyController implements IEnemyController {
 			this.Decide();
 			return;
 		}
+		this.movingTimes++;
 
 		let dest = this.path[0];
-		if (this.CanMove(dest)) {
-			// console.log(">>>>>", this.id, dest);
-			dest = this.path.shift();
-			this.enemy.isPlayable = false;
-			this.grid.Move(this.enemy, dest);
+		// if (this.CanMove(dest)) {
+		// console.log(">>>>>", this.id, dest);
+		dest = this.path.shift();
+
+		if (dest.Content && dest.Content.type === ContentType.Player && !this.enemy.Run) {
+			this.player.Alive = false;
 		}
+
+		this.enemy.isPlayable = false;
+		this.grid.Move(this.enemy, dest);
+		// }
 	}
 
-	public CanMove(dest: ICell): boolean {
-		if (dest.Content) {
-			return false;
-		}
-		return true;
-	}
+	// public CanMove(dest: ICell): boolean {
+	// 	if (dest.Content && (dest.Content.type === ContentType.Enemy && !this.enemy.Run)) {
+	// 		return false;
+	// 	}
+	// 	return true;
+	// }
 
 	public CanDecide(): boolean {
 		if (!this.path || this.path.length === 1) {
@@ -138,8 +162,12 @@ export abstract class EnemyController implements IEnemyController {
 	}
 
 	private EnemyEaten(enemy: ICellContent): void {
-		if (enemy.enemyType !== this.enemy.enemyType) {
-			throw new Error('unexpected enemy eaten');
+		if (enemy !== this.enemy) {
+			return;
+		}
+
+		if (this.IsHomeArea()) {
+			return;
 		}
 
 		this.pathFindLogic.Dfs(this.grid.GetCell(13, 12), this.enemy.Cell);
@@ -160,14 +188,14 @@ export abstract class EnemyController implements IEnemyController {
 		return false;
 	}
 
-	// todo refactoring
+	// todo refactoring maybe using vecgor
 	public GetFarPath(): ICell[] {
 		let neightbors = this.enemy.Cell.GetNeightbors();
 		let farPath: ICell[];
 		for (let neighbor of neightbors) {
 
 			// check if it is wall or another content
-			if ((neighbor.Facility && neighbor.Facility.Type === FacilityType.Wall) || neighbor.Content || this.enemy.previousCell === neighbor) {
+			if ((neighbor.Facility && neighbor.Facility.type === FacilityType.Wall) || neighbor.Content || this.enemy.previousCell === neighbor) {
 				continue;
 			}
 
@@ -195,12 +223,18 @@ export abstract class EnemyController implements IEnemyController {
 			if (!possiblePosition) {
 				continue;
 			}
-			if ((possiblePosition.Facility && possiblePosition.Facility.Type === FacilityType.Wall) || possiblePosition.Content || this.enemy.previousCell === possiblePosition) {
+			if ((possiblePosition.Facility && possiblePosition.Facility.type === FacilityType.Wall) || possiblePosition.Content || this.enemy.previousCell === possiblePosition) {
 				continue;
 			}
 			nextPosition = possiblePosition;
 			return nextPosition;
 		}
 		return this.enemy.previousCell;
+	}
+
+	public IsHomeArea(): boolean {
+		let currentPosition: ICell = this.grid.GetCell(this.enemy.x, this.enemy.y);
+
+		return !currentPosition.canPlayerVisit;
 	}
 }

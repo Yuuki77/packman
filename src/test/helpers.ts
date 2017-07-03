@@ -10,7 +10,7 @@ export class Helpers {
 		for (let y = 0; y < grid.height; y++) {
 			for (let x = 0; x < grid.width; x++) {
 				// to do something wrong
-				if (grid.GetCell(x, y).Content && grid.GetCell(x, y).Content.Type === contentName) {
+				if (grid.GetCell(x, y).Content && grid.GetCell(x, y).Content.type === contentName) {
 					return grid.GetCell(x, y).Content;
 				}
 			}
@@ -24,7 +24,7 @@ export class Helpers {
 		for (let y = 0; y < grid.height; y++) {
 			for (let x = 0; x < grid.width; x++) {
 
-				if (grid.GetCell(x, y).Content && grid.GetCell(x, y).Content.Type === contentName) {
+				if (grid.GetCell(x, y).Content && grid.GetCell(x, y).Content.type === contentName) {
 					let enemy = grid.GetCell(x, y);
 					enemys.push(enemy.Content);
 				}
@@ -41,16 +41,16 @@ export class Helpers {
 	}
 
 	public IsWall(cell: ICell): boolean {
-		return (cell.Facility && cell.Facility.Type === FacilityType.Wall);
+		return (cell.Facility && cell.Facility.type === FacilityType.Wall);
 	}
 
 	public IsYellowDot(cell: ICell): boolean {
-		return (cell.Facility && cell.Facility.Type === FacilityType.YellowDot);
+		return (cell.Facility && cell.Facility.type === FacilityType.YellowDot);
 	}
 
 	public IsPlayer(cell: ICell): boolean {
 		let player = cell.Content;
-		return player && player.Type === ContentType.Player;
+		return player && player.type === ContentType.Player;
 	}
 
 	public IsVisited(cell: ICell): boolean {
@@ -62,21 +62,30 @@ export class Helpers {
 
 	public IsSameContent(cell: ICell, nextCell: ICell): boolean {
 		if (cell.Content && nextCell.Content) {
-			return cell.Content.Type === nextCell.Content.Type;
+			return cell.Content.type === nextCell.Content.type;
 		}
 		return false;
 	}
 
 	public IsDifferentContent(cell: ICell, nextCell: ICell): boolean {
 		if (cell.Content && nextCell.Content) {
-			return cell.Content.Type !== nextCell.Content.Type;
+			return cell.Content.type !== nextCell.Content.type;
 		}
 		return false;
 	}
 
-	public IsThisFacility(cell: ICell, FacilityType: FacilityType): boolean {
+	public IsThisFacility(cell: ICell, facilityType: FacilityType): boolean {
 		if (cell.Facility) {
-			return cell.Facility.Type === FacilityType;
+			return cell.Facility.type === facilityType;
+		}
+		return false;
+	}
+
+	public IsThisContent(cell: ICell, ContentType): boolean {
+		if (cell.Content) {
+			console.log(cell.Content);
+			console.log(cell.Content.type === ContentType.Type);
+			return cell.Content.type === ContentType.Type;
 		}
 		return false;
 	}

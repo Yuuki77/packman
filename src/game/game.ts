@@ -2,12 +2,13 @@ import { gridData } from './const';
 import { ContentType, Direction, ICellContent } from './interfaces/interfaces';
 import { EnemyManager } from './logic/enemyManager/enemyManager';
 import { Grid } from './logic/grid';
+import { Enemy } from './logic/grid/contents/enemy';
 import { Player } from './logic/grid/contents/player';
 import { GridUi } from './ui/gridUI';
 
 export class Game {
 	private player: Player;
-	private enemysArray: ICellContent[] = [];
+	private enemysArray: Enemy[] = [];
 	private gridUi;
 	private grid: Grid;
 	private game;
@@ -24,10 +25,11 @@ export class Game {
 		this.gridUi = new GridUi(game, this.grid);
 
 		this.grid.AddContentCreatedListener((content: ICellContent) => {
-			if (content.Type === ContentType.Player) {
+			if (content.type === ContentType.Player) {
 				this.player = content as Player;
-			} else if (content.Type === ContentType.Enemy) {
-				this.enemysArray.push(content);
+			} else if (content.type === ContentType.Enemy) {
+				let enemy = content as Enemy;
+				this.enemysArray.push(enemy);
 			}
 		});
 

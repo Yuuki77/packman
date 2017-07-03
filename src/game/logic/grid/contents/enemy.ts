@@ -17,7 +17,6 @@ export class Enemy extends Content {
 		super();
 		this.enemyType = type;
 		this.aiManager = new AiManager(type);
-		this.SetHomeDirection(type);
 	}
 
 	public get Run() {
@@ -28,29 +27,6 @@ export class Enemy extends Content {
 		this.run = value;
 		for (let cb of this.onRun) {
 			cb(this.run);
-		}
-	}
-
-	private SetHomeDirection(enemyType: EnemyType): void {
-		switch (enemyType) {
-			case EnemyType.Red:
-				this.homeDirections.push(Direction.Up);
-				this.homeDirections.push(Direction.Left);
-				break;
-			case EnemyType.Blue:
-				this.homeDirections.push(Direction.Down);
-				this.homeDirections.push(Direction.Left);
-				break;
-			case EnemyType.Green:
-				this.homeDirections.push(Direction.Right);
-				this.homeDirections.push(Direction.Down);
-				break;
-			case EnemyType.Yellow:
-				this.homeDirections.push(Direction.Up);
-				this.homeDirections.push(Direction.Right);
-				break;
-			default:
-				throw new Error('unexpected enemy type' + enemyType);
 		}
 	}
 

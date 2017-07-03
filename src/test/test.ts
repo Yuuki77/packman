@@ -5,6 +5,7 @@ import { BLUE_ENEMY_POSITION, GREEN_ENEMY_POSITION, PACKGUM_POSITION, PLAYER_POS
 import { ContentType, Direction, EnemyType } from '../game/interfaces/interfaces';
 import { GreenEnemyController } from '../game/logic/enemyManager/controllers/greenController';
 import { RedEnemyController } from '../game/logic/enemyManager/controllers/redController';
+import { BlueEnemyController } from '../game/logic/enemyManager/controllers/blueController';
 import { Grid } from '../game/logic/grid';
 import { Enemy } from '../game/logic/grid/contents/enemy';
 import { Player } from '../game/logic/grid/contents/player';
@@ -27,10 +28,10 @@ describe('BFS function', () => {
 		let breadthFirstPathFind = new PathFinding(grid);
 
 		assert(player);
-		expect(player.Type).to.equal(ContentType.Player);
+		expect(player.type).to.equal(ContentType.Player);
 
 		assert(enemy);
-		assert.equal(enemy.Type, ContentType.Enemy);
+		assert.equal(enemy.type, ContentType.Enemy);
 
 		breadthFirstPathFind.Dfs(player.Cell, enemy.Cell);
 		let path = breadthFirstPathFind.GetPath();
@@ -54,7 +55,7 @@ describe('TEST Move function in grid', () => {
 		let player = playerContent as Player;
 
 		assert(player);
-		expect(player.Type).to.equal(ContentType.Player);
+		expect(player.type).to.equal(ContentType.Player);
 
 		grid.Move(player, grid.GetCell(player.x - 1, player.y));
 	});
@@ -75,7 +76,7 @@ describe('TEST Move function in grid', () => {
 		let player = playerContent as Player;
 
 		assert(player);
-		expect(player.Type).to.equal(ContentType.Player);
+		expect(player.type).to.equal(ContentType.Player);
 		let nextCell = player.Cell.GetNeightbor(Direction.Right);
 		assert.strictEqual(player.CannotMove(player, nextCell), true, 'should not go right');
 	});
@@ -96,7 +97,7 @@ describe('TEST CanMove function in player', () => {
 		let player = playerContent as Player;
 
 		assert(player);
-		expect(player.Type).to.equal(ContentType.Player);
+		expect(player.type).to.equal(ContentType.Player);
 		let nextCell = player.Cell.GetNeightbor(Direction.Up);
 		assert.strictEqual(player.CannotMove(player, nextCell), true, 'should not go up');
 	});
@@ -117,7 +118,7 @@ describe('TEST GetNextCell ', () => {
 		let player = playerContent as Player;
 
 		assert(player);
-		expect(player.Type).to.equal(ContentType.Player);
+		expect(player.type).to.equal(ContentType.Player);
 		let nextCell = player.GetNextCell(player, (Direction.Right));
 		expect(nextCell).to.equal(grid.GetCell(0, 1));
 	});
@@ -135,7 +136,7 @@ describe('TEST GetNextCell ', () => {
 		let playerContent = helpers.getContent(grid, ContentType.Player);
 		let player = playerContent as Player;
 		assert(player);
-		expect(player.Type).to.equal(ContentType.Player);
+		expect(player.type).to.equal(ContentType.Player);
 
 		let nextCell = player.GetNextCell(player, Direction.Left);
 		expect(nextCell).to.equal(grid.GetCell(2, 1));
@@ -157,7 +158,7 @@ describe('TEST CanMove function in player', () => {
 		let player = playerContent as Player;
 
 		assert(player);
-		expect(player.Type).to.equal(ContentType.Player);
+		expect(player.type).to.equal(ContentType.Player);
 
 		let nextCell = player.Cell.GetNeightbor(Direction.Up);
 		assert.strictEqual(player.CannotMove(player, nextCell), true, 'should not go up');
@@ -179,7 +180,7 @@ describe('TEST Player Can Eat packgum', () => {
 		let player = playerContent as Player;
 
 		assert(player);
-		expect(player.Type).to.equal(ContentType.Player);
+		expect(player.type).to.equal(ContentType.Player);
 
 		let nextCell = player.Cell.GetNeightbor(Direction.Up);
 		expect(player.IsPackGum(nextCell)).to.equal(true);
@@ -207,12 +208,13 @@ describe('TEST Enemy CanNotMove function', () => {
 		let blueEnemy = blue as Enemy;
 
 		assert(blueEnemy);
-		expect(blueEnemy.Type).to.equal(ContentType.Enemy);
+		expect(blueEnemy.type).to.equal(ContentType.Enemy);
 
 		assert(player);
-		expect(player.Type).to.equal(ContentType.Player);
+		expect(player.type).to.equal(ContentType.Player);
 
-		let enemyController = new GreenEnemyController(grid, player, grid.GetCell(2, 1).Content);
+		let enemy = grid.GetCell(2, 1).Content as Enemy;
+		let enemyController = new GreenEnemyController(grid, player, enemy);
 		let nextCell = blueEnemy.Cell.GetNeightbor(Direction.Down);
 		expect(nextCell).to.equal(grid.GetCell(2, 1));
 		expect(enemyController.CanMove(nextCell)).to.equal(false);
@@ -236,7 +238,7 @@ describe('TEST Player IsPackGUm', () => {
 		let player = playerContent as Player;
 
 		assert(player);
-		expect(player.Type).to.equal(ContentType.Player);
+		expect(player.type).to.equal(ContentType.Player);
 
 		let nextCell = player.Cell.GetNeightbor(Direction.Up);
 		expect(nextCell).to.equal(grid.GetCell(0, 0));
@@ -246,7 +248,7 @@ describe('TEST Player IsPackGUm', () => {
 		// player.Decide(player, Direction.Up);
 		grid.Move(player, nextCell);
 		console.log(grid.GetCell(0, 0).Content);
-		expect(grid.GetCell(0, 0).Content.Type).to.equal(ContentType.Player);
+		expect(grid.GetCell(0, 0).Content.type).to.equal(ContentType.Player);
 		expect(grid.GetCell(0, 1).Content).to.equal(undefined);
 		console.log();
 		console.log('After');
@@ -270,7 +272,7 @@ describe('TEST SpecialItemEaten Enemy', () => {
 		let enemy = enemyContent as Player;
 
 		assert(enemy);
-		expect(enemy.Type).to.equal(ContentType.Enemy);
+		expect(enemy.type).to.equal(ContentType.Enemy);
 
 		let nextCell = enemy.Cell.GetNeightbor(Direction.Down);
 
@@ -306,10 +308,10 @@ describe('TEST EnemyController  GetFarPath', () => {
 		let blueEnemy = blue as Enemy;
 
 		assert(blueEnemy);
-		expect(blueEnemy.Type).to.equal(ContentType.Enemy);
+		expect(blueEnemy.type).to.equal(ContentType.Enemy);
 
 		assert(player);
-		expect(player.Type).to.equal(ContentType.Player);
+		expect(player.type).to.equal(ContentType.Player);
 
 	});
 });
@@ -333,10 +335,10 @@ describe('TEST Player eatEnemy', () => {
 		blueEnemy.Run = true;
 
 		assert(blueEnemy);
-		expect(blueEnemy.Type).to.equal(ContentType.Enemy);
+		expect(blueEnemy.type).to.equal(ContentType.Enemy);
 
 		assert(player);
-		expect(player.Type).to.equal(ContentType.Player);
+		expect(player.type).to.equal(ContentType.Player);
 
 		console.log('Before');
 		console.log(grid.toString());
@@ -406,7 +408,7 @@ describe('TEST Check if there is a collision go home ', () => {
 
 		let enemyContent = grid.GetCell(0, 2);
 		assert(enemyContent);
-		expect(enemyContent.Content.EnemyType).to.equal(EnemyType.Blue);
+		expect(enemyContent.Content.enemyType).to.equal(EnemyType.Blue);
 
 		let enemy = enemyContent.Content as Enemy;
 		enemy.Run = true;
@@ -417,8 +419,8 @@ describe('TEST Check if there is a collision go home ', () => {
 		grid.Move(enemy, nextCell);
 		expect(grid.IsGameClear()).to.equal(false);
 
-		console.log(nextCell.Content.EnemyType);
-		expect(nextCell.Content.EnemyType).to.equal(EnemyType.Blue);
+		console.log(nextCell.Content.enemyType);
+		expect(nextCell.Content.enemyType).to.equal(EnemyType.Blue);
 
 		console.log('After');
 		console.log(grid.toString());
@@ -445,13 +447,13 @@ describe('TEST Check if Enemy go to player position', () => {
 		let playerContent = helpers.getContent(grid, ContentType.Player);
 		let player = playerContent as Player;
 		assert(player);
-		expect(player.Type).to.equal(ContentType.Player);
+		expect(player.type).to.equal(ContentType.Player);
 
 		let enemyContent = helpers.getContent(grid, ContentType.Enemy);
 		let redEnemy = enemyContent as Enemy;
 
 		assert(redEnemy);
-		expect(redEnemy.Type).to.equal(ContentType.Enemy);
+		expect(redEnemy.type).to.equal(ContentType.Enemy);
 
 		console.log('Before');
 		console.log(grid.toString());
@@ -459,20 +461,20 @@ describe('TEST Check if Enemy go to player position', () => {
 		enemyController.Random = 0;
 		enemyController.Update(25);
 
-		expect(grid.GetCell(1, 0).Content.Type).to.equal(ContentType.Enemy);
+		expect(grid.GetCell(1, 0).Content.type).to.equal(ContentType.Enemy);
 
 		console.log('After');
 		console.log(grid.toString());
 
 		expect(enemyController.thinkingTime).to.equal(0);
 		enemyController.Update(25);
-		expect(grid.GetCell(2, 0).Content.Type).to.equal(ContentType.Enemy);
+		expect(grid.GetCell(2, 0).Content.type).to.equal(ContentType.Enemy);
 
 		console.log('After');
 		console.log(grid.toString());
 
 		enemyController.Update(25);
-		expect(grid.GetCell(3, 0).Content.Type).to.equal(ContentType.Enemy);
+		expect(grid.GetCell(3, 0).Content.type).to.equal(ContentType.Enemy);
 
 		console.log('After');
 		console.log(grid.toString());
@@ -492,20 +494,19 @@ describe('TEST Check if red Enemy walks around or not', () => {
 			];
 		let helpers = new Helpers();
 		let grid = new Grid(gridData);
-		// tslint:disable-next-line:no-unused-new
 		new FakeGridUi(grid);
 		grid.CreateBoard();
 
 		let playerContent = helpers.getContent(grid, ContentType.Player);
 		let player = playerContent as Player;
 		assert(player);
-		expect(player.Type).to.equal(ContentType.Player);
+		expect(player.type).to.equal(ContentType.Player);
 
 		let enemyContent = helpers.getContent(grid, ContentType.Enemy);
 		let redEnemy = enemyContent as Enemy;
 
 		assert(redEnemy);
-		expect(redEnemy.Type).to.equal(ContentType.Enemy);
+		expect(redEnemy.type).to.equal(ContentType.Enemy);
 
 		console.log('Before');
 		console.log(grid.toString());
@@ -513,32 +514,32 @@ describe('TEST Check if red Enemy walks around or not', () => {
 		enemyController.Random = 1;
 		enemyController.Update(25);
 
-		expect(grid.GetCell(1, 0).Content.Type).to.equal(ContentType.Enemy);
+		expect(grid.GetCell(1, 0).Content.type).to.equal(ContentType.Enemy);
 
-		console.log('12');
+		console.log('1');
 		console.log(grid.toString());
 
 		expect(enemyController.thinkingTime).to.equal(0);
 		enemyController.Update(25);
-		expect(grid.GetCell(2, 0).Content.Type).to.equal(ContentType.Enemy);
+		expect(grid.GetCell(2, 0).Content.type).to.equal(ContentType.Enemy);
 
 		console.log('2');
 		console.log(grid.toString());
 
 		enemyController.Update(25);
-		expect(grid.GetCell(3, 0).Content.Type).to.equal(ContentType.Enemy);
+		expect(grid.GetCell(3, 0).Content.type).to.equal(ContentType.Enemy);
 
 		console.log('3');
 		console.log(grid.toString());
 
 		enemyController.Update(25);
-		expect(grid.GetCell(3, 1).Content.Type).to.equal(ContentType.Enemy);
+		expect(grid.GetCell(3, 1).Content.type).to.equal(ContentType.Enemy);
 
 		console.log('4');
 		console.log(grid.toString());
 
 		enemyController.Update(25);
-		expect(grid.GetCell(3, 2).Content.Type).to.equal(ContentType.Enemy);
+		expect(grid.GetCell(3, 2).Content.type).to.equal(ContentType.Enemy);
 
 		console.log('5');
 		console.log(grid.toString());
@@ -554,6 +555,218 @@ describe('TEST Check if red Enemy walks around or not', () => {
 			console.log(7 + i);
 			console.log(grid.toString());
 		}
-		expect(grid.GetCell(3, 1).Content.Type).to.equal(ContentType.Enemy);
+		// expect(grid.GetCell(3, 1).Content.type).to.equal(ContentType.Enemy);
+	});
+});
+
+
+describe('TEST Check if red Enemy walks around flag works or not', () => {
+	it('enemy should walk Around', () => {
+		let gridData: number[][] =
+			[
+				[RED_ENEMY_POSITION, 0, 0, 0, 1],
+				[0, 1, 1, 0, 1],
+				[0, 1, 1, 0, 1],
+				[0, 0, 0, 0, 1],
+				[0, 1, 1, 0, 1],
+				[PLAYER_POSITION, 1, 1, 0, 1]
+			];
+		let helpers = new Helpers();
+		let grid = new Grid(gridData);
+		new FakeGridUi(grid);
+		grid.CreateBoard();
+
+		let playerContent = helpers.getContent(grid, ContentType.Player);
+		let player = playerContent as Player;
+		assert(player);
+		expect(player.type).to.equal(ContentType.Player);
+
+		let enemyContent = helpers.getContent(grid, ContentType.Enemy);
+		let redEnemy = enemyContent as Enemy;
+
+		assert(redEnemy);
+		expect(redEnemy.type).to.equal(ContentType.Enemy);
+
+		console.log('Before');
+		console.log(grid.toString());
+		let enemyController = new RedEnemyController(grid, player, redEnemy);
+		enemyController.MovingTimes = 30;
+		enemyController.Update(25);
+
+		expect(grid.GetCell(1, 0).Content.type).to.equal(ContentType.Enemy);
+
+		console.log('12');
+		console.log(grid.toString());
+
+		expect(enemyController.thinkingTime).to.equal(0);
+		enemyController.Update(25);
+		expect(grid.GetCell(2, 0).Content.type).to.equal(ContentType.Enemy);
+
+		console.log('2');
+		console.log(grid.toString());
+
+		enemyController.Update(25);
+		expect(grid.GetCell(3, 0).Content.type).to.equal(ContentType.Enemy);
+
+		console.log('3');
+		console.log(grid.toString());
+
+		enemyController.Update(25);
+		expect(grid.GetCell(3, 1).Content.type).to.equal(ContentType.Enemy);
+	});
+});
+
+describe('TEST Check if red Enemy walks around flag works or not', () => {
+	it('enemy should walk Around', () => {
+		let gridData: number[][] =
+			[
+				[RED_ENEMY_POSITION, 0, 0, 0, 1],
+				[0, 1, 1, 0, 1],
+				[0, 1, 1, 0, 1],
+				[0, 0, 0, 0, 1],
+				[0, 1, 1, 0, 1],
+				[PLAYER_POSITION, 1, 1, 0, 1]
+			];
+		let helpers = new Helpers();
+		let grid = new Grid(gridData);
+		new FakeGridUi(grid);
+		grid.CreateBoard();
+
+		let playerContent = helpers.getContent(grid, ContentType.Player);
+		let player = playerContent as Player;
+		assert(player);
+		expect(player.type).to.equal(ContentType.Player);
+
+		let enemyContent = helpers.getContent(grid, ContentType.Enemy);
+		let redEnemy = enemyContent as Enemy;
+
+		assert(redEnemy);
+		expect(redEnemy.type).to.equal(ContentType.Enemy);
+
+		console.log('Before');
+		console.log(grid.toString());
+		let enemyController = new RedEnemyController(grid, player, redEnemy);
+		expect(grid.GetCell(0, 0).Content.type).to.equal(ContentType.Enemy);
+		enemyController.Random = 0;
+		enemyController.MovingTimes = 1;
+		enemyController.Update(25);
+
+		expect(grid.GetCell(0, 1).Content.type).to.equal(ContentType.Enemy);
+
+		console.log('1');
+		console.log(grid.toString());
+
+		expect(enemyController.thinkingTime).to.equal(0);
+		enemyController.Update(25);
+		expect(grid.GetCell(0, 2).Content.type).to.equal(ContentType.Enemy);
+
+		console.log('2');
+		console.log(grid.toString());
+
+		enemyController.Update(25);
+		expect(grid.GetCell(0, 3).Content.type).to.equal(ContentType.Enemy);
+
+		console.log('3');
+		console.log(grid.toString());
+
+		enemyController.Update(25);
+		expect(grid.GetCell(0, 4).Content.type).to.equal(ContentType.Enemy);
+	});
+});
+
+
+describe('TEST Check if blue Enemy walks around flag works or not', () => {
+	it('enemy should walk Around', () => {
+		let gridData: number[][] =
+			[
+				[BLUE_ENEMY_POSITION, 0, 0, 0, 1],
+				[0, 1, 1, 0, 1],
+				[0, 1, 1, 0, 1],
+				[0, 0, 0, 0, 1],
+				[0, 1, 1, 0, 1],
+				[PLAYER_POSITION, 1, 1, 0, 1]
+			];
+		let helpers = new Helpers();
+		let grid = new Grid(gridData);
+		new FakeGridUi(grid);
+		grid.CreateBoard();
+
+		let playerContent = helpers.getContent(grid, ContentType.Player);
+		let player = playerContent as Player;
+		assert(player);
+		expect(player.type).to.equal(ContentType.Player);
+
+		let enemyContent = helpers.getContent(grid, ContentType.Enemy);
+		let blue = enemyContent as Enemy;
+
+		assert(blue);
+		expect(blue.type).to.equal(ContentType.Enemy);
+
+		console.log('Before');
+		console.log(grid.toString());
+		let enemyController = new BlueEnemyController(grid, player, blue);
+		enemyController.Update(25);
+
+		expect(grid.GetCell(1, 0).Content.type).to.equal(ContentType.Enemy);
+
+		console.log('1');
+		console.log(grid.toString());
+
+		expect(enemyController.thinkingTime).to.equal(0);
+		enemyController.Update(25);
+		expect(grid.GetCell(2, 0).Content.type).to.equal(ContentType.Enemy);
+
+		console.log('2');
+		console.log(grid.toString());
+
+		enemyController.Update(25);
+		expect(grid.GetCell(3, 0).Content.type).to.equal(ContentType.Enemy);
+
+		console.log('3');
+		console.log(grid.toString());
+
+		enemyController.Update(25);
+		expect(grid.GetCell(3, 1).Content.type).to.equal(ContentType.Enemy);
+	});
+});
+
+describe('TEST Check if blue Enemy walks around flag works or not', () => {
+	it('enemy should walk Around', () => {
+		let gridData: number[][] =
+			[
+				[BLUE_ENEMY_POSITION, PLAYER_POSITION, 0, 0, 1],
+				[0, 1, 1, 0, 1],
+				[0, 1, 1, 0, 1],
+				[0, 0, 0, 0, 1],
+				[0, 1, 1, 0, 1],
+				[0, 1, 1, 0, 1]
+			];
+		let helpers = new Helpers();
+		let grid = new Grid(gridData);
+		new FakeGridUi(grid);
+		grid.CreateBoard();
+
+		let playerContent = helpers.getContent(grid, ContentType.Player);
+		let player = playerContent as Player;
+		assert(player);
+		expect(player.type).to.equal(ContentType.Player);
+
+		let enemyContent = helpers.getContent(grid, ContentType.Enemy);
+		let blue = enemyContent as Enemy;
+
+		assert(blue);
+		expect(blue.type).to.equal(ContentType.Enemy);
+
+		console.log('Before');
+		console.log(grid.toString());
+		let enemyController = new BlueEnemyController(grid, player, blue);
+		enemyController.Random = 0;
+		enemyController.MovingTimes = 1;
+		enemyController.Update(25);
+
+		console.log('1');
+		console.log(grid.toString());
+
+		expect(player.Alive).to.equal(false);
 	});
 });

@@ -23,12 +23,11 @@ export interface ICell {
 export interface ICellContent {
 	x: number;
 	y: number;
-	Id: string;
+	id: string;
 	Eaten: boolean;
-	readonly Type: ContentType;
-	readonly EnemyType: EnemyType;
+	readonly type: ContentType;
+	readonly enemyType: EnemyType;
 	previousCell: ICell;
-	Alive: boolean;
 	Cell: ICell;
 	AddMoveListener(cb: (cell: ICell) => void);
 }
@@ -97,8 +96,8 @@ export interface ICellFacility {
 	y: number;
 	Cell: ICell;
 	Visited: boolean;
-	Id: string;
-	Type: FacilityType;
+	id: string;
+	type: FacilityType;
 	AddVisitListener(cb: () => void);
 }
 

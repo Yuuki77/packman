@@ -1,4 +1,4 @@
-import { IGrid, ICellContent, ICell, Direction, IPathFinding, FacilityType } from '../../interfaces/interfaces';
+import { FacilityType, ICell, IGrid, IPathFinding } from '../../interfaces/interfaces';
 
 export class PathFinding implements IPathFinding {
 	readonly grid: IGrid;
@@ -22,7 +22,7 @@ export class PathFinding implements IPathFinding {
 			}
 			let neighbors: ICell[] = currentPosition.GetNeightbors();
 			for (let i = 0; i < neighbors.length; i++) {
-				if (neighbors[i].Facility && neighbors[i].Facility.Type === FacilityType.Wall) {
+				if (neighbors[i].Facility && neighbors[i].Facility.type === FacilityType.Wall) {
 					continue;
 				}
 				if (this.visited[neighbors[i].y][neighbors[i].x] === true && this.path[neighbors[i].y][neighbors[i].x] === this.path[currentPosition.y][currentPosition.x] - 1) {
@@ -61,7 +61,7 @@ export class PathFinding implements IPathFinding {
 			}
 			let neighbors: ICell[] = currentPosition.GetNeightbors();
 			for (let i = 0; i < neighbors.length; i++) {
-				if (neighbors[i].Facility && neighbors[i].Facility.Type === FacilityType.Wall) {
+				if (neighbors[i].Facility && neighbors[i].Facility.type === FacilityType.Wall) {
 					continue;
 				}
 

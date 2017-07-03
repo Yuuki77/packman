@@ -1,6 +1,6 @@
+import 'pixi';
 import 'p2';
 import 'phaser';
-import 'pixi';
 import * as WebFontLoader from 'webfontloader';
 import * as Assets from './assets';
 import Boot from './states/boot';

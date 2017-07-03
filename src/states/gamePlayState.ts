@@ -15,7 +15,8 @@ export default class GamePlayState extends Phaser.State {
 	public update(): void {
 
 		if (this.currentGame.isGameOver()) {
-			this.game.destroy();
+			console.log('game is over');
+			// his.game.destroy();
 		}
 		this.currentGame.Update();
 	}

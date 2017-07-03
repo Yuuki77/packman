@@ -1,14 +1,14 @@
-import { IGrid, ICellContent, ICell, Direction, ICellFacility, FacilityType } from '../../interfaces/interfaces';
+import { FacilityType, ICell, ICellFacility } from '../../interfaces/interfaces';
 
 export abstract class Facility implements ICellFacility {
 	public readonly x: number;
 	public readonly y: number;
 	private cell: ICell;
 	public showed: boolean = false;
-	public abstract Type: FacilityType | undefined;
+	public abstract type: FacilityType | undefined;
 	private visited: boolean = false;
-	private onVisitedDot: { (): void }[] = [];
-	public abstract Id: string;
+	private onVisitedDot: Array<{ (): void }> = [];
+	public abstract id: string;
 
 	public get Cell() {
 		return this.cell;

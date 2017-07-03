@@ -1,13 +1,12 @@
 import { ContentType, EnemyType, ICell, ICellContent, IGrid } from '../../interfaces/interfaces';
-import { Player } from "./contents/player";
 
 export abstract class Content implements ICellContent {
-	private alive: boolean;
+	private alive: boolean = true;
 	private cell: ICell;
 	private eaten: boolean = false;
 	public previousCell: ICell;
 	public grid: IGrid;
-	private onMove: Array<{ (player: Player): void }> = [];
+	private onMove: Array<{ (player: ICell): void }> = [];
 	private onEaten: Array<{ (eaten: boolean): void }> = [];
 	public abstract type: ContentType;
 	public abstract id: string;
@@ -63,7 +62,7 @@ export abstract class Content implements ICellContent {
 		}
 	}
 
-	public AddMoveListener(cb: (player: Player) => void) {
+	public AddMoveListener(cb: (cell: ICell) => void) {
 		this.onMove.push(cb);
 	}
 
