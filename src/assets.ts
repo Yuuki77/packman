@@ -127,6 +127,24 @@ export namespace Spritesheets {
 }
 
 export namespace Atlases {
+		enum AtlasesDiePackmanSpriteSheetFrames {
+				Pacman10HpSprite121 = <any>'Pacman10-hp-sprite_121.png',
+				Pacman10HpSprite122 = <any>'Pacman10-hp-sprite_122.png',
+				Pacman10HpSprite123 = <any>'Pacman10-hp-sprite_123.png',
+				Pacman10HpSprite124 = <any>'Pacman10-hp-sprite_124.png',
+				Pacman10HpSprite126 = <any>'Pacman10-hp-sprite_126.png',
+				Pacman10HpSprite127 = <any>'Pacman10-hp-sprite_127.png',
+				Pacman10HpSprite129 = <any>'Pacman10-hp-sprite_129.png',
+		}
+		export class AtlasesDiePackmanSpriteSheet {
+				static getName(): string { return 'diePackmanSpriteSheet'; };
+
+				static getJSONArray(): string { return require('assets/atlases/diePackmanSpriteSheet.json'); };
+
+				static getPNG(): string { return require('assets/atlases/diePackmanSpriteSheet.png'); };
+
+				static Frames = AtlasesDiePackmanSpriteSheetFrames;
+		}
 		enum AtlasesPackmanFrames {
 				Pacman10HpSprite15 = <any>'Pacman10-hp-sprite_15.png',
 				Pacman10HpSprite16 = <any>'Pacman10-hp-sprite_16.png',

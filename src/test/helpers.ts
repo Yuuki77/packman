@@ -90,6 +90,15 @@ export class Helpers {
 		return false;
 	}
 
+	public IsEnemy(cell: ICell): boolean {
+		if (cell.Content) {
+			console.log(cell.Content);
+			console.log(cell.Content.type === ContentType.Player);
+			return cell.Content.type !== ContentType.Player;
+		}
+		return false;
+	}
+
 }
 
 // tslint:disable-next-line:max-classes-per-file

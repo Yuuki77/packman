@@ -217,7 +217,7 @@ export class Grid implements IGrid {
 				let cell = this.GetCell(x, y);
 				if (cell.Content) {
 					result += cell.Content.id;
-				} else if (cell.Facility && cell.Facility.type === FacilityType.Wall) {
+				} else if (cell.Facility && cell.Facility.type !== FacilityType.YellowDot) {
 					result += ' ' + cell.Facility.id + ' ';
 				} else {
 					result += ' ' + ' 0 ' + ' ';

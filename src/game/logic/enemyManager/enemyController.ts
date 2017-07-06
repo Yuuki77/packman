@@ -26,10 +26,11 @@ export abstract class EnemyController implements IEnemyController {
 		this.player = player as Player;
 		this.enemy = enemy as Enemy;
 		this.id = id;
-		this.player.AddMoveListener((cell: ICell) => this.PlayerPositionUpdated(player));
-		this.player.AddPackGumEatListener(() => this.SpecialItemEaten());
-		this.player.AddEatEnemyListener((enemyContent: ICellContent) => this.EnemyEaten(enemyContent));
+		this.RegisterEvent();
 		this.pathFindLogic = new PathFinding(this.grid);
+
+		// I think this is really bad idea for checking if is a home area.
+		this.enemy.Cell.canPlayerVisit = false;
 	}
 
 	public get Random(): number {
@@ -56,7 +57,8 @@ export abstract class EnemyController implements IEnemyController {
 
 		// a lot of if makes me sad....
 		// back to normal state.
-		if (!this.IsSpecialTime() && this.specialItemEaten && this.enemy.Run && this.enemy.isPlayable) {
+		if (!this.IsSpecialTime() && this.specialItemEaten && this.enemy.Run && this.enemy.isPlayable && !this.enemy.goHome
+		) {
 			this.specialItemEaten = false;
 			this.enemy.Run = false;
 			this.enemy.goHome = false;
@@ -65,6 +67,9 @@ export abstract class EnemyController implements IEnemyController {
 		if (this.enemy.goHome && this.enemy.isPlayable) {
 			this.thinkingTime = 0;
 			this.enemy.goHome = this.path.length <= 1 ? false : true;
+			if (!this.enemy.goHome) {
+				this.enemy.Run = false;
+			}
 			this.Move();
 			return;
 		}
@@ -154,6 +159,15 @@ export abstract class EnemyController implements IEnemyController {
 	}
 
 	private SpecialItemEaten(): void {
+
+		if (this.IsHomeArea()) {
+			return;
+		}
+
+		if (this.enemy.goHome) {
+			return;
+		}
+
 		let now = Date.now();
 		this.lastSpecialTime = now;
 		this.specialItemEaten = true;
@@ -163,10 +177,6 @@ export abstract class EnemyController implements IEnemyController {
 
 	private EnemyEaten(enemy: ICellContent): void {
 		if (enemy !== this.enemy) {
-			return;
-		}
-
-		if (this.IsHomeArea()) {
 			return;
 		}
 
@@ -234,7 +244,12 @@ export abstract class EnemyController implements IEnemyController {
 
 	public IsHomeArea(): boolean {
 		let currentPosition: ICell = this.grid.GetCell(this.enemy.x, this.enemy.y);
-
 		return !currentPosition.canPlayerVisit;
+	}
+
+	public RegisterEvent(): void {
+		this.player.AddMoveListener((cell: ICell) => this.PlayerPositionUpdated(this.player));
+		this.player.AddPackGumEatListener(() => this.SpecialItemEaten());
+		this.player.AddEatEnemyListener((enemyContent: ICellContent) => this.EnemyEaten(enemyContent));
 	}
 }

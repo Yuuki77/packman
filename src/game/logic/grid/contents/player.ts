@@ -13,6 +13,7 @@ export class Player extends Content implements IPlayer {
 	public id = ' Player ';
 	private onEatItem: Array<{ () }> = [];
 	private onEat: Array<{ (enemy: ICellContent): void }> = [];
+	private onPlayerEaten: Array<{ (): void }> = [];
 
 	constructor() {
 		super();
@@ -74,15 +75,19 @@ export class Player extends Content implements IPlayer {
 
 		// visit Item
 		if (this.CanVisitItem(nextCell)) {
-			console.log('visit item');
 			this.EatSpecialItem(nextCell.Facility);
 			nextCell.Facility.Visited = true;
 			this.grid.Move(player, nextCell);
 			return;
 		}
 
-		if (this.helper.IsThisContent(nextCell, ContentType.Enemy)) {
-			throw new Error('It is not implemented yet');
+		if (this.helper.IsEnemy(nextCell, ContentType.Enemy)) {
+			let enemy = nextCell.Content as Enemy;
+			if (enemy.Run) {
+				this.EatEnemy(enemy);
+			} else {
+				this.Alive = false;
+			}
 		}
 
 		this.grid.Move(player, nextCell);
@@ -171,5 +176,20 @@ export class Player extends Content implements IPlayer {
 			throw new Error('it should be cherry' + cherry);
 		}
 		this.grid.scoreManager.SpecialItemEaten(cherry);
+	}
+
+	public AddPlayerEatenListener(cb: () => void) {
+		this.onPlayerEaten.push(cb);
+	}
+
+	public get Alive() {
+		return this.alive;
+	}
+
+	public set Alive(currentStatus: boolean | undefined) {
+		this.alive = currentStatus;
+		for (let cb of this.onPlayerEaten) {
+			cb();
+		}
 	}
 }

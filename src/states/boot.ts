@@ -22,6 +22,7 @@ export default class Boot extends Phaser.State {
 		this.game.load.image(Assets.Images.ImagesCherry.getName(), Assets.Images.ImagesCherry.getPNG());
 
 		this.game.load.atlasJSONHash(Assets.Atlases.AtlasesPackman.getName(), Assets.Atlases.AtlasesPackman.getPNG(), Assets.Atlases.AtlasesPackman.getJSONArray());
+		this.game.load.atlasJSONHash(Assets.Atlases.AtlasesDiePackmanSpriteSheet.getName(), Assets.Atlases.AtlasesDiePackmanSpriteSheet.getPNG(), Assets.Atlases.AtlasesDiePackmanSpriteSheet.getJSONArray());
 
 	}
 

@@ -44,10 +44,18 @@ export class PlayerUi {
 
 	private PlayerEaten() {
 		// this.player.alive = false;
+		// this.sprite.visible = false;
 		this.sprite.visible = false;
+		console.log('player eaten');
+		this.sprite = this.game.add.sprite(this.player.Cell.x * 18 + 9, this.player.Cell.y * 18 + 9, Assets.Atlases.AtlasesDiePackmanSpriteSheet.getName());
+		this.sprite.animations.add('eaten');
+		this.sprite.animations.play('eaten', 4, true);
+		this.sprite.anchor.setTo(0.5, 0.5);
+		this.sprite.scale.setTo(1);
 	}
 
 	private RegisterInterface(): void {
 		this.player.AddMoveListener((newCell: ICell) => this.PlayerMoved(newCell));
+		this.player.AddPlayerEatenListener(() => this.PlayerEaten());
 	}
 }

@@ -1,7 +1,7 @@
 import { ContentType, EnemyType, ICell, ICellContent, IGrid } from '../../interfaces/interfaces';
 
 export abstract class Content implements ICellContent {
-	private alive: boolean = true;
+	protected alive: boolean = true;
 	private cell: ICell;
 	private eaten: boolean = false;
 	public previousCell: ICell;
@@ -37,14 +37,6 @@ export abstract class Content implements ICellContent {
 				cb(this.Cell);
 			}
 		}
-	}
-
-	public get Alive() {
-		return this.alive;
-	}
-
-	public set Alive(currentStatus: boolean | undefined) {
-		this.alive = currentStatus;
 	}
 
 	public AddEatenListner(cb: (eaten: boolean) => void) {

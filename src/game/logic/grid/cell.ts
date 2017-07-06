@@ -37,6 +37,7 @@ export class Cell implements ICell {
 	}
 
 	public set CanPlayerVisit(canPlayerVisit: boolean) {
+		console.log('set the value to false');
 		this.canPlayerVisit = canPlayerVisit;
 	}
 

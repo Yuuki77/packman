@@ -1,0 +1,68 @@
+{"frames": [
+
+{
+	"filename": "Pacman10-hp-sprite_121.png",
+	"frame": {"x":18,"y":1,"w":13,"h":9},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":13,"h":9},
+	"sourceSize": {"w":13,"h":9}
+},
+{
+	"filename": "Pacman10-hp-sprite_122.png",
+	"frame": {"x":1,"y":1,"w":15,"h":8},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":15,"h":8},
+	"sourceSize": {"w":15,"h":8}
+},
+{
+	"filename": "Pacman10-hp-sprite_123.png",
+	"frame": {"x":1,"y":11,"w":15,"h":6},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":15,"h":6},
+	"sourceSize": {"w":15,"h":6}
+},
+{
+	"filename": "Pacman10-hp-sprite_124.png",
+	"frame": {"x":1,"y":27,"w":15,"h":5},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":15,"h":5},
+	"sourceSize": {"w":15,"h":5}
+},
+{
+	"filename": "Pacman10-hp-sprite_126.png",
+	"frame": {"x":1,"y":19,"w":15,"h":6},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":15,"h":6},
+	"sourceSize": {"w":15,"h":6}
+},
+{
+	"filename": "Pacman10-hp-sprite_127.png",
+	"frame": {"x":18,"y":12,"w":13,"h":7},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":13,"h":7},
+	"sourceSize": {"w":13,"h":7}
+},
+{
+	"filename": "Pacman10-hp-sprite_129.png",
+	"frame": {"x":18,"y":21,"w":5,"h":7},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":5,"h":7},
+	"sourceSize": {"w":5,"h":7}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "DiePackmanSpriteSheet.png",
+	"format": "RGBA8888",
+	"size": {"w":32,"h":33},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:75a752276fa28455e85a947f26d9b435:6ba5a8b1e0cb7198a56627e225fbca62:02f8ee2f41e5c330161c478224591ad4$"
+}
+}

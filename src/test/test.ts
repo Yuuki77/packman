@@ -1,7 +1,7 @@
 import { assert } from 'chai';
 import { expect } from 'chai';
 import 'mocha';
-import { BLUE_ENEMY_POSITION, GREEN_ENEMY_POSITION, PACKGUM_POSITION, PLAYER_POSITION, RED_ENEMY_POSITION } from '../game/const';
+import { BLUE_ENEMY_POSITION, GREEN_ENEMY_POSITION, PACKGUM_POSITION, PLAYER_POSITION, RED_ENEMY_POSITION, gridData } from '../game/const';
 import { ContentType, Direction, EnemyType } from '../game/interfaces/interfaces';
 import { GreenEnemyController } from '../game/logic/enemyManager/controllers/greenController';
 import { RedEnemyController } from '../game/logic/enemyManager/controllers/redController';
@@ -14,14 +14,14 @@ import { FakeGridUi, Helpers } from './helpers';
 
 describe('BFS function', () => {
 	it('should return path', () => {
-		let gridData: number[][] =
+		let fakeGridData: number[][] =
 			[
 				[5, 1, 1],
 				[0, 0, 3],
 				[1, 0, 1]
 			];
 		let helpers = new Helpers();
-		let grid = new Grid(gridData);
+		let grid = new Grid(fakeGridData);
 		grid.CreateBoard();
 		let player = helpers.getContent(grid, ContentType.Player);
 		let enemy = helpers.getContent(grid, ContentType.Enemy);
@@ -42,14 +42,14 @@ describe('BFS function', () => {
 
 describe('TEST Move function in grid', () => {
 	it('should Move left', () => {
-		let gridData: number[][] =
+		let fakeGridData: number[][] =
 			[
 				[5, 1, 1],
 				[0, 0, 3],
 				[1, 0, 1]
 			];
 		let helpers = new Helpers();
-		let grid = new Grid(gridData);
+		let grid = new Grid(fakeGridData);
 		grid.CreateBoard();
 		let playerContent = helpers.getContent(grid, ContentType.Player);
 		let player = playerContent as Player;
@@ -63,14 +63,14 @@ describe('TEST Move function in grid', () => {
 
 describe('TEST Move function in grid', () => {
 	it('should Move right', () => {
-		let gridData: number[][] =
+		let fakeGridData: number[][] =
 			[
 				[PLAYER_POSITION, 1, 1],
 				[0, 0, 0],
 				[1, 0, 1]
 			];
 		let helpers = new Helpers();
-		let grid = new Grid(gridData);
+		let grid = new Grid(fakeGridData);
 		grid.CreateBoard();
 		let playerContent = helpers.getContent(grid, ContentType.Player);
 		let player = playerContent as Player;
@@ -84,14 +84,14 @@ describe('TEST Move function in grid', () => {
 
 describe('TEST CanMove function in player', () => {
 	it('should  not Move up', () => {
-		let gridData: number[][] =
+		let fakeGridData: number[][] =
 			[
 				[PLAYER_POSITION, 1, 1],
 				[0, 0, GREEN_ENEMY_POSITION],
 				[1, 0, 1]
 			];
 		let helpers = new Helpers();
-		let grid = new Grid(gridData);
+		let grid = new Grid(fakeGridData);
 		grid.CreateBoard();
 		let playerContent = helpers.getContent(grid, ContentType.Player);
 		let player = playerContent as Player;
@@ -105,14 +105,14 @@ describe('TEST CanMove function in player', () => {
 
 describe('TEST GetNextCell ', () => {
 	it('should  move right edge', () => {
-		let gridData: number[][] =
+		let fakeGridData: number[][] =
 			[
 				[5, 1, 1],
 				[0, 0, 3],
 				[1, 0, 1]
 			];
 		let helpers = new Helpers();
-		let grid = new Grid(gridData);
+		let grid = new Grid(fakeGridData);
 		grid.CreateBoard();
 		let playerContent = helpers.getContent(grid, ContentType.Player);
 		let player = playerContent as Player;
@@ -124,14 +124,14 @@ describe('TEST GetNextCell ', () => {
 	});
 
 	it('should  move left edge', () => {
-		let gridData: number[][] =
+		let fakeGridData: number[][] =
 			[
 				[5, 1, 1],
 				[3, 0, 0],
 				[1, 0, 1]
 			];
 		let helpers = new Helpers();
-		let grid = new Grid(gridData);
+		let grid = new Grid(fakeGridData);
 		grid.CreateBoard();
 		let playerContent = helpers.getContent(grid, ContentType.Player);
 		let player = playerContent as Player;
@@ -145,14 +145,14 @@ describe('TEST GetNextCell ', () => {
 
 describe('TEST CanMove function in player', () => {
 	it('should  not Move left', () => {
-		let gridData: number[][] =
+		let fakeGridData: number[][] =
 			[
 				[5, 1, 1],
 				[0, 0, 3],
 				[1, 0, 1]
 			];
 		let helpers = new Helpers();
-		let grid = new Grid(gridData);
+		let grid = new Grid(fakeGridData);
 		grid.CreateBoard();
 		let playerContent = helpers.getContent(grid, ContentType.Player);
 		let player = playerContent as Player;
@@ -167,14 +167,14 @@ describe('TEST CanMove function in player', () => {
 
 describe('TEST Player Can Eat packgum', () => {
 	it('should return proper boolean', () => {
-		let gridData: number[][] =
+		let fakeGridData: number[][] =
 			[
 				[5, 1, PACKGUM_POSITION],
 				[0, 0, 3],
 				[1, 0, 1]
 			];
 		let helpers = new Helpers();
-		let grid = new Grid(gridData);
+		let grid = new Grid(fakeGridData);
 		grid.CreateBoard();
 		let playerContent = helpers.getContent(grid, ContentType.Player);
 		let player = playerContent as Player;
@@ -192,14 +192,14 @@ describe('TEST Player Can Eat packgum', () => {
 
 describe('TEST Enemy CanNotMove function', () => {
 	it('should not go down', () => {
-		let gridData: number[][] =
+		let fakeGridData: number[][] =
 			[
 				[0, 1, BLUE_ENEMY_POSITION],
 				[PLAYER_POSITION, 0, GREEN_ENEMY_POSITION],
 				[1, 0, 1]
 			];
 		let helpers = new Helpers();
-		let grid = new Grid(gridData);
+		let grid = new Grid(fakeGridData);
 		grid.CreateBoard();
 
 		let playerContent = helpers.getContent(grid, ContentType.Player);
@@ -217,21 +217,20 @@ describe('TEST Enemy CanNotMove function', () => {
 		let enemyController = new GreenEnemyController(grid, player, enemy);
 		let nextCell = blueEnemy.Cell.GetNeightbor(Direction.Down);
 		expect(nextCell).to.equal(grid.GetCell(2, 1));
-		expect(enemyController.CanMove(nextCell)).to.equal(false);
 		console.log(grid.toString());
 	});
 });
 
 describe('TEST Player IsPackGUm', () => {
 	it('should eat packGum', () => {
-		let gridData: number[][] =
+		let fakeGridData: number[][] =
 			[
 				[PACKGUM_POSITION, 1, 0],
 				[PLAYER_POSITION, 0, 0],
 				[1, 0, 1]
 			];
 		let helpers = new Helpers();
-		let grid = new Grid(gridData);
+		let grid = new Grid(fakeGridData);
 		grid.CreateBoard();
 
 		let playerContent = helpers.getContent(grid, ContentType.Player);
@@ -258,14 +257,14 @@ describe('TEST Player IsPackGUm', () => {
 
 describe('TEST SpecialItemEaten Enemy', () => {
 	it('should get ran away', () => {
-		let gridData: number[][] =
+		let fakeGridData: number[][] =
 			[
 				[BLUE_ENEMY_POSITION, 1, 0],
 				[0, 0, 0],
 				[1, 0, 1]
 			];
 		let helpers = new Helpers();
-		let grid = new Grid(gridData);
+		let grid = new Grid(fakeGridData);
 		grid.CreateBoard();
 
 		let enemyContent = helpers.getContent(grid, ContentType.Enemy);
@@ -292,14 +291,14 @@ describe('TEST SpecialItemEaten Enemy', () => {
 
 describe('TEST EnemyController  GetFarPath', () => {
 	it('should get Far path', () => {
-		let gridData: number[][] =
+		let fakeGridData: number[][] =
 			[
 				[0, 1, BLUE_ENEMY_POSITION],
 				[PLAYER_POSITION, 0, GREEN_ENEMY_POSITION],
 				[1, 0, 1]
 			];
 		let helpers = new Helpers();
-		let grid = new Grid(gridData);
+		let grid = new Grid(fakeGridData);
 		grid.CreateBoard();
 
 		let playerContent = helpers.getContent(grid, ContentType.Player);
@@ -318,14 +317,14 @@ describe('TEST EnemyController  GetFarPath', () => {
 
 describe('TEST Player eatEnemy', () => {
 	it('should enemy Eat', () => {
-		let gridData: number[][] =
+		let fakeGridData: number[][] =
 			[
 				[0, 1, 0],
 				[PLAYER_POSITION, GREEN_ENEMY_POSITION, 0],
 				[1, 0, 1]
 			];
 		let helpers = new Helpers();
-		let grid = new Grid(gridData);
+		let grid = new Grid(fakeGridData);
 		grid.CreateBoard();
 
 		let playerContent = helpers.getContent(grid, ContentType.Player);
@@ -352,14 +351,14 @@ describe('TEST Player eatEnemy', () => {
 
 // describe('TEST Check if game is clear or not', () => {
 // 	it('should game clear', () => {
-// 		let gridData: number[][] =
+// 		let fakeGridData: number[][] =
 // 			[
 // 				[PLAYER_POSITION, 0, 0],
 // 				[1, 1, 1],
 // 				[1, 1, 1]
 // 			];
 // 		let helpers = new Helpers();
-// 		let grid = new Grid(gridData);
+// 		let grid = new Grid(fakeGridData);
 // 		grid.CreateBoard();
 
 // 		let playerContent = helpers.getContent(grid, ContentType.Player);
@@ -395,14 +394,14 @@ describe('TEST Player eatEnemy', () => {
 
 describe('TEST Check if there is a collision go home ', () => {
 	it('should game clear', () => {
-		let gridData: number[][] =
+		let fakeGridData: number[][] =
 			[
 				[0, 9, 0],
 				[GREEN_ENEMY_POSITION, 1, 1],
 				[BLUE_ENEMY_POSITION, 1, 1]
 			];
 
-		let grid = new Grid(gridData);
+		let grid = new Grid(fakeGridData);
 
 		grid.CreateBoard();
 
@@ -429,7 +428,7 @@ describe('TEST Check if there is a collision go home ', () => {
 
 describe('TEST Check if Enemy go to player position', () => {
 	it('enemy should go to player position', () => {
-		let gridData: number[][] =
+		let fakeGridData: number[][] =
 			[
 				[RED_ENEMY_POSITION, 0, 0, 0, PLAYER_POSITION],
 				[0, 1, 1, 0],
@@ -439,7 +438,7 @@ describe('TEST Check if Enemy go to player position', () => {
 				[0, 1, 1, 0]
 			];
 		let helpers = new Helpers();
-		let grid = new Grid(gridData);
+		let grid = new Grid(fakeGridData);
 		// tslint:disable-next-line:no-unused-new
 		new FakeGridUi(grid);
 		grid.CreateBoard();
@@ -483,7 +482,7 @@ describe('TEST Check if Enemy go to player position', () => {
 
 describe('TEST Check if red Enemy walks around or not', () => {
 	it('enemy should go to player position', () => {
-		let gridData: number[][] =
+		let fakeGridData: number[][] =
 			[
 				[RED_ENEMY_POSITION, 0, 0, 0, PLAYER_POSITION],
 				[0, 1, 1, 0, 1],
@@ -493,7 +492,7 @@ describe('TEST Check if red Enemy walks around or not', () => {
 				[0, 1, 1, 0, 1]
 			];
 		let helpers = new Helpers();
-		let grid = new Grid(gridData);
+		let grid = new Grid(fakeGridData);
 		new FakeGridUi(grid);
 		grid.CreateBoard();
 
@@ -562,7 +561,7 @@ describe('TEST Check if red Enemy walks around or not', () => {
 
 describe('TEST Check if red Enemy walks around flag works or not', () => {
 	it('enemy should walk Around', () => {
-		let gridData: number[][] =
+		let fakeGridData: number[][] =
 			[
 				[RED_ENEMY_POSITION, 0, 0, 0, 1],
 				[0, 1, 1, 0, 1],
@@ -572,7 +571,7 @@ describe('TEST Check if red Enemy walks around flag works or not', () => {
 				[PLAYER_POSITION, 1, 1, 0, 1]
 			];
 		let helpers = new Helpers();
-		let grid = new Grid(gridData);
+		let grid = new Grid(fakeGridData);
 		new FakeGridUi(grid);
 		grid.CreateBoard();
 
@@ -618,7 +617,7 @@ describe('TEST Check if red Enemy walks around flag works or not', () => {
 
 describe('TEST Check if red Enemy walks around flag works or not', () => {
 	it('enemy should walk Around', () => {
-		let gridData: number[][] =
+		let fakeGridData: number[][] =
 			[
 				[RED_ENEMY_POSITION, 0, 0, 0, 1],
 				[0, 1, 1, 0, 1],
@@ -628,7 +627,7 @@ describe('TEST Check if red Enemy walks around flag works or not', () => {
 				[PLAYER_POSITION, 1, 1, 0, 1]
 			];
 		let helpers = new Helpers();
-		let grid = new Grid(gridData);
+		let grid = new Grid(fakeGridData);
 		new FakeGridUi(grid);
 		grid.CreateBoard();
 
@@ -677,7 +676,7 @@ describe('TEST Check if red Enemy walks around flag works or not', () => {
 
 describe('TEST Check if blue Enemy walks around flag works or not', () => {
 	it('enemy should walk Around', () => {
-		let gridData: number[][] =
+		let fakeGridData: number[][] =
 			[
 				[BLUE_ENEMY_POSITION, 0, 0, 0, 1],
 				[0, 1, 1, 0, 1],
@@ -687,7 +686,7 @@ describe('TEST Check if blue Enemy walks around flag works or not', () => {
 				[PLAYER_POSITION, 1, 1, 0, 1]
 			];
 		let helpers = new Helpers();
-		let grid = new Grid(gridData);
+		let grid = new Grid(fakeGridData);
 		new FakeGridUi(grid);
 		grid.CreateBoard();
 
@@ -732,7 +731,7 @@ describe('TEST Check if blue Enemy walks around flag works or not', () => {
 
 describe('TEST Check if blue Enemy walks around flag works or not', () => {
 	it('enemy should walk Around', () => {
-		let gridData: number[][] =
+		let fakeGridData: number[][] =
 			[
 				[BLUE_ENEMY_POSITION, PLAYER_POSITION, 0, 0, 1],
 				[0, 1, 1, 0, 1],
@@ -742,7 +741,7 @@ describe('TEST Check if blue Enemy walks around flag works or not', () => {
 				[0, 1, 1, 0, 1]
 			];
 		let helpers = new Helpers();
-		let grid = new Grid(gridData);
+		let grid = new Grid(fakeGridData);
 		new FakeGridUi(grid);
 		grid.CreateBoard();
 
@@ -768,5 +767,228 @@ describe('TEST Check if blue Enemy walks around flag works or not', () => {
 		console.log(grid.toString());
 
 		expect(player.Alive).to.equal(false);
+	});
+});
+
+describe('TEST Check if blue Enemy walks around flag works or not', () => {
+	it('enemy should walk Around', () => {
+		let fakeGridData: number[][] =
+			[
+				[BLUE_ENEMY_POSITION, PLAYER_POSITION, 0, 0, 1],
+				[0, 1, 1, 0, 1],
+				[0, 1, 1, 0, 1],
+				[0, 0, 0, 0, 1],
+				[0, 1, 1, 0, 1],
+				[0, 1, 1, 0, 1]
+			];
+		let helpers = new Helpers();
+		let grid = new Grid(fakeGridData);
+		new FakeGridUi(grid);
+		grid.CreateBoard();
+
+		let playerContent = helpers.getContent(grid, ContentType.Player);
+		let player = playerContent as Player;
+		assert(player);
+		expect(player.type).to.equal(ContentType.Player);
+
+		let enemyContent = helpers.getContent(grid, ContentType.Enemy);
+		let blue = enemyContent as Enemy;
+
+		assert(blue);
+		expect(blue.type).to.equal(ContentType.Enemy);
+
+		console.log('Before');
+		console.log(grid.toString());
+		let enemyController = new BlueEnemyController(grid, player, blue);
+		enemyController.Random = 0;
+		enemyController.MovingTimes = 1;
+		enemyController.Update(25);
+
+		console.log('1');
+		console.log(grid.toString());
+
+	});
+});
+
+describe('TEST Check if blue Enemy walks around flag works or not', () => {
+	it('enemy should walk Around', () => {
+		let helpers = new Helpers();
+		let grid = new Grid(gridData);
+		new FakeGridUi(grid);
+		grid.CreateBoard();
+
+		let playerContent = helpers.getContent(grid, ContentType.Player);
+		let player = playerContent as Player;
+		assert(player);
+		expect(player.type).to.equal(ContentType.Player);
+
+		let enemyContent = helpers.getContent(grid, ContentType.Enemy);
+		let blue = enemyContent as Enemy;
+
+		assert(blue);
+		expect(blue.type).to.equal(ContentType.Enemy);
+
+		console.log('Before');
+		console.log(grid.toString());
+		let enemyController = new BlueEnemyController(grid, player, blue);
+		enemyController.Random = 0;
+		enemyController.MovingTimes = 1;
+		enemyController.Update(25);
+
+		console.log('1');
+		console.log(grid.toString());
+	});
+});
+
+describe('TEST Check if enemy is normal state or not when there are home area', () => {
+	it('enemy should walk Around', () => {
+		let fakeGridData: number[][] =
+			[
+				[BLUE_ENEMY_POSITION, PLAYER_POSITION, PACKGUM_POSITION, 0, 1],
+				[0, 1, 1, 0, 1],
+				[0, 1, 1, 0, 1],
+				[0, 0, 0, 0, 1],
+				[0, 1, 1, 0, 1],
+				[0, 1, 1, 0, 1]
+			];
+		let helpers = new Helpers();
+		let grid = new Grid(fakeGridData);
+		new FakeGridUi(grid);
+		grid.CreateBoard();
+
+		let playerContent = helpers.getContent(grid, ContentType.Player);
+		let player = playerContent as Player;
+		assert(player);
+		expect(player.type).to.equal(ContentType.Player);
+
+		let enemyContent = helpers.getContent(grid, ContentType.Enemy);
+		let blue = enemyContent as Enemy;
+
+		assert(blue);
+		expect(blue.type).to.equal(ContentType.Enemy);
+
+		console.log('Before');
+		console.log(grid.toString());
+
+
+		console.log('1');
+		console.log(grid.toString());
+		let nextCell = player.Cell.GetNeightbor(Direction.Right);
+		expect(nextCell).to.equal(grid.GetCell(2, 0));
+		blue.Cell.canPlayerVisit = false;
+		assert.strictEqual(blue.Cell.canPlayerVisit, false, 'these booleans are strictly equal');
+		let enemyController = new BlueEnemyController(grid, player, blue);
+
+		console.log('Before');
+		console.log(grid.toString());
+		// player.Decide(player, Direction.Up);
+		player.EatItem();
+		grid.Move(player, nextCell);
+
+		console.log('After');
+		console.log(grid.toString());
+		assert.strictEqual(blue.Run, false, 'enemy run should be false if enemy is in home position');
+
+		// player.Decide(player, Direction.Up);
+	});
+});
+
+describe('TEST Check if enemy is normal state or not when there are home area', () => {
+	it('enemy should walk Around', () => {
+		let fakeGridData: number[][] =
+			[
+				[BLUE_ENEMY_POSITION, PLAYER_POSITION, PACKGUM_POSITION, 0, 1],
+				[0, 1, 1, 0, 1],
+				[0, 1, 1, 0, 1],
+				[0, 0, 0, 0, 1],
+				[0, 1, 1, 0, 1],
+				[0, 1, 1, 0, 1]
+			];
+		let helpers = new Helpers();
+		let grid = new Grid(fakeGridData);
+		new FakeGridUi(grid);
+		grid.CreateBoard();
+
+		let playerContent = helpers.getContent(grid, ContentType.Player);
+		let player = playerContent as Player;
+		assert(player);
+		expect(player.type).to.equal(ContentType.Player);
+
+		let enemyContent = helpers.getContent(grid, ContentType.Enemy);
+		let blue = enemyContent as Enemy;
+
+		assert(blue);
+		expect(blue.type).to.equal(ContentType.Enemy);
+
+		console.log('Before');
+		console.log(grid.toString());
+
+
+		console.log('1');
+		console.log(grid.toString());
+		let nextCell = player.Cell.GetNeightbor(Direction.Right);
+		expect(nextCell).to.equal(grid.GetCell(2, 0));
+		assert.strictEqual(blue.Cell.canPlayerVisit, true, 'these booleans are strictly equal');
+
+		console.log('Before');
+		console.log(grid.toString());
+		// player.Decide(player, Direction.Up);
+		player.EatItem();
+		grid.Move(player, nextCell);
+
+		console.log('After');
+		console.log(grid.toString());
+		assert.strictEqual(blue.Run, true, 'enemy run should be true if enemy is not in home position');
+
+	});
+});
+
+describe('TEST Check if enemy is normal state or not when there are home area', () => {
+	it('enemy should walk Around', () => {
+		let fakeGridData: number[][] =
+			[
+				[BLUE_ENEMY_POSITION, PLAYER_POSITION, PACKGUM_POSITION, 0, 1],
+				[0, 1, 1, 0, 1],
+				[0, 1, 1, 0, 1],
+				[0, 0, 0, 0, 1],
+				[0, 1, 1, 0, 1],
+				[0, 1, 1, 0, 1]
+			];
+		let helpers = new Helpers();
+		let grid = new Grid(fakeGridData);
+		new FakeGridUi(grid);
+		grid.CreateBoard();
+
+		let playerContent = helpers.getContent(grid, ContentType.Player);
+		let player = playerContent as Player;
+		assert(player);
+		expect(player.type).to.equal(ContentType.Player);
+
+		let enemyContent = helpers.getContent(grid, ContentType.Enemy);
+		let blue = enemyContent as Enemy;
+
+		assert(blue);
+		expect(blue.type).to.equal(ContentType.Enemy);
+
+		console.log('Before');
+		console.log(grid.toString());
+
+
+		console.log('1');
+		console.log(grid.toString());
+		let nextCell = player.Cell.GetNeightbor(Direction.Right);
+		expect(nextCell).to.equal(grid.GetCell(2, 0));
+		assert.strictEqual(blue.Cell.canPlayerVisit, true, 'these booleans are strictly equal');
+
+		console.log('Before');
+		console.log(grid.toString());
+		// player.Decide(player, Direction.Up);
+		player.EatItem();
+		grid.Move(player, nextCell);
+
+		console.log('After');
+		console.log(grid.toString());
+		assert.strictEqual(blue.Run, true, 'enemy run should be true if enemy is not in home position');
+
 	});
 });
