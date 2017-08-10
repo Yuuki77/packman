@@ -1,10 +1,3 @@
-// export let GridData: number[][] =
-// 	[
-// 		[1, 1, 1],
-// 		[3, 0, 0],
-// 		[1, 1, 1]
-// 	];
-
 export const RED_ENEMY_POSITION = 4;
 export const BLUE_ENEMY_POSITION = 2;
 export const GREEN_ENEMY_POSITION = 5;

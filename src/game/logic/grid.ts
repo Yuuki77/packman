@@ -1,5 +1,5 @@
 import { Helpers } from '../../test/helpers';
-import { ContentType, EnemyType, FacilityType, ICell, ICellContent, ICellFacility, IGrid } from '../interfaces/interfaces';
+import { ContentType, EnemyType, FacilityType, ICell, ICellContent, ICellFacility, IGrid, IStateManager } from '../interfaces/interfaces';
 import { ScoreManager } from '../score/scoreManager';
 import { Cell } from './grid/cell';
 import { Enemy } from './grid/contents/enemy';
@@ -14,6 +14,7 @@ export class Grid implements IGrid {
 	private onFacilityCreatedCallbacks: Array<{ (facility: ICellFacility): void; }> = [];
 	private onContentCreatedCallbacks: Array<{ (content: ICellContent): void; }> = [];
 	private data: number[][];
+	private stateManager: IStateManager;
 
 	public visitedDotNumbers: number = 0;
 	public numberOfDots: number = 0;
@@ -23,11 +24,12 @@ export class Grid implements IGrid {
 	private helper: Helpers;
 	private now: number;
 
-	constructor(gridData: number[][]) {
+	constructor(gridData: number[][], stateManager: IStateManager) {
 		this.data = gridData;
 		this.scoreManager = new ScoreManager();
 		this.helper = new Helpers();
 		this.now = Date.now();
+		this.stateManager = stateManager;
 	}
 
 	// todo
@@ -136,7 +138,7 @@ export class Grid implements IGrid {
 		let content;
 		switch (type) {
 			case ContentType.Player:
-				content = new Player();
+				content = new Player(this.stateManager);
 				break;
 			// todo change the logic
 			case ContentType.Enemy:

@@ -1,4 +1,4 @@
-import { IGrid } from '../../../interfaces/interfaces';
+import { IGrid, IStateManager } from '../../../interfaces/interfaces';
 import { Enemy } from '../../grid/contents/enemy';
 import { Player } from '../../grid/contents/player';
 import { EnemyController } from '../enemyController';

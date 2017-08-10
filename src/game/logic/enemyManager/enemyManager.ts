@@ -1,4 +1,4 @@
-import { EnemyType, IEnemyController, IEnemyManager, IGrid } from '../../interfaces/interfaces';
+import { EnemyType, IEnemyController, IEnemyManager, IGrid, IStateManager, StateType } from '../../interfaces/interfaces';
 import { Enemy } from '../grid/contents/enemy';
 import { Player } from '../grid/contents/player';
 import { BlueEnemyController } from './controllers/blueController';
@@ -16,11 +16,13 @@ export class EnemyManager implements IEnemyManager {
 	public player: Player;
 	public enemyArray: Enemy[] = [];
 	public enemyControllers: IEnemyController[] = [];
+	public stateManager: IStateManager;
 
-	constructor(grid: IGrid, player: Player, enemyArray: Enemy[]) {
+	constructor(grid: IGrid, player: Player, enemyArray: Enemy[], stateManager: IStateManager) {
 		this.grid = grid;
 		this.player = player;
 		this.enemyArray = enemyArray;
+		this.stateManager = stateManager;
 
 		for (let enemy of this.enemyArray) {
 			switch (enemy.enemyType) {
@@ -47,6 +49,10 @@ export class EnemyManager implements IEnemyManager {
 	}
 
 	Update(dt: number): void {
+		if (this.stateManager.CurrentState === StateType.Stop) {
+			return;
+		}
+
 		for (let enemyController of this.enemyControllers) {
 			enemyController.Update(dt);
 		}

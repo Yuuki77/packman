@@ -32,31 +32,6 @@ export interface ICellContent {
 	AddMoveListener(cb: (cell: ICell) => void);
 }
 
-export enum ContentType {
-	Player,
-	Enemy
-}
-export enum FacilityType {
-	Wall,
-	YellowDot,
-	PackGum,
-	Cherry
-}
-
-export enum EnemyType {
-	Red,
-	Blue,
-	Yellow,
-	Green
-}
-
-export enum Direction {
-	Up,
-	Down,
-	Left,
-	Right
-}
-
 export interface IPathFinding {
 	readonly grid: IGrid;
 	path: number[][];
@@ -85,11 +60,6 @@ export interface IScoreManager {
 	AddEnemyEatenListener(cb: (newScore: number, enemy: ICellContent) => void);
 	AddSpecialItemEatenListener(cb: (newScore: number, cherry: ICellFacility) => void);
 }
-export interface IAiManager {
-	Greedy: number;
-	Emotively: number;
-	Speed: number;
-}
 
 export interface ICellFacility {
 	x: number;
@@ -104,6 +74,47 @@ export interface ICellFacility {
 export interface IPlayer {
 	GetNextCell(content: ICellContent, direction: Direction): ICell | undefined;
 	CannotMove(content: ICellContent, nextCell: ICell): boolean;
+}
+
+
+export interface IStateManager {
+	CurrentState: StateType;
+	UpdateState(updateState: StateType): void;
+}
+
+export enum StateType {
+	Start,
+	Stop
+}
+export interface IAiManager {
+	Greedy: number;
+	Emotively: number;
+	Speed: number;
+}
+
+export enum ContentType {
+	Player,
+	Enemy
+}
+export enum FacilityType {
+	Wall,
+	YellowDot,
+	PackGum,
+	Cherry
+}
+
+export enum EnemyType {
+	Red,
+	Blue,
+	Yellow,
+	Green
+}
+
+export enum Direction {
+	Up,
+	Down,
+	Left,
+	Right
 }
 
 export const ENEMY_NOMAL_SPPED = 500;

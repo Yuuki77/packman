@@ -1,27 +1,30 @@
 import { gridData } from './const';
-import { ContentType, Direction, ICellContent } from './interfaces/interfaces';
+import { ContentType, Direction, ICellContent, StateType } from './interfaces/interfaces';
 import { EnemyManager } from './logic/enemyManager/enemyManager';
 import { Grid } from './logic/grid';
 import { Enemy } from './logic/grid/contents/enemy';
 import { Player } from './logic/grid/contents/player';
 import { GridUi } from './ui/gridUI';
+import { StateMyManager } from './logic/stateManager';
 
 export class Game {
 	private player: Player;
 	private enemysArray: Enemy[] = [];
 	private gridUi;
-	private grid: Grid;
-	private game;
+	public grid: Grid;
+	private game: Phaser.Game;
 	private upKey;
 	private downKey;
 	private leftKey;
 	private rightKey;
-	private enemyManager;
+	private enemyManager: EnemyManager;
+	private stateManager: StateMyManager;
 	private currentTime: number;
 
 	constructor(game: Phaser.Game) {
 		this.game = game;
-		this.grid = new Grid(gridData);
+		this.stateManager = new StateMyManager(StateType.Start);
+		this.grid = new Grid(gridData, this.stateManager);
 		this.gridUi = new GridUi(game, this.grid);
 
 		this.grid.AddContentCreatedListener((content: ICellContent) => {
@@ -34,37 +37,43 @@ export class Game {
 		});
 
 		this.grid.CreateBoard();
-		this.enemyManager = new EnemyManager(this.grid, this.player, this.enemysArray);
+		this.enemyManager = new EnemyManager(this.grid, this.player, this.enemysArray, this.stateManager);
 		this.currentTime = Date.now();
 	}
 
 	public KeyboardInputs(): void {
 		this.upKey = this.game.input.keyboard.addKey(Phaser.Keyboard.UP);
 		this.upKey.onDown.add(() => {
-			if (!this.game.paused) {
-				this.player.Update(this.player, Direction.Up);
+			if (this.stateManager.CurrentState === StateType.Stop) {
+				return;
 			}
+			this.player.Update(this.player, Direction.Up);
 		}, this);
 
 		this.downKey = this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
 		this.downKey.onDown.add(() => {
-			if (!this.game.paused) {
-				this.player.Update(this.player, Direction.Down);
+			if (this.stateManager.CurrentState === StateType.Stop) {
+				return;
 			}
+			this.player.Update(this.player, Direction.Down);
 		}, this);
 
 		this.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
 		this.leftKey.onDown.add(() => {
-			if (!this.game.paused) {
-				this.player.Update(this.player, Direction.Left);
+			if (this.stateManager.CurrentState === StateType.Stop) {
+				return;
 			}
+			this.player.Update(this.player, Direction.Left);
+
 		}, this);
 
 		this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
 		this.rightKey.onDown.add(() => {
-			if (!this.game.paused) {
-				this.player.Update(this.player, Direction.Right);
+			if (this.stateManager.CurrentState === StateType.Stop) {
+				return;
 			}
+			this.player.Update(this.player, Direction.Right);
+
 		}, this);
 	}
 
@@ -78,7 +87,8 @@ export class Game {
 		(window as any).games = this.game;
 	}
 
+	// todo change the logic
 	public isGameOver(): boolean {
-		return !this.player.Alive;
+		return !this.player.Alive && this.player.hasAnimationEnd;
 	}
 }

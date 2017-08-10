@@ -1,5 +1,5 @@
 import { Helpers } from '../../../../test/helpers';
-import { ContentType, Direction, FacilityType, ICell, ICellContent, ICellFacility, IPlayer, PLAYERY_NOMAL_SPPED } from '../../../interfaces/interfaces';
+import { ContentType, Direction, FacilityType, ICell, ICellContent, ICellFacility, IPlayer, PLAYERY_NOMAL_SPPED, IStateManager, StateType } from '../../../interfaces/interfaces';
 import { Content } from '../content';
 import { Cherry } from '../facility/cherry';
 import { Enemy } from './enemy';
@@ -14,10 +14,15 @@ export class Player extends Content implements IPlayer {
 	private onEatItem: Array<{ () }> = [];
 	private onEat: Array<{ (enemy: ICellContent): void }> = [];
 	private onPlayerEaten: Array<{ (): void }> = [];
+	public isPlayable: boolean = true;
+	public hasAnimationEnd: boolean = false;
+	public stateManager: IStateManager;
 
-	constructor() {
+
+	constructor(stateManager: IStateManager) {
 		super();
 		this.helper = new Helpers();
+		this.stateManager = stateManager;
 	}
 
 	public EatItem() {
@@ -42,7 +47,7 @@ export class Player extends Content implements IPlayer {
 		let now = Date.now();
 
 		this.currentDirection = this.GetNextDirection(direction);
-		if (this.lastMove + PLAYERY_NOMAL_SPPED < now) {
+		if (this.lastMove + PLAYERY_NOMAL_SPPED < now && this.stateManager.CurrentState !== StateType.Stop) {
 			this.lastMove = now;
 			this.Decide(player, direction);
 		}
@@ -86,6 +91,7 @@ export class Player extends Content implements IPlayer {
 			if (enemy.Run) {
 				this.EatEnemy(enemy);
 			} else {
+				this.stateManager.UpdateState(StateType.Stop);
 				this.Alive = false;
 			}
 		}

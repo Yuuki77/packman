@@ -42,9 +42,12 @@ export class PlayerUi {
 		this.game.add.tween(this.sprite).to(destination, 200, Phaser.Easing.Linear.None, true);
 	}
 
+	private onComplete() {
+		console.log('on complete is called');
+		this.player.hasAnimationEnd = true;
+	}
+
 	private PlayerEaten() {
-		// this.player.alive = false;
-		// this.sprite.visible = false;
 		this.sprite.visible = false;
 		console.log('player eaten');
 		this.sprite = this.game.add.sprite(this.player.Cell.x * 18 + 9, this.player.Cell.y * 18 + 9, Assets.Atlases.AtlasesDiePackmanSpriteSheet.getName());
@@ -52,6 +55,8 @@ export class PlayerUi {
 		this.sprite.animations.play('eaten', 4, true);
 		this.sprite.anchor.setTo(0.5, 0.5);
 		this.sprite.scale.setTo(1);
+		this.onComplete();
+
 	}
 
 	private RegisterInterface(): void {

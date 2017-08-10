@@ -81,6 +81,11 @@ export namespace Images {
 
 				static getPNG(): string { return require('assets/images/ghostYellow.png'); };
 		}
+		export class ImagesMenuBackground {
+				static getName(): string { return 'menuBackground'; };
+
+				static getPNG(): string { return require('assets/images/menuBackground.png'); };
+		}
 		export class ImagesMetal {
 				static getName(): string { return 'metal'; };
 
@@ -90,6 +95,11 @@ export namespace Images {
 				static getName(): string { return 'pacman'; };
 
 				static getPNG(): string { return require('assets/images/pacman.png'); };
+		}
+		export class ImagesRestartButton {
+				static getName(): string { return 'restartButton'; };
+
+				static getPNG(): string { return require('assets/images/restartButton.png'); };
 		}
 		export class ImagesRoadtexture {
 				static getName(): string { return 'roadtexture'; };

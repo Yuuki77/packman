@@ -1,4 +1,4 @@
-import { ENEMY_NOMAL_SPPED, ENEMY_RUN_AWAY_SPPED, FacilityType, ICell, ICellContent, IEnemyController, IGrid, ContentType } from '../../interfaces/interfaces';
+import { ENEMY_NOMAL_SPPED, ENEMY_RUN_AWAY_SPPED, FacilityType, ICell, ICellContent, IEnemyController, IGrid, ContentType, IStateManager, StateType } from '../../interfaces/interfaces';
 import { Enemy } from '../grid/contents/enemy';
 import { Player } from '../grid/contents/player';
 import { PathFinding } from '../pathFind/pathFind';
@@ -16,7 +16,7 @@ export abstract class EnemyController implements IEnemyController {
 	public xt: number[];
 	public yt: number[];
 	private movingTimes: number = 0;
-
+	public stateManager: IStateManager;
 
 	// control random for testing purpose
 	private random?: number;
@@ -27,8 +27,8 @@ export abstract class EnemyController implements IEnemyController {
 		this.enemy = enemy as Enemy;
 		this.id = id;
 		this.RegisterEvent();
-		this.pathFindLogic = new PathFinding(this.grid);
 
+		this.pathFindLogic = new PathFinding(this.grid);
 		// I think this is really bad idea for checking if is a home area.
 		this.enemy.Cell.canPlayerVisit = false;
 	}
@@ -123,25 +123,17 @@ export abstract class EnemyController implements IEnemyController {
 		this.movingTimes++;
 
 		let dest = this.path[0];
-		// if (this.CanMove(dest)) {
-		// console.log(">>>>>", this.id, dest);
 		dest = this.path.shift();
 
 		if (dest.Content && dest.Content.type === ContentType.Player && !this.enemy.Run) {
 			this.player.Alive = false;
+			this.player.stateManager.UpdateState(StateType.Stop);
 		}
 
 		this.enemy.isPlayable = false;
 		this.grid.Move(this.enemy, dest);
 		// }
 	}
-
-	// public CanMove(dest: ICell): boolean {
-	// 	if (dest.Content && (dest.Content.type === ContentType.Enemy && !this.enemy.Run)) {
-	// 		return false;
-	// 	}
-	// 	return true;
-	// }
 
 	public CanDecide(): boolean {
 		if (!this.path || this.path.length === 1) {
@@ -198,7 +190,7 @@ export abstract class EnemyController implements IEnemyController {
 		return false;
 	}
 
-	// todo refactoring maybe using vecgor
+	// todo refactoring maybe using length of vector
 	public GetFarPath(): ICell[] {
 		let neightbors = this.enemy.Cell.GetNeightbors();
 		let farPath: ICell[];
