@@ -13,23 +13,23 @@ export class PopUp {
 	}
 
 	public Show() {
-		this.background = this.game.add.sprite(this.game.world.centerX - 70, this.game.world.centerY, Assets.Images.GraphicsGameOver.getName());
+		this.background = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, Assets.Images.GraphicsGameOver.getName());
 		this.background.alpha = 0.2;
 		this.background.anchor.set(0.5);
-		this.background.scale.setTo(0.3, 0.3);
+		this.background.scale.setTo(0.5, 0.5);
 
 		this.background.inputEnabled = true;
-		const pw = ((this.background.width - 70) / 2);
-		const ph = (this.background.height / 2);
+		const x = ((this.background.width) / 2);
+		const y = this.background.y + this.background.y / 4 + 20;
 
-		this.restartButton = this.game.add.sprite(pw + 160, ph + 250, Assets.Images.ImagesRestartButton.getName());
+		this.restartButton = this.game.add.sprite(this.background.x, y, Assets.Images.ImagesRestartButton.getName());
 		this.restartButton.inputEnabled = true;
 		this.restartButton.input.priorityID = 1;
 		this.restartButton.input.useHandCursor = true;
 		this.restartButton.events.onInputDown.add(this.restartGame, this);
 
 		this.restartButton.anchor.set(0.5);
-		this.restartButton.scale.setTo(0.3, 0.3);
+		this.restartButton.scale.setTo(0.5, 0.5);
 		// this.scoreEnemyEatenText = this.game.add.text(cherry.Cell.x * 18 + 9, cherry.Cell.y * 18, newScore.toString(), { fontSize: '15px', fill: '#F0F8FF' });
 		// // this.game.time.events.add(1000, this.RemoveText, this);
 		// this.scoreText = this.game.add.text(600, 16, 'score: 0', { fontSize: '18px', fill: '#F0F8FF' });
