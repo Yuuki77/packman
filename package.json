@@ -71,5 +71,8 @@
     "extension": [
       ".ts"
     ]
+  },
+  "dependencies": {
+    "npm-check-updates": "^2.14.2"
   }
 }
