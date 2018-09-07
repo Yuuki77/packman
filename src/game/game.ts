@@ -25,7 +25,7 @@ export class Game {
 		this.game = game;
 		this.stateManager = new StateMyManager(StateType.Start);
 		this.grid = new Grid(gridData, this.stateManager);
-		this.gridUi = new GridUi(game, this.grid);
+		this.gridUi = new GridUi(game, this.grid, this.grid.player);
 
 		this.grid.AddContentCreatedListener((content: ICellContent) => {
 			if (content.type === ContentType.Player) {
@@ -79,9 +79,9 @@ export class Game {
 
 	public Update(): void {
 		let dt = this.game.time.elapsedMS;
+		this.enemyManager.Update(dt);
 		this.KeyboardInputs();
 		this.player.Update(this.player, this.player.currentDirection);
-		this.enemyManager.Update(dt);
 
 		// debug
 		(window as any).games = this.game;
@@ -89,6 +89,6 @@ export class Game {
 
 	// todo change the logic
 	public isGameOver(): boolean {
-		return !this.player.Alive && this.player.hasAnimationEnd;
+		return this.player && !this.player.Alive && this.player.hasAnimationEnd;
 	}
 }

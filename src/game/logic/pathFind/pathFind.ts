@@ -20,7 +20,7 @@ export class PathFinding implements IPathFinding {
 			if (currentPosition.x === this.startPosition.x && currentPosition.y === this.startPosition.y) {
 				break;
 			}
-			let neighbors: ICell[] = currentPosition.GetNeightbors();
+			let neighbors: ICell[] = currentPosition.GetNeighbors();
 			for (let i = 0; i < neighbors.length; i++) {
 				if (neighbors[i].Facility && neighbors[i].Facility.type === FacilityType.Wall) {
 					continue;
@@ -59,7 +59,7 @@ export class PathFinding implements IPathFinding {
 			if (currentPosition.x === goalPosition.x && currentPosition.y === goalPosition.y) {
 				break;
 			}
-			let neighbors: ICell[] = currentPosition.GetNeightbors();
+			let neighbors: ICell[] = currentPosition.GetNeighbors();
 			for (let i = 0; i < neighbors.length; i++) {
 				if (neighbors[i].Facility && neighbors[i].Facility.type === FacilityType.Wall) {
 					continue;

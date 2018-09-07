@@ -110,9 +110,9 @@ export class FakeGridUi {
 		this.grid.AddContentCreatedListener((content: ICellContent) => {
 			let enemy = content as Enemy;
 			if (enemy.isPlayable !== undefined) {
-				enemy.AddMoveListener((newCell: ICell) => enemy.isPlayable = true);
+				enemy.AddMovedListener((newCell: ICell) => enemy.isPlayable = true);
 				enemy.AddRunListener((isRun: boolean) => enemy.isPlayable = true);
-				enemy.AddEatenListner((isEaten: boolean) => enemy.isPlayable = true);
+				enemy.AddEatenListener((isEaten: boolean) => enemy.isPlayable = true);
 			}
 		});
 	}

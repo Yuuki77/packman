@@ -23,6 +23,7 @@ export class Grid implements IGrid {
 	public scoreManager: ScoreManager;
 	private helper: Helpers;
 	private now: number;
+	public player: Player;
 
 	constructor(gridData: number[][], stateManager: IStateManager) {
 		this.data = gridData;
@@ -30,6 +31,7 @@ export class Grid implements IGrid {
 		this.helper = new Helpers();
 		this.now = Date.now();
 		this.stateManager = stateManager;
+		this.player = new Player(this.stateManager);
 	}
 
 	// todo
@@ -138,7 +140,7 @@ export class Grid implements IGrid {
 		let content;
 		switch (type) {
 			case ContentType.Player:
-				content = new Player(this.stateManager);
+				content = this.player;
 				break;
 			// todo change the logic
 			case ContentType.Enemy:

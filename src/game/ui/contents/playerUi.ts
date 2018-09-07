@@ -42,7 +42,7 @@ export class PlayerUi {
 		this.game.add.tween(this.sprite).to(destination, 200, Phaser.Easing.Linear.None, true);
 	}
 
-	private onComplete() {
+	private onCompletePlayerEaten() {
 		this.game.time.events.add(2000, function () {
 			this.player.hasAnimationEnd = true;
 		}, this);
@@ -55,12 +55,11 @@ export class PlayerUi {
 		this.sprite.animations.play('eaten', 4, false);
 		this.sprite.anchor.setTo(0.5, 0.5);
 		this.sprite.scale.setTo(1);
-		this.onComplete();
-
+		this.onCompletePlayerEaten();
 	}
 
 	private RegisterInterface(): void {
-		this.player.AddMoveListener((newCell: ICell) => this.PlayerMoved(newCell));
+		this.player.AddMovedListener((newCell: ICell) => this.PlayerMoved(newCell));
 		this.player.AddPlayerEatenListener(() => this.PlayerEaten());
 	}
 }

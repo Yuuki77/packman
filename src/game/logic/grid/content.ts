@@ -39,7 +39,7 @@ export abstract class Content implements ICellContent {
 		}
 	}
 
-	public AddEatenListner(cb: (eaten: boolean) => void) {
+	public AddEatenListener(cb: (eaten: boolean) => void) {
 		this.onEaten.push(cb);
 	}
 
@@ -54,7 +54,7 @@ export abstract class Content implements ICellContent {
 		}
 	}
 
-	public AddMoveListener(cb: (cell: ICell) => void) {
+	public AddMovedListener(cb: (cell: ICell) => void) {
 		this.onMove.push(cb);
 	}
 

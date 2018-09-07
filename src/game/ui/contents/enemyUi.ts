@@ -1,19 +1,23 @@
 import * as Assets from '../../../assets';
-import { EnemyType, ICell } from '../../interfaces/interfaces';
+import { EnemyType, ICell, ICellContent } from '../../interfaces/interfaces';
 import { Enemy } from '../../logic/grid/contents/enemy';
+import { Player } from '../../logic/grid/contents/player';
 
 export class EnemyUi {
 	private enemy: Enemy;
 	private game: Phaser.Game;
 	private sprite: Phaser.Sprite = null;
+	private player: Player;
 
-	constructor(game: Phaser.Game, enemy: Enemy) {
+	constructor(game: Phaser.Game, enemy: Enemy, player: ICellContent) {
 		this.enemy = enemy;
 		this.game = game;
+		this.player = player as Player;
 		this.Show();
-		this.enemy.AddMoveListener((newCell: ICell) => this.EnemyMoved(newCell));
+		this.player.AddPlayerEatenListener(() => this.PlayerEaten());
+		this.enemy.AddMovedListener((newCell: ICell) => this.EnemyMoved(newCell));
 		this.enemy.AddRunListener((isRun: boolean) => this.SpecialItemEaten(isRun));
-		this.enemy.AddEatenListner((isEaten: boolean) => this.EnemyEaten(isEaten));
+		this.enemy.AddEatenListener((isEaten: boolean) => this.EnemyEaten(isEaten));
 	}
 
 	private Show() {
@@ -91,5 +95,12 @@ export class EnemyUi {
 			this.Show();
 		}
 		this.onComplete();
+	}
+
+	private PlayerEaten(): any {
+
+		this.game.time.events.add(2000, function () {
+			this.sprite.destroy();
+		}, this);
 	}
 }

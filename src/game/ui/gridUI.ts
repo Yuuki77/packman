@@ -16,11 +16,12 @@ import { ScoreUi } from './score/scoreUi';
 export class GridUi {
 	private game: Phaser.Game;
 	private grid: IGrid;
-	private player: ICellContent;
+	private player: Player;
 
-	constructor(game: Phaser.Game, grid: IGrid) {
+	constructor(game: Phaser.Game, grid: IGrid, player: Player) {
 		this.game = game;
 		this.grid = grid;
+		this.player = player;
 		this.RegisterEvents();
 		// tslint:disable-next-line:no-unused-new
 		new ScoreUi(this.game, this.grid.scoreManager);
@@ -30,11 +31,10 @@ export class GridUi {
 	private ContentCreated(content: ICellContent): void {
 		switch (content.type) {
 			case ContentType.Player:
-				this.player = content;
 				new PlayerUi(this.game, content as Player);
 				break;
 			case ContentType.Enemy:
-				new EnemyUi(this.game, content as Enemy);
+				new EnemyUi(this.game, content as Enemy, this.player);
 				break;
 			default:
 				console.warn('unexpected content', content);

@@ -17,7 +17,7 @@ export interface ICell {
 	Content: ICellContent | undefined;
 	Facility: ICellFacility | undefined;
 	GetNeightbor(direction: Direction): ICell | undefined;
-	GetNeightbors(): ICell[];
+	GetNeighbors(): ICell[];
 }
 
 export interface ICellContent {
@@ -29,7 +29,7 @@ export interface ICellContent {
 	readonly enemyType: EnemyType;
 	previousCell: ICell;
 	Cell: ICell;
-	AddMoveListener(cb: (cell: ICell) => void);
+	AddMovedListener(cb: (cell: ICell) => void);
 }
 
 export interface IPathFinding {
@@ -117,7 +117,7 @@ export enum Direction {
 	Right
 }
 
-export const ENEMY_NOMAL_SPPED = 500;
-export const PLAYERY_NOMAL_SPPED = 210;
-export const ENEMY_RUN_AWAY_SPPED = 459;
+export const ENEMY_NORMAL_SPEED = 500;
+export const PLAYER_NORMAL_SPEED = 210;
+export const ENEMY_RUN_AWAY_SPEED = 459;
 export const ENEMY_GOHOME_SPPED = 100;

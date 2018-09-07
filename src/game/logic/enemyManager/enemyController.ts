@@ -1,4 +1,4 @@
-import { ENEMY_NOMAL_SPPED, ENEMY_RUN_AWAY_SPPED, FacilityType, ICell, ICellContent, IEnemyController, IGrid, ContentType, IStateManager, StateType } from '../../interfaces/interfaces';
+import { ENEMY_NORMAL_SPEED, ENEMY_RUN_AWAY_SPEED, FacilityType, ICell, ICellContent, IEnemyController, IGrid, ContentType, IStateManager, StateType } from '../../interfaces/interfaces';
 import { Enemy } from '../grid/contents/enemy';
 import { Player } from '../grid/contents/player';
 import { PathFinding } from '../pathFind/pathFind';
@@ -55,7 +55,6 @@ export abstract class EnemyController implements IEnemyController {
 	public Update(dt: number): void {
 		this.thinkingTime += dt;
 
-		// a lot of if makes me sad....
 		// back to normal state.
 		if (!this.IsSpecialTime() && this.specialItemEaten && this.enemy.Run && this.enemy.isPlayable && !this.enemy.goHome
 		) {
@@ -132,7 +131,6 @@ export abstract class EnemyController implements IEnemyController {
 
 		this.enemy.isPlayable = false;
 		this.grid.Move(this.enemy, dest);
-		// }
 	}
 
 	public CanDecide(): boolean {
@@ -192,9 +190,9 @@ export abstract class EnemyController implements IEnemyController {
 
 	// todo refactoring maybe using length of vector
 	public GetFarPath(): ICell[] {
-		let neightbors = this.enemy.Cell.GetNeightbors();
+		let neighbors = this.enemy.Cell.GetNeighbors();
 		let farPath: ICell[];
-		for (let neighbor of neightbors) {
+		for (let neighbor of neighbors) {
 
 			// check if it is wall or another content
 			if ((neighbor.Facility && neighbor.Facility.type === FacilityType.Wall) || neighbor.Content || this.enemy.previousCell === neighbor) {
@@ -212,7 +210,7 @@ export abstract class EnemyController implements IEnemyController {
 	}
 
 	public GetCurrentSpeed(): number {
-		return this.specialItemEaten === true ? ENEMY_RUN_AWAY_SPPED : ENEMY_NOMAL_SPPED;
+		return this.specialItemEaten === true ? ENEMY_RUN_AWAY_SPEED : ENEMY_NORMAL_SPEED;
 	}
 
 	public GetWalkingAroundNextCell(): ICell {
@@ -240,7 +238,7 @@ export abstract class EnemyController implements IEnemyController {
 	}
 
 	public RegisterEvent(): void {
-		this.player.AddMoveListener((cell: ICell) => this.PlayerPositionUpdated(this.player));
+		this.player.AddMovedListener((cell: ICell) => this.PlayerPositionUpdated(this.player));
 		this.player.AddPackGumEatListener(() => this.SpecialItemEaten());
 		this.player.AddEatEnemyListener((enemyContent: ICellContent) => this.EnemyEaten(enemyContent));
 	}

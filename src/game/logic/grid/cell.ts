@@ -61,7 +61,7 @@ export class Cell implements ICell {
 		}
 	}
 
-	public GetNeightbors(): ICell[] {
+	public GetNeighbors(): ICell[] {
 		let neightbors: ICell[] = [];
 
 		let up = this.GetNeightbor(Direction.Up);

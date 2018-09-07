@@ -1,5 +1,5 @@
 import { Helpers } from '../../../../test/helpers';
-import { ContentType, Direction, FacilityType, ICell, ICellContent, ICellFacility, IPlayer, PLAYERY_NOMAL_SPPED, IStateManager, StateType } from '../../../interfaces/interfaces';
+import { ContentType, Direction, FacilityType, ICell, ICellContent, ICellFacility, IPlayer, PLAYER_NORMAL_SPEED, IStateManager, StateType } from '../../../interfaces/interfaces';
 import { Content } from '../content';
 import { Cherry } from '../facility/cherry';
 import { Enemy } from './enemy';
@@ -47,7 +47,7 @@ export class Player extends Content implements IPlayer {
 		let now = Date.now();
 
 		this.currentDirection = this.GetNextDirection(direction);
-		if (this.lastMove + PLAYERY_NOMAL_SPPED < now && this.stateManager.CurrentState !== StateType.Stop) {
+		if (this.lastMove + PLAYER_NORMAL_SPEED < now && this.stateManager.CurrentState !== StateType.Stop) {
 			this.lastMove = now;
 			this.Decide(player, direction);
 		}
@@ -90,12 +90,15 @@ export class Player extends Content implements IPlayer {
 			let enemy = nextCell.Content as Enemy;
 			if (enemy.Run) {
 				this.EatEnemy(enemy);
+				this.grid.Move(player, nextCell);
 			} else {
+				this.grid.Move(player, nextCell);
 				this.stateManager.UpdateState(StateType.Stop);
 				this.Alive = false;
 			}
-		}
 
+			return;
+		}
 		this.grid.Move(player, nextCell);
 	}
 
@@ -194,6 +197,10 @@ export class Player extends Content implements IPlayer {
 
 	public set Alive(currentStatus: boolean | undefined) {
 		this.alive = currentStatus;
+
+		if (this.alive) {
+			throw new Error('player should be dead');
+		}
 		for (let cb of this.onPlayerEaten) {
 			cb();
 		}
