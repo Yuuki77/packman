@@ -19,9 +19,11 @@ export default class GamePlayState extends Phaser.State {
 
 		// to do write the logic
 		if (this.currentGame.isGameOver()) {
-			console.log('game is over');
-			this.popUp.Show();
-			// his.game.destroy();
+			if (!this.popUp.isShow) {
+				this.popUp.Show();
+			}
+
+			this.popUp.Update()
 		}
 		this.currentGame.Update();
 	}
