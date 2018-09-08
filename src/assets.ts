@@ -92,6 +92,17 @@ export namespace Spritesheets {
 }
 
 export namespace Atlases {
+		enum AtlasesCharactersAtlasFrames {
+		}
+		export class AtlasesCharactersAtlas {
+				static getName(): string { return 'charactersAtlas'; };
+
+				static getJSONArray(): string { return require('assets/atlases/charactersAtlas.json'); };
+
+				static getPNG(): string { return require('assets/atlases/charactersAtlas.png'); };
+
+				static Frames = AtlasesCharactersAtlasFrames;
+		}
 		enum AtlasesDiePackmanSpriteSheetFrames {
 				Pacman10HpSprite121 = <any>'Pacman10-hp-sprite_121.png',
 				Pacman10HpSprite122 = <any>'Pacman10-hp-sprite_122.png',

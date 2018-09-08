@@ -22,11 +22,14 @@ export class PlayerUi {
 
 		// this.sprite = this.game.add.sprite(this.player.Cell.x * 18 + 9, this.player.Cell.y * 18 + 9, Assets.Images.ImagesPacman.getName());
 		this.sprite = this.game.add.sprite(this.player.Cell.x * 18 + 9, this.player.Cell.y * 18 + 9, Assets.Atlases.AtlasesPackman.getName());
-		this.sprite.animations.add('walk');
-		this.sprite.animations.play('walk', 4, true);
+		this.sprite.animations.add('walkHorizontally');
+		this.sprite.animations.play('walkHorizontally', 4, true);
 		this.sprite.anchor.setTo(0.5, 0.5);
 		this.sprite.scale.setTo(1);
 		this.sprite.z = 5;
+
+		this.sprite.animations.add('dying', Phaser.Animation.generateFrameNames('dying', 1, 6), 5, true);
+		Phaser.Animation.generateFrameNames('dying', 1, 6);
 	}
 
 	private PlayerMoved(newCell: ICell): void {
