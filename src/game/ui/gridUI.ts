@@ -12,16 +12,19 @@ import { YellowDotUi } from './facilitys/dotUi';
 import { PackGumUi } from './facilitys/PackGumUi';
 import { WallUi } from './facilitys/wallUi';
 import { ScoreUi } from './score/scoreUi';
+import { AnimationMyManager } from '../logic/animationMyManager/animationMyManager';
 
 export class GridUi {
 	private game: Phaser.Game;
 	private grid: IGrid;
 	private player: Player;
+	private animationController: AnimationMyManager
 
-	constructor(game: Phaser.Game, grid: IGrid, player: Player) {
+	constructor(game: Phaser.Game, grid: IGrid, player: Player, animationManager: AnimationMyManager) {
 		this.game = game;
 		this.grid = grid;
 		this.player = player;
+		this.animationController = animationManager
 		this.RegisterEvents();
 		// tslint:disable-next-line:no-unused-new
 		new ScoreUi(this.game, this.grid.scoreManager);
@@ -31,10 +34,10 @@ export class GridUi {
 	private ContentCreated(content: ICellContent): void {
 		switch (content.type) {
 			case ContentType.Player:
-				new PlayerUi(this.game, content as Player);
+				new PlayerUi(this.game, content as Player, this.animationController);
 				break;
 			case ContentType.Enemy:
-				new EnemyUi(this.game, content as Enemy, this.player);
+				new EnemyUi(this.game, content as Enemy, this.player, this.animationController);
 				break;
 			default:
 				console.warn('unexpected content', content);

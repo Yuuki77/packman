@@ -1,15 +1,18 @@
 import { ICell } from '../../interfaces/interfaces';
 import { Player } from '../../logic/grid/contents/player';
 import * as Assets from '../../../assets';
+import { AnimationMyManager } from '../../logic/animationMyManager/animationMyManager';
 
 export class PlayerUi {
 	private player: Player;
 	private game: Phaser.Game;
 	private sprite: Phaser.Sprite = null;
+	private animationController: AnimationMyManager;
 
-	constructor(game: Phaser.Game, player: Player) {
+	constructor(game: Phaser.Game, player: Player, animationController: AnimationMyManager) {
 		this.player = player;
 		this.game = game;
+		this.animationController = animationController
 		this.Show();
 
 		this.RegisterInterface();
@@ -39,13 +42,17 @@ export class PlayerUi {
 			this.sprite.scale.x = destination.x < this.sprite.x ? -1 * Math.abs(this.sprite.scale.x) : 1 * Math.abs(this.sprite.scale.x);
 		}
 
-		this.game.add.tween(this.sprite).to(destination, 200, Phaser.Easing.Linear.None, true);
+		const tween = this.game.add.tween(this.sprite).to(destination, 200, Phaser.Easing.Linear.None, true);
+		tween.onComplete.add(() => {
+			this.animationController.CharacterMoved()
+		}, this);
 	}
 
 	private onCompletePlayerEaten() {
-		this.game.time.events.add(2000, function () {
+		this.game.time.events.add(2000, () => {
 			this.player.hasAnimationEnd = true;
-		}, this);
+			this.sprite.visible = false;
+		});
 	}
 
 	private PlayerEaten() {

@@ -119,18 +119,31 @@ export abstract class EnemyController implements IEnemyController {
 			this.Decide();
 			return;
 		}
+
 		this.movingTimes++;
 
 		let dest = this.path[0];
 		dest = this.path.shift();
 
-		if (dest.Content && dest.Content.type === ContentType.Player && !this.enemy.Run) {
+		if (dest.Content) {
+			console.log('dist content  type is', dest.Content.type as ContentType);
+			console.log('is Player', dest.Content && dest.Content.type === ContentType.Player);
+		}
+
+		const canEatPlayer = dest.Content && dest.Content.type === ContentType.Player && !this.enemy.Run
+		// if (dest.Content && dest.Content.type === ContentType.Player && !this.enemy.Run) {
+		// 	this.player.Alive = false;
+		// 	this.player.stateManager.UpdateState(StateType.Stop);
+		// }
+
+		// after checking is done,move the enemy
+		this.enemy.isPlayable = false;
+		this.grid.Move(this.enemy, dest);
+
+		if (canEatPlayer) {
 			this.player.Alive = false;
 			this.player.stateManager.UpdateState(StateType.Stop);
 		}
-
-		this.enemy.isPlayable = false;
-		this.grid.Move(this.enemy, dest);
 	}
 
 	public CanDecide(): boolean {

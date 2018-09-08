@@ -2,17 +2,20 @@ import * as Assets from '../../../assets';
 import { EnemyType, ICell, ICellContent } from '../../interfaces/interfaces';
 import { Enemy } from '../../logic/grid/contents/enemy';
 import { Player } from '../../logic/grid/contents/player';
+import { AnimationMyManager } from '../../logic/animationMyManager/animationMyManager';
 
 export class EnemyUi {
 	private enemy: Enemy;
 	private game: Phaser.Game;
 	private sprite: Phaser.Sprite = null;
 	private player: Player;
+	private animationMyManager: AnimationMyManager
 
-	constructor(game: Phaser.Game, enemy: Enemy, player: ICellContent) {
+	constructor(game: Phaser.Game, enemy: Enemy, player: ICellContent, animationMyManager: AnimationMyManager) {
 		this.enemy = enemy;
 		this.game = game;
 		this.player = player as Player;
+		this.animationMyManager = animationMyManager;
 		this.Show();
 		this.player.AddPlayerEatenListener(() => this.PlayerEaten());
 		this.enemy.AddMovedListener((newCell: ICell) => this.EnemyMoved(newCell));
@@ -69,6 +72,7 @@ export class EnemyUi {
 
 	private onComplete() {
 		this.enemy.isPlayable = true;
+		this.animationMyManager.CharacterMoved()
 	}
 
 	private SpecialItemEaten(isRun: boolean): void {
@@ -97,10 +101,7 @@ export class EnemyUi {
 		this.onComplete();
 	}
 
-	private PlayerEaten(): any {
-
-		this.game.time.events.add(2000, function () {
-			this.sprite.destroy();
-		}, this);
+	private PlayerEaten(): void {
+		this.sprite.destroy();
 	}
 }

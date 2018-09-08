@@ -8,7 +8,7 @@
     "webpack:dist": "webpack --config webpack.dist.config.js --progress --colors",
     "build:dev": "echo-cli 'Building DEV ...' && npm run webpack:dev && echo-cli 'Build Complete ✔'",
     "build:dist": "echo-cli 'Building DIST ...' && npm run webpack:dist && echo-cli 'Build Complete ✔'",
-    "server:dev": "webpack-dev-server --config webpack.dev.config.js --host ::",
+    "server:dev": "webpack-dev-server --mode development --config webpack.dev.config.js --host ::",
     "server:dist": "webpack-dev-server --config webpack.dist.config.js --open",
     "setupGameSize": "node ./scripts/setupGameSize.js",
     "assets:dev": "node ./scripts/generateAssetsClass.js --dev",
@@ -37,7 +37,7 @@
     "@types/node": "10.9.4",
     "chai": "^4.0.0",
     "clean-webpack-plugin": "0.1.19",
-    "commander": "2.17.1",
+    "commander": "2.18.0",
     "copy-webpack-plugin": "4.5.2",
     "echo-cli": "1.0.8",
     "electron": "2.0.8",
@@ -60,7 +60,8 @@
     "typings": "^2.1.1",
     "webfontloader": "1.6.28",
     "webpack": "4.17.2",
-    "webpack-dev-server": "3.1.7",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "3.1.8",
     "webpack-shell-plugin": "0.5.0",
     "xml2js": "0.4.19"
   },
@@ -73,6 +74,7 @@
     ]
   },
   "dependencies": {
+    "bluebird": "^3.5.2",
     "npm-check-updates": "^2.14.2"
   }
 }

@@ -48,16 +48,25 @@ export class Player extends Content implements IPlayer {
 
 		this.currentDirection = this.GetNextDirection(direction);
 		if (this.lastMove + PLAYER_NORMAL_SPEED < now && this.stateManager.CurrentState !== StateType.Stop) {
+
+			// console.log('yo are you busy from player', this.grid.isBusy)
+			// if (this.grid.isBusy) {
+			// 	return;
+			// }
+
 			this.lastMove = now;
 			this.Decide(player, direction);
 		}
 	}
 
 	public Decide(player: ICellContent, direction: Direction) {
+		// when player is about to move, then lock moving of the grid bro
+		// do the same thing for enemy
 		let nextCell = this.GetNextCell(player, direction);
 		if (this.CannotMove(player, nextCell)) {
 			return;
 		}
+		// this.grid.isBusy = true;
 
 		// eat pacgum
 		if (this.IsPackGum(nextCell)) {
@@ -96,6 +105,7 @@ export class Player extends Content implements IPlayer {
 				this.stateManager.UpdateState(StateType.Stop);
 				this.Alive = false;
 			}
+			// this.grid.isBusy = false;
 
 			return;
 		}
@@ -197,7 +207,10 @@ export class Player extends Content implements IPlayer {
 
 	public set Alive(currentStatus: boolean | undefined) {
 		this.alive = currentStatus;
+	}
 
+	public EmitDeadEvents() {
+		// todo think about this
 		if (this.alive) {
 			throw new Error('player should be dead');
 		}

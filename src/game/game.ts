@@ -6,6 +6,7 @@ import { Enemy } from './logic/grid/contents/enemy';
 import { Player } from './logic/grid/contents/player';
 import { GridUi } from './ui/gridUI';
 import { StateMyManager } from './logic/stateManager';
+import { AnimationMyManager } from './logic/animationMyManager/animationMyManager';
 
 export class Game {
 	private player: Player;
@@ -19,13 +20,16 @@ export class Game {
 	private rightKey;
 	private enemyManager: EnemyManager;
 	private stateManager: StateMyManager;
+	private animationMyManager: AnimationMyManager;
 	private currentTime: number;
 
 	constructor(game: Phaser.Game) {
 		this.game = game;
 		this.stateManager = new StateMyManager(StateType.Start);
 		this.grid = new Grid(gridData, this.stateManager);
-		this.gridUi = new GridUi(game, this.grid, this.grid.player);
+
+		this.animationMyManager = new AnimationMyManager(this.grid.player);
+		this.gridUi = new GridUi(game, this.grid, this.grid.player, this.animationMyManager);
 
 		this.grid.AddContentCreatedListener((content: ICellContent) => {
 			if (content.type === ContentType.Player) {
@@ -38,6 +42,7 @@ export class Game {
 
 		this.grid.CreateBoard();
 		this.enemyManager = new EnemyManager(this.grid, this.player, this.enemysArray, this.stateManager);
+
 		this.currentTime = Date.now();
 	}
 

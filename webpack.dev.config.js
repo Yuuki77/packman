@@ -64,6 +64,7 @@ module.exports = {
 	},
 	module: {
 		rules: [
+			{ type: 'javascript/auto' },
 			{ test: /\.ts$/, enforce: 'pre', loader: 'tslint-loader', options: { emitErrors: true } },
 			{ test: /assets(\/|\\)/, loader: 'file-loader?name=assets/[hash].[ext]' },
 			{ test: /pixi\.js$/, loader: 'expose-loader?PIXI' },

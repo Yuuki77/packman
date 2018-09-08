@@ -11,6 +11,8 @@ export abstract class Content implements ICellContent {
 	public abstract type: ContentType;
 	public abstract id: string;
 
+
+
 	readonly enemyType: EnemyType | undefined = undefined;
 	public x: number;
 	public y: number;

@@ -1,6 +1,7 @@
-import { IStateManager, StateType } from '../../game/interfaces/interfaces';
+import { IStateManager, StateType, ICellContent, ICell, IPlayer } from '../../game/interfaces/interfaces';
 
 export class StateMyManager implements IStateManager {
+
 	private currentState: StateType;
 	constructor(state: StateType) {
 		this.currentState = state;

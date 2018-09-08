@@ -7,6 +7,7 @@ export const PACKGUM_POSITION = 7;
 export const WALL_POSITION = 1;
 export const PLAYER_POSITION = 3;
 export const CHERRY_POSITION = 9;
+export const TOTAL_CHARACTER_COUNT = 5;
 
 export let gridData: number[][] =
 	[

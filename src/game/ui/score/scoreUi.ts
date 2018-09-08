@@ -18,7 +18,7 @@ export class ScoreUi {
 	}
 
 	private Show() {
-		this.scoreText = this.game.add.text(600, 16, 'score: 0', { fontSize: '18px', fill: '#F0F8FF' });
+		this.scoreText = this.game.add.text(600, 16, 'score: 0', { fontSize: 18, fill: '#F0F8FF' });
 		this.scoreText.text = 'score: 0';
 	}
 
@@ -28,14 +28,14 @@ export class ScoreUi {
 	}
 
 	private ScoreSpecialUpdated(newScore: number, enemy: ICellContent) {
-		this.scoreEnemyEatenText = this.game.add.text(enemy.x * 18 + 9, enemy.y * 18 + 9, newScore.toString(), { fontSize: '15px', fill: '#F0F8FF' });
+		this.scoreEnemyEatenText = this.game.add.text(enemy.x * 18 + 9, enemy.y * 18 + 9, newScore.toString(), { fontSize: 15, fill: '#F0F8FF' });
 		this.score += newScore;
 		this.scoreEnemyEatenText.text = newScore.toString();
 		this.game.time.events.add(1000, this.RemoveText, this);
 	}
 
 	private ScoreSpecialItmEatenUpdated(newScore: number, cherry: ICellFacility) {
-		this.scoreEnemyEatenText = this.game.add.text(cherry.Cell.x * 18 + 9, cherry.Cell.y * 18, newScore.toString(), { fontSize: '15px', fill: '#F0F8FF' });
+		this.scoreEnemyEatenText = this.game.add.text(cherry.Cell.x * 18 + 9, cherry.Cell.y * 18, newScore.toString(), { fontSize: 15, fill: '#F0F8FF' });
 		this.score += newScore;
 		this.scoreEnemyEatenText.text = newScore.toString();
 		this.game.time.events.add(1000, this.RemoveText, this);
