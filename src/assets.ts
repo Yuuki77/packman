@@ -1,11 +1,6 @@
 /* AUTO GENERATED FILE. DO NOT MODIFY. YOU WILL LOSE YOUR CHANGES ON BUILD. */
 
 export namespace Images {
-		export class AtlasesDownload {
-				static getName(): string { return 'download'; };
-
-				static getJPEG(): string { return require('assets/atlases/download.jpeg'); };
-		}
 		export class GraphicsGameOver {
 				static getName(): string { return 'GameOver'; };
 
@@ -25,26 +20,6 @@ export namespace Images {
 				static getName(): string { return 'TitleScreen'; };
 
 				static getPNG(): string { return require('assets/graphics/TitleScreen.png'); };
-		}
-		export class ImagesBackgroundTemplate {
-				static getName(): string { return 'background_template'; };
-
-				static getPNG(): string { return require('assets/images/background_template.png'); };
-		}
-		export class ImagesBackgroundtexture2 {
-				static getName(): string { return 'backgroundtexture2'; };
-
-				static getJPG(): string { return require('assets/images/backgroundtexture2.jpg'); };
-		}
-		export class ImagesBoafront {
-				static getName(): string { return 'boafront'; };
-
-				static getJPG(): string { return require('assets/images/boafront.jpg'); };
-		}
-		export class ImagesBuildtexture {
-				static getName(): string { return 'buildtexture'; };
-
-				static getJPG(): string { return require('assets/images/buildtexture.jpg'); };
 		}
 		export class ImagesCherry {
 				static getName(): string { return 'cherry'; };
@@ -85,26 +60,6 @@ export namespace Images {
 				static getName(): string { return 'menuBackground'; };
 
 				static getPNG(): string { return require('assets/images/menuBackground.png'); };
-		}
-		export class ImagesMetal {
-				static getName(): string { return 'metal'; };
-
-				static getPNG(): string { return require('assets/images/metal.png'); };
-		}
-		export class ImagesPacman {
-				static getName(): string { return 'pacman'; };
-
-				static getPNG(): string { return require('assets/images/pacman.png'); };
-		}
-		export class ImagesRestartButton {
-				static getName(): string { return 'restartButton'; };
-
-				static getPNG(): string { return require('assets/images/restartButton.png'); };
-		}
-		export class ImagesRoadtexture {
-				static getName(): string { return 'roadtexture'; };
-
-				static getJPG(): string { return require('assets/images/roadtexture.jpg'); };
 		}
 		export class ImagesSand {
 				static getName(): string { return 'sand'; };
@@ -206,28 +161,6 @@ export namespace Atlases {
 				static getXML(): string { return require('assets/atlases/preload_sprites_xml.xml'); };
 
 				static Frames = AtlasesPreloadSpritesXmlFrames;
-		}
-		enum GraphicsHeroIdleFrames {
-		}
-		export class GraphicsHeroIdle {
-				static getName(): string { return 'Hero_Idle'; };
-
-				static getPNG(): string { return require('assets/graphics/Hero_Idle.png'); };
-
-				static getXML(): string { return require('assets/graphics/Hero_Idle.xml'); };
-
-				static Frames = GraphicsHeroIdleFrames;
-		}
-		enum GraphicsHeroWalkingFrames {
-		}
-		export class GraphicsHeroWalking {
-				static getName(): string { return 'Hero_Walking'; };
-
-				static getPNG(): string { return require('assets/graphics/Hero_Walking.png'); };
-
-				static getXML(): string { return require('assets/graphics/Hero_Walking.xml'); };
-
-				static Frames = GraphicsHeroWalkingFrames;
 		}
 }
 
@@ -339,19 +272,5 @@ export namespace Shaders {
 		}
 }
 export namespace Misc {
-		export class ImagesCityBackground {
-				static getName(): string { return 'CityBackground'; };
-
-				static getBLEND(): string { return require('assets/images/CityBackground.blend'); };
-		}
-		export class ImagesIdle {
-				static getName(): string { return 'idle'; };
-
-				static getBLEND(): string { return require('assets/images/idle.blend'); };
-		}
-		export class ImagesWalkcycle {
-				static getName(): string { return 'walkcycle'; };
-
-				static getBLEND(): string { return require('assets/images/walkcycle.blend'); };
-		}
+		class IExistSoTypeScriptWillNotComplainAboutAnEmptyNamespace {}
 }
