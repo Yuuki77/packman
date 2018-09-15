@@ -21,23 +21,7 @@ export class AnimationMyManager {
 		this.moveFinishCount++
 
 		if (this.AllCharsMoved()) {
-
-			setTimeout(() => {
-				this.player.EmitDeadEvents()
-			}, 1000);
-			this.moveFinishCount = 0
-		}
-	}
-
-	public EnemyEaten() {
-		if (this.player.Alive) {
-			return
-		}
-
-		this.moveFinishCount++
-
-		if (this.AllCharsMoved()) {
-
+			this.player.EmitStopAnimation();
 			setTimeout(() => {
 				this.player.EmitDeadEvents()
 			}, 1000);

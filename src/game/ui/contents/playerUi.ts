@@ -8,6 +8,7 @@ export class PlayerUi {
 	private game: Phaser.Game;
 	private sprite: Phaser.Sprite = null;
 	private animationController: AnimationMyManager;
+	private currentMovingAnimation: string;
 
 	constructor(game: Phaser.Game, player: Player, animationController: AnimationMyManager) {
 		this.player = player;
@@ -15,21 +16,23 @@ export class PlayerUi {
 		this.animationController = animationController
 		this.Show();
 
-		this.RegisterInterface();
+		this.RegisterEvents();
+	}
+
+	private StopCurrentAnimation(): void {
+		this.sprite.animations.stop();
 	}
 
 	private Show(): void {
-
-		// this.sprite = this.game.add.sprite(this.player.Cell.x * 18 + 9, this.player.Cell.y * 18 + 9, Assets.Images.ImagesPacman.getName());
-		this.sprite = this.game.add.sprite(this.player.Cell.x * 18 + 9, this.player.Cell.y * 18 + 9, Assets.Atlases.AtlasesPackman.getName());
-		this.sprite.animations.add('walkHorizontally');
-		this.sprite.animations.play('walkHorizontally', 4, true);
+		this.sprite = this.game.add.sprite(this.player.Cell.x * 18 + 9, this.player.Cell.y * 18 + 9, Assets.Atlases.AtlasesCharactersAtlas.getName());
+		this.sprite.animations.add('walkHorizontally', Phaser.Animation.generateFrameNames('pacmanGoLeft', 1, 2), 2, true);
+		this.sprite.animations.add('walkVertically', Phaser.Animation.generateFrameNames('pacmanGoUp', 1, 2), 2, true);
+		this.sprite.animations.play('walkHorizontally', 2, true);
+		this.currentMovingAnimation = 'walkHorizontally'
 		this.sprite.anchor.setTo(0.5, 0.5);
 		this.sprite.scale.setTo(1);
 		this.sprite.z = 5;
-
-		this.sprite.animations.add('dying', Phaser.Animation.generateFrameNames('dying', 1, 6), 5, true);
-		Phaser.Animation.generateFrameNames('dying', 1, 6);
+		this.sprite.scale.x = -1;
 	}
 
 	private PlayerMoved(newCell: ICell): void {
@@ -42,7 +45,24 @@ export class PlayerUi {
 		}
 
 		if (destination.x !== this.sprite.x) {
-			this.sprite.scale.x = destination.x < this.sprite.x ? -1 * Math.abs(this.sprite.scale.x) : 1 * Math.abs(this.sprite.scale.x);
+			if (this.currentMovingAnimation !== 'walkHorizontally') {
+				// console.warn('Call hirozontaly')
+				this.currentMovingAnimation = 'walkHorizontally'
+				this.sprite.animations.stop();
+				// console.log('play')
+				this.sprite.animations.play('walkHorizontally', 2, true);
+			}
+
+			this.sprite.scale.x = destination.x < this.sprite.x ? 1 * Math.abs(this.sprite.scale.x) : -1 * Math.abs(this.sprite.scale.x);
+		} else if (destination.y !== this.sprite.y) {
+			if (this.currentMovingAnimation !== 'walkVertically') {
+				// console.warn('Call walkVertically')
+				this.currentMovingAnimation = 'walkVertically'
+				this.sprite.animations.stop();
+				// console.log('play')
+				this.sprite.animations.play('walkVertically', 2, true);
+			}
+			this.sprite.scale.y = destination.y < this.sprite.y ? 1 * Math.abs(this.sprite.scale.y) : -1 * Math.abs(this.sprite.scale.y);
 		}
 
 		const tween = this.game.add.tween(this.sprite).to(destination, 200, Phaser.Easing.Linear.None, true);
@@ -59,7 +79,7 @@ export class PlayerUi {
 	}
 
 	private PlayerEaten() {
-		this.sprite.visible = false;
+		this.sprite.destroy();
 		this.sprite = this.game.add.sprite(this.player.Cell.x * 18 + 9, this.player.Cell.y * 18 + 9, Assets.Atlases.AtlasesDiePackmanSpriteSheet.getName());
 		this.sprite.animations.add('eaten');
 		this.sprite.animations.play('eaten', 4, false);
@@ -68,8 +88,9 @@ export class PlayerUi {
 		this.onCompletePlayerEaten();
 	}
 
-	private RegisterInterface(): void {
+	private RegisterEvents(): void {
 		this.player.AddMovedListener((newCell: ICell) => this.PlayerMoved(newCell));
 		this.player.AddPlayerEatenListener(() => this.PlayerEaten());
+		this.player.PlayerStopAnimation(() => this.StopCurrentAnimation());
 	}
 }

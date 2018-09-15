@@ -14,6 +14,8 @@ export class Player extends Content implements IPlayer {
 	private onEatItem: Array<{ () }> = [];
 	private onEat: Array<{ (enemy: ICellContent): void }> = [];
 	private onPlayerEaten: Array<{ (): void }> = [];
+	private onPlayerStopAnimation: Array<{ (): void }> = [];
+
 	public isPlayable: boolean = true;
 	public hasAnimationEnd: boolean = false;
 	public stateManager: IStateManager;
@@ -61,6 +63,20 @@ export class Player extends Content implements IPlayer {
 			return;
 		}
 
+		if (this.helper.IsEnemy(nextCell, ContentType.Enemy)) {
+			let enemy = nextCell.Content as Enemy;
+			if (enemy.Run) {
+				this.EatEnemy(enemy);
+				this.grid.Move(this, nextCell);
+			} else {
+				this.grid.Move(this, nextCell);
+				this.stateManager.UpdateState(StateType.Stop);
+				this.Alive = false;
+			}
+
+			return;
+		}
+
 		// eat pacgum
 		if (this.IsPackGum(nextCell)) {
 			this.EatItem();
@@ -81,20 +97,6 @@ export class Player extends Content implements IPlayer {
 			this.EatSpecialItem(nextCell.Facility);
 			nextCell.Facility.Visited = true;
 			this.grid.Move(this, nextCell);
-			return;
-		}
-
-		if (this.helper.IsEnemy(nextCell, ContentType.Enemy)) {
-			let enemy = nextCell.Content as Enemy;
-			if (enemy.Run) {
-				this.EatEnemy(enemy);
-				this.grid.Move(this, nextCell);
-			} else {
-				this.grid.Move(this, nextCell);
-				this.stateManager.UpdateState(StateType.Stop);
-				this.Alive = false;
-			}
-
 			return;
 		}
 
@@ -185,6 +187,10 @@ export class Player extends Content implements IPlayer {
 		this.onPlayerEaten.push(cb);
 	}
 
+	public PlayerStopAnimation(cb: () => void) {
+		this.onPlayerStopAnimation.push(cb);
+	}
+
 	public get Alive() {
 		return this.alive;
 	}
@@ -199,6 +205,12 @@ export class Player extends Content implements IPlayer {
 			throw new Error('player should be dead');
 		}
 		for (let cb of this.onPlayerEaten) {
+			cb();
+		}
+	}
+
+	public EmitStopAnimation() {
+		for (let cb of this.onPlayerStopAnimation) {
 			cb();
 		}
 	}

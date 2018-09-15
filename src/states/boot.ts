@@ -6,10 +6,6 @@ export default class Boot extends Phaser.State {
 	public preload(): void {
 		// Load any assets you need for your preloader state here.
 		this.game.load.atlasJSONArray(Assets.Atlases.AtlasesPreloadSpritesArray.getName(), Assets.Atlases.AtlasesPreloadSpritesArray.getPNG(), Assets.Atlases.AtlasesPreloadSpritesArray.getJSONArray());
-		// this.game.load.atlasXML(Assets.Atlases.GraphicsHeroIdle.getName(), Assets.Atlases.GraphicsHeroIdle.getXML());
-		// this.game.load.atlasXML(Assets.Atlases.GraphicsHeroWalking.getName(), Assets.Atlases.GraphicsHeroWalking.getXML());
-
-
 		this.game.load.image(Assets.Images.ImagesWall4.getName(), Assets.Images.ImagesWall4.getPNG());
 		this.game.load.image(Assets.Images.ImagesGhostBlue.getName(), Assets.Images.ImagesGhostBlue.getPNG());
 		this.game.load.image(Assets.Images.ImagesGhostRed.getName(), Assets.Images.ImagesGhostRed.getPNG());
@@ -21,11 +17,9 @@ export default class Boot extends Phaser.State {
 		this.game.load.image(Assets.Images.ImagesCherry.getName(), Assets.Images.ImagesCherry.getPNG());
 		this.game.load.image(Assets.Images.ImagesMenuBackground.getName(), Assets.Images.ImagesMenuBackground.getPNG());
 
-
 		this.game.load.atlasJSONHash(Assets.Atlases.AtlasesPackman.getName(), Assets.Atlases.AtlasesPackman.getPNG(), Assets.Atlases.AtlasesPackman.getJSONArray());
 		this.game.load.atlasJSONHash(Assets.Atlases.AtlasesDiePackmanSpriteSheet.getName(), Assets.Atlases.AtlasesDiePackmanSpriteSheet.getPNG(), Assets.Atlases.AtlasesDiePackmanSpriteSheet.getJSONArray());
 		this.game.load.atlasJSONHash(Assets.Atlases.AtlasesCharactersAtlas.getName(), Assets.Atlases.AtlasesCharactersAtlas.getPNG(), Assets.Atlases.AtlasesCharactersAtlas.getJSONArray());
-
 	}
 
 	public create(): void {

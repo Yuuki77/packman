@@ -167,7 +167,7 @@ export class Grid implements IGrid {
 	public Move(movingContent: ICellContent, nextCell: ICell) {
 		console.log('moving cell content', movingContent.id);
 		if (nextCell.Content) {
-			console.log('next cell content', nextCell.Content.id);
+		console.log('next cell content', nextCell.Content.id);
 		}
 		if (nextCell === undefined) {
 			throw Error('next cell is undefined');
