@@ -10,13 +10,26 @@ export class AnimationMyManager {
 	}
 
 	private AllCharsMoved() {
-		console.log('moveFinishCount', this.moveFinishCount)
-		console.log('TOTAL_CHARACTER_COUNT', TOTAL_CHARACTER_COUNT)
 		return this.moveFinishCount === TOTAL_CHARACTER_COUNT
 	}
 
 	public CharacterMoved() {
-		console.log(this.player.Alive)
+		if (this.player.Alive) {
+			return
+		}
+
+		this.moveFinishCount++
+
+		if (this.AllCharsMoved()) {
+
+			setTimeout(() => {
+				this.player.EmitDeadEvents()
+			}, 1000);
+			this.moveFinishCount = 0
+		}
+	}
+
+	public EnemyEaten() {
 		if (this.player.Alive) {
 			return
 		}

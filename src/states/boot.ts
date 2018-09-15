@@ -51,8 +51,8 @@ export default class Boot extends Phaser.State {
 			// Any mobile specific stuff here
 
 			// Comment the following and uncomment the line after that to force portrait mode instead of landscape
-			this.game.scale.forceOrientation(true, false);
-			// this.game.scale.forceOrientation(false, true);
+			// this.game.scale.forceOrientation(true, false);
+			this.game.scale.forceOrientation(false, true);
 		}
 
 		// Use DEBUG to wrap code that should only be included in a DEBUG build of the game

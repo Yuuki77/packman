@@ -21,7 +21,7 @@ export class Game {
 	private enemyManager: EnemyManager;
 	private stateManager: StateMyManager;
 	private animationMyManager: AnimationMyManager;
-	private currentTime: number;
+	private currentDirection: Direction = Direction.Left;
 
 	constructor(game: Phaser.Game) {
 		this.game = game;
@@ -42,8 +42,6 @@ export class Game {
 
 		this.grid.CreateBoard();
 		this.enemyManager = new EnemyManager(this.grid, this.player, this.enemysArray, this.stateManager);
-
-		this.currentTime = Date.now();
 	}
 
 	public KeyboardInputs(): void {
@@ -52,7 +50,12 @@ export class Game {
 			if (this.stateManager.CurrentState === StateType.Stop) {
 				return;
 			}
-			this.player.Update(this.player, Direction.Up);
+
+			if (this.currentDirection === Direction.Up) {
+				return;
+			}
+
+			this.currentDirection = Direction.Up
 		}, this);
 
 		this.downKey = this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
@@ -60,7 +63,12 @@ export class Game {
 			if (this.stateManager.CurrentState === StateType.Stop) {
 				return;
 			}
-			this.player.Update(this.player, Direction.Down);
+
+			if (this.player.currentDirection === Direction.Down) {
+				return;
+			}
+
+			this.currentDirection = Direction.Down
 		}, this);
 
 		this.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
@@ -68,7 +76,11 @@ export class Game {
 			if (this.stateManager.CurrentState === StateType.Stop) {
 				return;
 			}
-			this.player.Update(this.player, Direction.Left);
+			if (this.currentDirection === Direction.Left) {
+				return;
+			}
+
+			this.currentDirection = Direction.Left
 
 		}, this);
 
@@ -77,8 +89,12 @@ export class Game {
 			if (this.stateManager.CurrentState === StateType.Stop) {
 				return;
 			}
-			this.player.Update(this.player, Direction.Right);
 
+			if (this.currentDirection === Direction.Right) {
+				return;
+			}
+
+			this.currentDirection = Direction.Right
 		}, this);
 	}
 
@@ -86,7 +102,7 @@ export class Game {
 		let dt = this.game.time.elapsedMS;
 		this.enemyManager.Update(dt);
 		this.KeyboardInputs();
-		this.player.Update(this.player, this.player.currentDirection);
+		this.player.Update(this.currentDirection);
 
 		// debug
 		(window as any).games = this.game;

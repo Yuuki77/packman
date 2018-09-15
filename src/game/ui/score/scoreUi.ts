@@ -28,13 +28,15 @@ export class ScoreUi {
 	}
 
 	private ScoreSpecialUpdated(newScore: number, enemy: ICellContent) {
+		console.error('ScoreSpecialUpdated is called');
 		this.scoreEnemyEatenText = this.game.add.text(enemy.x * 18 + 9, enemy.y * 18 + 9, newScore.toString(), { fontSize: 15, fill: '#F0F8FF' });
 		this.score += newScore;
-		this.scoreEnemyEatenText.text = newScore.toString();
+		// this.scoreEnemyEatenText.text = newScore.toString();
 		this.game.time.events.add(1000, this.RemoveText, this);
 	}
 
 	private ScoreSpecialItmEatenUpdated(newScore: number, cherry: ICellFacility) {
+		console.error('ScoreSpecialItmEatenUpdated is called');
 		this.scoreEnemyEatenText = this.game.add.text(cherry.Cell.x * 18 + 9, cherry.Cell.y * 18, newScore.toString(), { fontSize: 15, fill: '#F0F8FF' });
 		this.score += newScore;
 		this.scoreEnemyEatenText.text = newScore.toString();
@@ -42,6 +44,7 @@ export class ScoreUi {
 	}
 
 	private RemoveText(): void {
+		console.log('remove text is called')
 		this.scoreEnemyEatenText.destroy();
 	}
 }

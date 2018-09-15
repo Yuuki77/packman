@@ -72,8 +72,8 @@ export interface ICellFacility {
 }
 
 export interface IPlayer {
-	GetNextCell(content: ICellContent, direction: Direction): ICell | undefined;
-	CannotMove(content: ICellContent, nextCell: ICell): boolean;
+	GetNextCell(direction: Direction): ICell | undefined;
+	CannotMove(nextCell: ICell): boolean;
 }
 
 

@@ -36,54 +36,43 @@ export class Player extends Content implements IPlayer {
 	}
 
 	private GetNextDirection(direction: Direction) {
-		let nextCell = this.GetNextCell(this, direction);
-		if (this.CannotMove(this, nextCell)) {
+		let nextCell = this.GetNextCell(direction);
+		if (this.CannotMove(nextCell)) {
 			return this.currentDirection;
 		}
 		return direction;
 	}
 
-	public Update(player: ICellContent, direction: Direction): void {
+	public Update(inputDirection: Direction): void {
 		let now = Date.now();
 
-		this.currentDirection = this.GetNextDirection(direction);
+		this.currentDirection = this.GetNextDirection(inputDirection);
 		if (this.lastMove + PLAYER_NORMAL_SPEED < now && this.stateManager.CurrentState !== StateType.Stop) {
-
-			// console.log('yo are you busy from player', this.grid.isBusy)
-			// if (this.grid.isBusy) {
-			// 	return;
-			// }
-
 			this.lastMove = now;
-			this.Decide(player, direction);
+			this.Decide(this.currentDirection);
 		}
 	}
 
-	public Decide(player: ICellContent, direction: Direction) {
-		// when player is about to move, then lock moving of the grid bro
-		// do the same thing for enemy
-		let nextCell = this.GetNextCell(player, direction);
-		if (this.CannotMove(player, nextCell)) {
+	public Decide(inputDirection: Direction) {
+		let nextCell = this.GetNextCell(inputDirection);
+
+		// check if the input direction can move
+		if (this.CannotMove(nextCell)) {
 			return;
 		}
-		// this.grid.isBusy = true;
 
 		// eat pacgum
 		if (this.IsPackGum(nextCell)) {
 			this.EatItem();
 			nextCell.Facility.Visited = true;
-			this.grid.Move(player, nextCell);
+			this.grid.Move(this, nextCell);
 			return;
-		}
-
-		if (this.CanEatEnemy(nextCell)) {
-			this.EatEnemy(nextCell.Content);
 		}
 
 		// visit dot
 		if (this.CanVisitDot(nextCell)) {
 			nextCell.Facility.Visited = true;
-			this.grid.Move(player, nextCell);
+			this.grid.Move(this, nextCell);
 			return;
 		}
 
@@ -91,7 +80,7 @@ export class Player extends Content implements IPlayer {
 		if (this.CanVisitItem(nextCell)) {
 			this.EatSpecialItem(nextCell.Facility);
 			nextCell.Facility.Visited = true;
-			this.grid.Move(player, nextCell);
+			this.grid.Move(this, nextCell);
 			return;
 		}
 
@@ -99,19 +88,18 @@ export class Player extends Content implements IPlayer {
 			let enemy = nextCell.Content as Enemy;
 			if (enemy.Run) {
 				this.EatEnemy(enemy);
-				this.grid.Move(player, nextCell);
+				this.grid.Move(this, nextCell);
 			} else {
-				this.grid.Move(player, nextCell);
+				this.grid.Move(this, nextCell);
 				this.stateManager.UpdateState(StateType.Stop);
 				this.Alive = false;
 			}
-			// this.grid.isBusy = false;
 
 			return;
 		}
-		this.grid.Move(player, nextCell);
-	}
 
+		this.grid.Move(this, nextCell);
+	}
 	private CanVisitDot(nextCell: ICell): boolean {
 		return nextCell.Facility && nextCell.Facility.type === FacilityType.YellowDot && !nextCell.Facility.Visited;
 	}
@@ -123,12 +111,12 @@ export class Player extends Content implements IPlayer {
 		}
 	}
 
-	public GetNextCell(player: ICellContent, direction: Direction): ICell | undefined {
-		let nextCell = player.Cell.GetNeightbor(direction);
-		if (player.x === player.Cell.grid.width - 1 && !nextCell) {
-			nextCell = player.Cell.grid.GetCell(0, player.y);
-		} else if (player.x === 0 && !nextCell) {
-			nextCell = player.Cell.grid.GetCell(player.Cell.grid.width - 1, player.y);
+	public GetNextCell(direction: Direction): ICell | undefined {
+		let nextCell = this.Cell.GetNeightbor(direction);
+		if (this.x === this.Cell.grid.width - 1 && !nextCell) {
+			nextCell = this.Cell.grid.GetCell(0, this.y);
+		} else if (this.x === 0 && !nextCell) {
+			nextCell = this.Cell.grid.GetCell(this.Cell.grid.width - 1, this.y);
 		}
 		return nextCell;
 	}
@@ -144,11 +132,7 @@ export class Player extends Content implements IPlayer {
 		}
 	}
 
-	public CannotMove(content: ICellContent, nextCell: ICell): boolean {
-		if (content.type !== ContentType.Player) {
-			return true;
-		}
-
+	public CannotMove(nextCell: ICell): boolean {
 		// check if cell is undefined
 		if (nextCell === undefined) {
 			return true;

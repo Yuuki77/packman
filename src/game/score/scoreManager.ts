@@ -1,3 +1,4 @@
+import { Loader } from './../../utils/assetUtils';
 import { ContentType, FacilityType, ICellContent, ICellFacility, IGrid, IScoreManager } from '../interfaces/interfaces';
 
 export class ScoreManager implements IScoreManager {
@@ -30,6 +31,8 @@ export class ScoreManager implements IScoreManager {
 	}
 
 	public EnemyEaten(enemy: ICellContent) {
+		console.log('EnemyEaten is called')
+		console.log('onScoreEnemyEatenCallbacks', this.onScoreEnemyEatenCallbacks.length)
 		if (enemy.type !== ContentType.Enemy) {
 			throw new Error('this content should be enemy');
 		}
