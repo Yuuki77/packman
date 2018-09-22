@@ -1,5 +1,6 @@
 import { Wall } from '../../logic/grid/facility/wall';
 import * as Assets from '../../../assets';
+import { START_GRID_POS } from '../../const';
 
 export class WallUi {
 	private wall: Wall;
@@ -13,7 +14,7 @@ export class WallUi {
 	}
 
 	private Show() {
-		this.sprite = this.game.add.sprite(this.wall.Cell.x * 18, this.wall.Cell.y * 18, Assets.Images.ImagesWall4.getName());
+		this.sprite = this.game.add.sprite(START_GRID_POS.x + this.wall.Cell.x * 18, START_GRID_POS.y + this.wall.Cell.y * 18, Assets.Images.ImagesWall4.getName());
 		this.sprite.scale.setTo(0.070, 0.070);
 	}
 }

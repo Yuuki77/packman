@@ -38,7 +38,7 @@ export class EnemyManager implements IEnemyManager {
 					this.yellowEnemyController = new YellowEnemyController(this.grid, this.player, enemy);
 					this.enemyControllers.push(this.yellowEnemyController);
 					break;
-				case EnemyType.Green:
+				case EnemyType.Pink:
 					this.greenEnemyController = new GreenEnemyController(this.grid, this.player, enemy);
 					this.enemyControllers.push(this.greenEnemyController);
 					break;

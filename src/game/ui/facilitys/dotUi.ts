@@ -1,5 +1,6 @@
 import { ICellFacility } from '../../interfaces/interfaces';
 import * as Assets from '../../../assets';
+import { START_GRID_POS } from '../../const';
 
 
 export class YellowDotUi {
@@ -15,7 +16,7 @@ export class YellowDotUi {
 	}
 
 	private Show(): void {
-		this.sprite = this.game.add.sprite(this.yellowDot.Cell.x * 18 + 9, this.yellowDot.Cell.y * 18 + 9, Assets.Images.ImagesYellowDot.getName());
+		this.sprite = this.game.add.sprite(START_GRID_POS.x + this.yellowDot.Cell.x * 18 + 9, START_GRID_POS.y + this.yellowDot.Cell.y * 18 + 9, Assets.Images.ImagesYellowDot.getName());
 		this.sprite.anchor.setTo(0.5, 0.5);
 		this.sprite.scale.setTo(0.050, 0.050);
 		this.sprite.z = 1;

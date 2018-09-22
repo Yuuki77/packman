@@ -11,6 +11,7 @@ export class Player extends Content implements IPlayer {
 	public helper;
 	private lastMove = 0;
 	public id = ' Player ';
+	public eatDotCount: number = 0
 	private onEatItem: Array<{ () }> = [];
 	private onEat: Array<{ (enemy: ICellContent): void }> = [];
 	private onPlayerEaten: Array<{ (): void }> = [];
@@ -67,41 +68,33 @@ export class Player extends Content implements IPlayer {
 			let enemy = nextCell.Content as Enemy;
 			if (enemy.Run) {
 				this.EatEnemy(enemy);
-				this.grid.Move(this, nextCell);
 			} else {
-				this.grid.Move(this, nextCell);
 				this.stateManager.UpdateState(StateType.Stop);
 				this.Alive = false;
 			}
-
-			return;
 		}
 
 		// eat pacgum
 		if (this.IsPackGum(nextCell)) {
 			this.EatItem();
 			nextCell.Facility.Visited = true;
-			this.grid.Move(this, nextCell);
-			return;
-		}
-
-		// visit dot
-		if (this.CanVisitDot(nextCell)) {
-			nextCell.Facility.Visited = true;
-			this.grid.Move(this, nextCell);
-			return;
 		}
 
 		// visit Item
 		if (this.CanVisitItem(nextCell)) {
 			this.EatSpecialItem(nextCell.Facility);
 			nextCell.Facility.Visited = true;
-			this.grid.Move(this, nextCell);
-			return;
 		}
 
 		this.grid.Move(this, nextCell);
+
+		// visit dot
+		if (this.CanVisitDot(nextCell)) {
+			nextCell.Facility.Visited = true;
+			this.eatDotCount++;
+		}
 	}
+
 	private CanVisitDot(nextCell: ICell): boolean {
 		return nextCell.Facility && nextCell.Facility.type === FacilityType.YellowDot && !nextCell.Facility.Visited;
 	}
@@ -121,17 +114,6 @@ export class Player extends Content implements IPlayer {
 			nextCell = this.Cell.grid.GetCell(this.Cell.grid.width - 1, this.y);
 		}
 		return nextCell;
-	}
-
-	private CanEatEnemy(cell: ICell) {
-		if (!cell.Content) {
-			return false;
-		}
-
-		if (cell.Content.type === ContentType.Enemy) {
-			let enemy = cell.Content as Enemy;
-			return enemy.Run;
-		}
 	}
 
 	public CannotMove(nextCell: ICell): boolean {

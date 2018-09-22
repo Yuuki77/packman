@@ -8,7 +8,9 @@ export const WALL_POSITION = 1;
 export const PLAYER_POSITION = 3;
 export const CHERRY_POSITION = 9;
 export const TOTAL_CHARACTER_COUNT = 5;
-
+export const START_GRID_POS = {
+	x: 30, y: 50
+};
 export let gridData: number[][] =
 	[
 		[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],

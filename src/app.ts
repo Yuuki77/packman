@@ -26,7 +26,7 @@ function startApp(): void {
 	let gameHeight: number = DEFAULT_GAME_HEIGHT;
 
 	if (SCALE_MODE === 'USER_SCALE') {
-		let screenMetrics: Utils.ScreenMetrics = Utils.ScreenUtils.calculateScreenMetrics(gameWidth, gameHeight);
+		let screenMetrics: Utils.ScreenMetrics = Utils.ScreenUtils.calculateScreenMetrics(800, 600);
 
 		gameWidth = screenMetrics.gameWidth;
 		gameHeight = screenMetrics.gameHeight;

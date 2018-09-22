@@ -1,7 +1,7 @@
 import { IScoreManager, ICellContent, ICellFacility } from '../interfaces/interfaces';
 import * as Assets from '../../assets';
 
-export class PopUp {
+export class GameOverPopUp {
 	public isShow = false
 	private game: Phaser.Game;
 	private background: Phaser.Sprite;
@@ -20,13 +20,13 @@ export class PopUp {
 		this.isShow = true
 		this.background = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, Assets.Images.GraphicsGameOver.getName());
 		this.background.alpha = 1;
-		this.background.anchor.set(0.5);
+		this.background.anchor.set(0.5, 0.5);
 		this.background.scale.setTo(0.5, 0.5);
 
 		this.background.inputEnabled = true;
-		const x = ((this.background.width) / 2);
 		const y = this.background.y + this.background.y / 4 + 20;
-		this.restartTxt = this.game.add.text(x, y, 'Restart Game ?', { fontSize: 30, fill: '#F0F8FF' });
+		this.restartTxt = this.game.add.text(this.game.world.centerX, y, 'Restart Game ?', { fontSize: 30, fill: '#F0F8FF' });
+		this.restartTxt.anchor.set(0.5, 0.5);
 		this.background.events.onInputDown.add(this.restartGame, this);
 	}
 

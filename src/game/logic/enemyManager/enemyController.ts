@@ -51,13 +51,11 @@ export abstract class EnemyController implements IEnemyController {
 		this.player = player;
 	}
 
-	// todo refactoring
 	public Update(dt: number): void {
 		this.thinkingTime += dt;
 
 		// back to normal state.
-		if (!this.IsSpecialTime() && this.specialItemEaten && this.enemy.Run && this.enemy.isPlayable && !this.enemy.goHome
-		) {
+		if (!this.IsSpecialTime() && this.specialItemEaten && this.enemy.Run && this.enemy.isPlayable && !this.enemy.goHome) {
 			this.specialItemEaten = false;
 			this.enemy.Run = false;
 			this.enemy.goHome = false;
@@ -122,23 +120,15 @@ export abstract class EnemyController implements IEnemyController {
 
 		this.movingTimes++;
 
-		let dest =  this.path.shift();
-
-		// if (dest.Content) {
-		// 	console.log('dist content  type is', dest.Content.type as ContentType);
-		// 	console.log('is Player', dest.Content && dest.Content.type === ContentType.Player);
-		// }
-
+		let dest = this.path.shift();
 		const canEatPlayer = dest.Content && dest.Content.type === ContentType.Player && !this.enemy.Run
-		// if (dest.Content && dest.Content.type === ContentType.Player && !this.enemy.Run) {
-		// 	this.player.Alive = false;
-		// 	this.player.stateManager.UpdateState(StateType.Stop);
-		// }
+		const canPlayerEatEnemy = dest.Content && dest.Content.type === ContentType.Player && this.enemy.Run
 
-		// after checking is done,move the enemy
 		if (canEatPlayer) {
 			this.player.Alive = false;
 			this.player.stateManager.UpdateState(StateType.Stop);
+		} else if (canPlayerEatEnemy) {
+			this.player.EatEnemy(this.enemy);
 		}
 		this.enemy.isPlayable = false;
 		this.grid.Move(this.enemy, dest);

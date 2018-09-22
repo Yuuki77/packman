@@ -18,12 +18,13 @@ export class Grid implements IGrid {
 
 	public visitedDotNumbers: number = 0;
 	public numberOfDots: number = 0;
+	public player: Player;
 	public width: number = 0;
 	public height: number = 0;
 	public scoreManager: ScoreManager;
+	public dotCount: number = 0;
 	private helper: Helpers;
 	private now: number;
-	public player: Player;
 
 	constructor(gridData: number[][], stateManager: IStateManager) {
 		this.data = gridData;
@@ -81,6 +82,7 @@ export class Grid implements IGrid {
 				}
 
 				if (this.data[y][x] === 0) {
+					this.dotCount++;
 					this.CreateFacility(FacilityType.YellowDot, this.grid[y][x]);
 					this.numberOfDots++;
 					continue;
@@ -165,16 +167,16 @@ export class Grid implements IGrid {
 	}
 
 	public Move(movingContent: ICellContent, nextCell: ICell) {
-		console.log('moving cell content', movingContent.id);
+		// console.log('moving cell content', movingContent.id);
 		if (nextCell.Content) {
-		console.log('next cell content', nextCell.Content.id);
+			// console.log('next cell content', nextCell.Content.id);
 		}
 		if (nextCell === undefined) {
 			throw Error('next cell is undefined');
 		}
 
 		if (nextCell === movingContent.Cell) {
-			throw Error('next cell is same place');
+			console.warn('next cell is same place');
 		}
 
 		// clean previous position
@@ -198,7 +200,7 @@ export class Grid implements IGrid {
 				enemy = new Enemy(EnemyType.Red);
 				break;
 			case 5:
-				enemy = new Enemy(EnemyType.Green);
+				enemy = new Enemy(EnemyType.Pink);
 				break;
 			case 6:
 				enemy = new Enemy(EnemyType.Yellow);

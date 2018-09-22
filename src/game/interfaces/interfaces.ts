@@ -107,7 +107,7 @@ export enum EnemyType {
 	Red,
 	Blue,
 	Yellow,
-	Green
+	Pink
 }
 
 export enum Direction {

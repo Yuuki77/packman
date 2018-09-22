@@ -1,6 +1,11 @@
 /* AUTO GENERATED FILE. DO NOT MODIFY. YOU WILL LOSE YOUR CHANGES ON BUILD. */
 
 export namespace Images {
+		export class GraphicsGameClear {
+				static getName(): string { return 'GameClear'; };
+
+				static getJPG(): string { return require('assets/graphics/GameClear.jpg'); };
+		}
 		export class GraphicsGameOver {
 				static getName(): string { return 'GameOver'; };
 

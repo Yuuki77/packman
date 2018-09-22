@@ -1,4 +1,3 @@
-import { Loader } from './../../utils/assetUtils';
 import { ContentType, FacilityType, ICellContent, ICellFacility, IGrid, IScoreManager } from '../interfaces/interfaces';
 
 export class ScoreManager implements IScoreManager {

@@ -1,4 +1,5 @@
 import { IScoreManager, ICellContent, ICellFacility } from '../../interfaces/interfaces';
+import { START_GRID_POS } from '../../const';
 
 export class ScoreUi {
 	private game: Phaser.Game;
@@ -18,7 +19,7 @@ export class ScoreUi {
 	}
 
 	private Show() {
-		this.scoreText = this.game.add.text(600, 16, 'score: 0', { fontSize: 18, fill: '#F0F8FF' });
+		this.scoreText = this.game.add.text(this.game.world.centerX / 2, 16, 'score: 0', { fontSize: 15, fill: '#F0F8FF' });
 		this.scoreText.text = 'score: 0';
 	}
 
@@ -29,7 +30,7 @@ export class ScoreUi {
 
 	private ScoreSpecialUpdated(newScore: number, enemy: ICellContent) {
 		console.error('ScoreSpecialUpdated is called');
-		this.scoreEnemyEatenText = this.game.add.text(enemy.x * 18 + 9, enemy.y * 18 + 9, newScore.toString(), { fontSize: 15, fill: '#F0F8FF' });
+		this.scoreEnemyEatenText = this.game.add.text(START_GRID_POS.x + enemy.x * 18 + 9, START_GRID_POS.y + enemy.y * 18 + 9, newScore.toString(), { fontSize: 15, fill: '#F0F8FF' });
 		this.score += newScore;
 		// this.scoreEnemyEatenText.text = newScore.toString();
 		this.game.time.events.add(1000, this.RemoveText, this);
@@ -37,7 +38,7 @@ export class ScoreUi {
 
 	private ScoreSpecialItmEatenUpdated(newScore: number, cherry: ICellFacility) {
 		console.error('ScoreSpecialItmEatenUpdated is called');
-		this.scoreEnemyEatenText = this.game.add.text(cherry.Cell.x * 18 + 9, cherry.Cell.y * 18, newScore.toString(), { fontSize: 15, fill: '#F0F8FF' });
+		this.scoreEnemyEatenText = this.game.add.text(START_GRID_POS.x + cherry.Cell.x * 18 + 9, START_GRID_POS.y + cherry.Cell.y * 18, newScore.toString(), { fontSize: 15, fill: '#F0F8FF' });
 		this.score += newScore;
 		this.scoreEnemyEatenText.text = newScore.toString();
 		this.game.time.events.add(1000, this.RemoveText, this);

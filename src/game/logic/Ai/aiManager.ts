@@ -28,7 +28,7 @@ export class AiManager implements IAiManager {
 				this.reactivity = 22;
 
 				break;
-			case EnemyType.Green:
+			case EnemyType.Pink:
 				this.greedy = 0.5;
 				this.emotively = 0.2;
 				this.speed = 300;

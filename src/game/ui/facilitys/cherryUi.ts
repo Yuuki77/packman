@@ -1,6 +1,7 @@
 import { ICellFacility } from '../../interfaces/interfaces';
 import * as Assets from '../../../assets';
 import { Cherry } from '../../logic/grid/facility/cherry';
+import { START_GRID_POS } from '../../const';
 
 
 export class CherryUi {
@@ -20,7 +21,7 @@ export class CherryUi {
 		if (this.cherry.showed) {
 			return;
 		}
-		this.sprite = this.game.add.sprite(this.cherry.Cell.x * 18 + 9, this.cherry.Cell.y * 18 + 9, Assets.Images.ImagesCherry.getName());
+		this.sprite = this.game.add.sprite(START_GRID_POS.x + this.cherry.Cell.x * 18 + 9, START_GRID_POS.y + this.cherry.Cell.y * 18 + 9, Assets.Images.ImagesCherry.getName());
 		this.sprite.anchor.setTo(0.5, 0.5);
 		this.sprite.z = 1;
 		this.cherry.showed = true;

@@ -108,8 +108,14 @@ export class Game {
 		(window as any).games = this.game;
 	}
 
-	// todo change the logic
 	public isGameOver(): boolean {
 		return this.player && !this.player.Alive && this.player.hasAnimationEnd;
+	}
+
+	public isGameClear(): boolean {
+		if (this.player.eatDotCount === this.grid.dotCount) {
+			this.player.stateManager.UpdateState(StateType.Stop)
+		}
+		return this.player.eatDotCount === this.grid.dotCount
 	}
 }
