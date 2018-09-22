@@ -46,12 +46,12 @@ module.exports = {
 		new CleanWebpackPlugin([
 			path.join(__dirname, 'dist')
 		]),
-		new webpack.optimize.UglifyJsPlugin({
-			compress: {
-				warnings: false
-			},
-			screw_ie8: true
-		}),
+		// new webpack.optimize.UglifyJsPlugin({
+		// 	compress: {
+		// 		warnings: false
+		// 	},
+		// 	screw_ie8: true
+		// }),
 		new HtmlWebpackPlugin({
 			title: 'Phaser NPM Webpack TypeScript Starter Project!',
 			template: path.join(__dirname, 'templates/index.ejs')
@@ -70,8 +70,8 @@ module.exports = {
 	},
 	module: {
 		rules: [
+			{ type: 'javascript/auto' },
 			{ test: /\.ts$/, enforce: 'pre', loader: 'tslint-loader' },
-
 			{ test: /assets(\/|\\)/, loader: 'file-loader?name=assets/[hash].[ext]' },
 			{ test: /pixi\.js$/, loader: 'expose-loader?PIXI' },
 			{ test: /phaser-split\.js$/, loader: 'expose-loader?Phaser' },
