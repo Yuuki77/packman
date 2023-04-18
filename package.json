@@ -40,7 +40,7 @@
     "commander": "2.18.0",
     "copy-webpack-plugin": "4.5.2",
     "echo-cli": "1.0.8",
-    "electron": "2.0.8",
+    "electron": "18.3.7",
     "electron-packager": "12.1.1",
     "expose-loader": "0.7.5",
     "file-loader": "2.0.0",
